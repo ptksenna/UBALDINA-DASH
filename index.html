@@ -145,7 +145,7 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
 <div id="hsel"><div id="htop"><button id="hB">◀ MENU PRINCIPAL</button><img data-logo class="kl" alt=""></div><h2>ESCONDE-ESCONDE</h2><p class="hp">Um atirador é sorteado. Os outros viram objetos da rua e têm 30s para se esconder. O atirador tem 1min30 para achar 70% deles.</p><div id="hbt"><button id="hC">Criar sala</button><input id="hcd" maxlength="4" placeholder="CÓDIGO"><button id="hE">Entrar</button><button id="hT" class="alt">Treino com bots</button></div><div id="hpl"></div><div id="hact"><button id="hRd" style="display:none">PRONTO</button><button id="hmic">🎤</button></div><div id="hst"></div></div>
 <div id="xhud"><div id="xrole"></div><div id="xtm"></div><div id="xinfo"></div></div><div id="xmsg"></div><div id="xblind"><b></b><span></span></div><div id="xres"></div><div id="xcross">✛</div><button id="xmic">🎤</button>
 <div id="splash"><div class="sp"><div class="crown">♛</div><div class="spn">Patraca</div><div class="spg"><i></i>Games<i></i></div></div></div><div id="wipe"></div><img data-logo id="wm" alt=""><button id="hHome" title="Menu inicial">🏠</button><div id="menu"><div class="tt"><img data-logo id="mlogo" alt="Rua Ubaldina — Patraca Games"></div>
-<div id="mm"><div id="mmain" style="display:flex;flex-direction:column;gap:12px"><button id="bIni">Iniciar</button><button id="bDif" class="alt">Dificuldade: Médio</button><button id="bLuta">Luta online</button><button id="bKart">Kart</button><button id="bHide">Esconde-esconde</button></div>
+<div id="mm"><div id="mmain" style="display:flex;flex-direction:column;gap:12px"><button id="bIni">Iniciar</button><button id="bDif" class="alt">Dificuldade: Médio</button><button id="bLuta">Luta online</button><button id="bKart">Kart</button><button id="bHide">Esconde-esconde</button><button id="bFlav">Corre, o Flávio fugiu!</button></div>
 <div id="msub" style="flex-direction:column;gap:12px"><button id="de">Molezinha</button><button id="dm" class="alt">Médio</button><button id="dh">Difícil pra caralho</button></div></div>
 <div id="logo">🎮 <b>Patraca</b> Games<br><button id="bInst">📲 INSTALAR APP</button></div></div>
 <div id="ov"><div><img data-logo class="rl" alt=""><h1>Rua Ubaldina, 2018</h1>
@@ -1360,4 +1360,4 @@ ubHud({mode:()=>st===1?'dash':st===5?'kart':st===6?'beat':st===7?'hide':null,sho
  pause:on=>{window.__hp=on&&(st===1||st===6)?1:0},
  css:'body.hedit #joy,body.hedit #btns{display:block!important}body.hedit #bJ,body.hedit #bP,body.hedit #bR{display:block!important}body.hedit.k #bRe{display:block!important}'});
 loop(last);
-</script></body></html>
+</script><script>/* modo CORRE, O FLÁVIO FUGIU! */(function(){var b=document.getElementById('bFlav');if(!b)return;b.onclick=function(){var go=function(){location.href='flavio.html'};try{if(typeof fade==='function'){fade(go);return}}catch(e){}go()}})();</script></body></html>
