@@ -119,6 +119,8 @@ td.t0{color:var(--red)}td.t1{color:var(--tblue)}
 @keyframes kshake{0%{transform:translate(0,0) rotate(0)}25%{transform:translate(-3px,1px) rotate(-3deg)}50%{transform:translate(2px,-2px) rotate(2deg)}75%{transform:translate(-1px,2px) rotate(-1deg)}100%{transform:translate(2px,0) rotate(3deg)}}
 @media (prefers-reduced-motion:reduce){#kfx svg{animation:none}}
 #dmgs{position:absolute;inset:0;overflow:hidden}
+#recon{position:fixed;left:50%;top:38%;transform:translate(-50%,-50%);z-index:60;padding:12px 22px;border:2px solid var(--neon);border-radius:12px;background:rgba(5,10,7,.9);color:var(--neon);font:400 18px/1 var(--display);letter-spacing:.06em;box-shadow:0 0 18px rgba(61,255,116,.4);pointer-events:none}
+#recon[hidden]{display:none}
 #dmgs b{position:absolute;left:0;top:0;font-family:var(--display);font-weight:400;font-size:clamp(16px,3.6vh,24px);color:#ffd23a;text-shadow:0 2px 0 #5a3a00,0 0 6px rgba(0,0,0,.8);white-space:nowrap;will-change:transform,opacity}
 #dmgs b.p{color:#8dff5a;font-size:clamp(13px,3vh,19px);text-shadow:0 2px 0 #1d4a00,0 0 6px rgba(0,0,0,.8)}
 #dmgs b.h{color:#ff3030;font-size:clamp(20px,4.6vh,32px);text-shadow:0 2px 0 #4a0000,0 0 8px rgba(0,0,0,.8)}
@@ -206,7 +208,7 @@ body.br.touch #mini{right:auto;left:max(16px,env(safe-area-inset-left,0px));top:
   <div id="top"><div id="score"><span class="a">VERMELHO 0</span> × <span class="b">0 AZUL</span></div><div id="tm">5:00</div></div>
   <div id="feed"></div>
   <div id="scope"></div>
-  <div id="dmgs"></div>
+  <div id="dmgs"></div><div id="recon" hidden>RECONECTANDO…</div>
   <div id="cross"><i id="c1"></i><i id="c2"></i><i id="c3"></i><i id="c4"></i></div>
   <div id="hitm"></div>
   <div id="prot" hidden>protegido</div>
@@ -1053,7 +1055,7 @@ function checkReady(){if(!NET.on||!NET.isHost||(HG&&HG.run))return;const all=LOB
   else if(!all&&NET.cdAt)cdStop();bcLobby()}
 function hostHandle(id,d){if(!d||typeof d!=='object')return;const H=HG;
   switch(d.t){
-    case 'hi':{if(LOBBY.some(p=>p.id===id))return;if(LOBBY.length>=10){safeSend(NET.conns.get(id),{t:'full'});return}
+    case 'hi':{if(LOBBY.some(p=>p.id===id)){hostResume(id);return}if(LOBBY.length>=10){safeSend(NET.conns.get(id),{t:'full'});return}
       if(BR){const p={id,name:uniq(clean(d.n)||'JOGADOR',LOBBY),ch:clamp(d.ch|0,0,CHARS.length-1),team:0,rd:false};LOBBY.push(p);if(H&&H.run)lateJoin(p);else checkReady();break}
       const c0=LOBBY.filter(p=>p.team===0).length,c1=LOBBY.length-c0;let team=(d.tm===0||d.tm===1)?d.tm:(c0<=c1?0:1);if((team===0?c0:c1)>=5)team=1-team;
       const p={id,name:uniq(clean(d.n)||'JOGADOR',LOBBY),ch:clamp(d.ch|0,0,CHARS.length-1),team,rd:false};LOBBY.push(p);if(H&&H.run)lateJoin(p);else checkReady();break}
@@ -1068,6 +1070,11 @@ function hostHandle(id,d){if(!d||typeof d!=='object')return;const H=HG;
     case 'wh':if(H&&H.run&&H.br)wallHit(d.id|0,clamp(+d.d||0,0,60));break;
     case 'heal':if(H&&H.run&&H.br&&E){const e=E.get(id);if(e&&e.alive&&e.med>0&&e.hp<HPMAX){e.med--;e.hp=Math.min(HPMAX,e.hp+BRW.heal);e.hpSent=Math.ceil(e.hp);brInv(e)}}break;
   }}
+function hostDrop(id){const e=E&&E.get(id);if(HG&&HG.run&&e&&!e.bot){NET.conns.delete(id);e.gone=now();setTimeout(()=>{const x=E&&E.get(id);if(x&&x.gone&&now()-x.gone>=59000)hostLeave(id)},60000);return}hostLeave(id)}
+function hostResume(id){const e=E&&E.get(id);if(!HG||!HG.run||!e)return;e.gone=0;e.inv=now()+1500;toId(id,startMsg());
+  toId(id,{t:'resume',x:r2(e.x),y:r2(e.y),z:r2(e.z),yaw:r2(e.yaw),al:e.alive?1:0,ph:e.ph|0,hp:Math.ceil(e.hp),has:(e.has||[1,1,1]).slice(),ammo:(e.ammo||[]).slice(),k:e.kills,d:e.deaths});
+  if(HG.br)brInv(e);msgAll((PL.get(id)||e).name+' voltou')}
+function msgAll(t){try{bc({t:'note',m:t})}catch(e){}}
 function hostLeave(id){NET.conns.delete(id);LOBBY=LOBBY.filter(p=>p.id!==id);if(E&&E.has(id)){E.delete(id);bc({t:'left',id})}checkReady()}
 function lateJoin(p){const e=mkEnt(p.id,p.name,p.ch,BR?10+E.size+Math.floor(Math.random()*1000):p.team,false);E.set(p.id,e);
   if(BR){e.alive=false;e.place=0;e.ph=3}
@@ -1410,6 +1417,11 @@ function punch(){ME.cool=MELEE.rate;VM.kick=1;VM.pull=1;VM.side=!VM.side;ME.heal
 function clientHandle(d){if(!d||typeof d!=='object')return;
   switch(d.t){
     case 'lobby':lobbyUI(d);break;
+    case 'note':if(d.m)msg(String(d.m).slice(0,60));break;
+    case 'resume':{if(!G||!G.run)break;Object.assign(ME,{x:+d.x||0,y:+d.y||0,z:+d.z||0,sy:+d.y||0,yaw:+d.yaw||0,vx:0,vz:0,vy:0,og:true,inv:now()+1500});ME.alive=!!d.al;ME.hp=d.hp|0;
+      if(BR){ME.ph=d.ph|0;if(Array.isArray(d.has))ME.has=d.has.map(v=>v?1:0);if(Array.isArray(d.ammo))ME.ammo=d.ammo.map(v=>v|0);ME.wp=ME.has.findIndex(h=>h);if(ME.ph===3)$('dead').hidden=ME.alive}
+      else{if(Array.isArray(d.ammo))ME.ammo=d.ammo.map(v=>v|0);$('dead').hidden=ME.alive}
+      $('recon').hidden=true;slotCache='';buildSlots();msg('Voltou pra partida!');break}
     case 'full':nst('Essa sala está cheia.');leaveNet();showScreen('scr-menu');break;
     case 'start':startClient(d);break;
     case 'join':addPlayer(d.e);break;
@@ -1783,15 +1795,26 @@ $('code').addEventListener('keydown',e=>{if(e.key==='Enter')$('bJoin').click()})
 function createRoom(){if(typeof Peer==='undefined'){nst('Sem conexão com o serviço online.');return}leaveNet();nst('Criando a sala…');
   const code=roomCode(),pr=netFix(new Peer(PREFIX+code,PCFG));NET.peer=pr;NET.isHost=true;NET.on=true;NET.code=code;
   pr.on('open',id=>{myId=id;LOBBY=[{id,name:myName(),ch:CFG.ch,team:BR?0:CFG.team|0,rd:false}];LOPT.size=BR?(CFG.brSize||10):(CFG.size||5);LOPT.dif=CFG.dif|0;nst('');bcLobby()});
-  pr.on('connection',c=>{c.on('open',()=>NET.conns.set(c.peer,c));c.on('data',d=>hostHandle(c.peer,d));c.on('close',()=>{if(NET.on)hostLeave(c.peer)});c.on('error',()=>{})});
+  pr.on('connection',c=>{c.on('open',()=>NET.conns.set(c.peer,c));c.on('data',d=>hostHandle(c.peer,d));c.on('close',()=>{if(NET.on&&NET.conns.get(c.peer)===c)hostDrop(c.peer)});c.on('error',()=>{})});
   pr.on('error',e=>{if(e.type==='unavailable-id'){leaveNet();createRoom();return}if(e.type==='peer-unavailable')return;if(!LOBBY.length){nst('Não deu pra criar a sala ('+e.type+'). Tente de novo.');leaveNet()}})}
+function myRid(){let r='';try{r=sessionStorage.getItem('ub-rid')||''}catch(e){}if(!r){r=Math.random().toString(36).slice(2,8);try{sessionStorage.setItem('ub-rid',r)}catch(e){}}return r}
+function rejoin(code,tries){if(!G||!G.run){quitToMenu('A sala fechou.');return}
+  if(tries>22){quitToMenu('A conexão com a sala caiu e não voltou. Entre de novo com o código '+code+'.');return}
+  msg('Conexão caiu… reconectando ('+tries+')');$('recon').hidden=false;
+  try{NET.peer&&NET.peer.destroy()}catch(e){}NET.peer=null;NET.hc=null;
+  setTimeout(()=>{if(!G||!G.run)return;const pr=netFix(new Peer(PREFIX+code+'-'+myRid(),PCFG));NET.peer=pr;NET.on=true;let ok=false;
+    const to=setTimeout(()=>{if(!ok&&NET.peer===pr)rejoin(code,tries+1)},6000);
+    pr.on('open',id=>{myId=id;const c=pr.connect(PREFIX+code,{reliable:true});NET.hc=c;
+      c.on('open',()=>{ok=true;clearTimeout(to);$('recon').hidden=true;c.send({t:'hi',n:myName(),ch:CFG.ch,tm:CFG.team|0})});c.on('data',clientHandle);
+      c.on('close',()=>{if(NET.on&&NET.peer===pr)rejoin(code,1)})});
+    pr.on('error',e=>{if(ok)return;clearTimeout(to);if(NET.peer===pr)rejoin(code,tries+1)})},tries<=1?300:2000)}
 function joinRoom(code){if(typeof Peer==='undefined'){nst('Sem conexão com o serviço online.');return}leaveNet();nst('Procurando a sala '+code+'…');
-  const pr=netFix(new Peer(PREFIX+code+'-'+Math.random().toString(36).slice(2,7),PCFG));NET.peer=pr;NET.isHost=false;NET.on=true;NET.code=code;let ok=false;
+  const pr=netFix(new Peer(PREFIX+code+'-'+myRid(),PCFG));NET.peer=pr;NET.isHost=false;NET.on=true;NET.code=code;let ok=false;
   const to=setTimeout(()=>{if(!ok&&NET.peer===pr){nst('Não achei essa sala. Confira o código.');leaveNet()}},15000);
   pr.on('open',id=>{myId=id;const c=pr.connect(PREFIX+code,{reliable:true});NET.hc=c;
     c.on('open',()=>{ok=true;clearTimeout(to);nst('');c.send({t:'hi',n:myName(),ch:CFG.ch,tm:CFG.team|0})});c.on('data',clientHandle);
-    c.on('close',()=>{if(NET.on&&NET.peer===pr)quitToMenu('A sala fechou.')})});
-  pr.on('error',e=>{if(e.type==='peer-unavailable'){clearTimeout(to);nst('Não achei essa sala. Confira o código.');leaveNet()}else if(!ok)nst('Erro na conexão: '+e.type)})}
+    c.on('close',()=>{if(NET.on&&NET.peer===pr){if(G&&G.run)rejoin(code,1);else quitToMenu('A sala fechou.')}})});
+  pr.on('error',e=>{if(e.type==='unavailable-id'&&!ok){try{sessionStorage.removeItem('ub-rid')}catch(x){}setTimeout(()=>joinRoom(code),1500);return}if(e.type==='peer-unavailable'){clearTimeout(to);nst('Não achei essa sala. Confira o código.');leaveNet()}else if(!ok)nst('Erro na conexão: '+e.type)})}
 function lobbyUI(d){if(G&&G.run)return;if(!NET.isHost&&d.br!=null&&!!d.br!==BR){const c=NET.code;leaveNet();nst('Essa sala é do '+(d.br?'Battle Royale':'modo Guerra')+'. Indo pra lá…');location.href='guerra.html?'+(d.br?'br&':'')+'join='+c;return}
   LOBBY=d.pl;if(!NET.isHost){LOPT.size=d.size;LOPT.dif=d.dif}
   showScreen('scr-lobby');$('hud').hidden=true;$('lcode').textContent=NET.code;
@@ -1836,7 +1859,7 @@ requestAnimationFrame(frame);
     for(const id of HIDS)$(id).hidden=false;slotCache='';buildSlots();if(BR){if(!MINI.bg)miniInit();MINI.x.clearRect(0,0,168,77);MINI.x.drawImage(MINI.bg,0,0,168,77)}},
   close(){if(!HB)return;for(const id in HB.h)$(id).hidden=HB.h[id];showScreen(HB.scr);HB=null}};
  $('bHud').onclick=()=>window.hudEdit&&hudEdit();$('pHud').onclick=()=>window.hudEdit&&hudEdit();}
-window.__UG={TRN,trainAt,dmg:(id,d)=>damage(E.get(id),d,null,false,4),BR,BIT,LOOT,ALLEYS,zoneAt,planeAt,brJump:()=>brJump(),useMed:()=>useMed(),punch:()=>punch(),ME,get E(){return E},get HG(){return HG},get G(){return G},RE,PL,NODES,PICKS,solids,TK,hostEnd:()=>hostEnd(),sim:n=>{for(let i=0;i<n;i++){hostTick(0.05);stepPrj(0.05)}},shoot:()=>shoot(),killFx:(n,h)=>killFx(n,h),swapTo:i=>swapTo(i),moveMe:(dx,dz,jump,n)=>{for(let i=0;i<n;i++)moveBody(ME,dx,dz,0.05,jump)}};
+window.__UG={TRN,trainAt,get NET(){return NET},dmg:(id,d)=>damage(E.get(id),d,null,false,4),BR,BIT,LOOT,ALLEYS,zoneAt,planeAt,brJump:()=>brJump(),useMed:()=>useMed(),punch:()=>punch(),ME,get E(){return E},get HG(){return HG},get G(){return G},RE,PL,NODES,PICKS,solids,TK,hostEnd:()=>hostEnd(),sim:n=>{for(let i=0;i<n;i++){hostTick(0.05);stepPrj(0.05)}},shoot:()=>shoot(),killFx:(n,h)=>killFx(n,h),swapTo:i=>swapTo(i),moveMe:(dx,dz,jump,n)=>{for(let i=0;i<n;i++)moveBody(ME,dx,dz,0.05,jump)}};
 })();
 </script>
 <script>/* iPhone: reajusta a tela quando a barra do Safari aparece/some ou o celular gira */(function(){var f=function(){try{window.scrollTo(0,0)}catch(e){}window.dispatchEvent(new Event('resize'))};var t;if(window.visualViewport)visualViewport.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(f,120)});addEventListener('orientationchange',function(){setTimeout(f,350)})})();</script><script>/* editor de HUD: arraste cada botão pra onde quiser, mude o tamanho e salve */(function(){
