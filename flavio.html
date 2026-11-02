@@ -670,5 +670,5 @@ window.hudEdit=function(){if(on)return;on=true;bak=JSON.stringify(S);document.bo
 window.hudEditing=function(){return on};
 function close(save){if(!on)return;if(save){try{localStorage.setItem(C.key,JSON.stringify(S))}catch(e){}}else{S=JSON.parse(bak)||{};all()}on=false;drag=null;if(sel&&$(sel))$(sel).classList.remove('hsel');document.body.classList.remove('hed-on');bar.hidden=true;if(C.close)C.close()}
 $('hedT').onclick=function(){bar.classList.toggle('down')};$('hedOk').onclick=function(){close(true)};$('hedNo').onclick=function(){close(false)};$('hedRe').onclick=function(){S={};all();if(sel)pick(sel)};
-})();</script></body>
+})();</script><script src="conta.js?v=1"></script></body>
 </html>
