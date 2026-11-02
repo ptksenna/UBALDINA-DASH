@@ -274,6 +274,7 @@ body.br.touch #mini{right:auto;left:max(16px,env(safe-area-inset-left,0px));top:
     </div>
     <div class="row">
       <label class="muted">Sensibilidade <input type="range" id="sens" min="0.3" max="2.5" step="0.1"></label>
+      <label class="muted">Gráficos <select id="ogfx"><option value="0">automático</option><option value="1">leve (PC fraco)</option><option value="2">bonito</option></select></label>
       <label class="muted">Mira <select id="oaim"><option value="0">padrão (com ajuda)</option><option value="1">precisa (sem ajuda)</option></select></label>
       <button class="ghost" id="bHud" type="button">editar HUD</button>
       <button class="ghost" id="bBack" type="button">voltar ao menu do jogo</button>
@@ -700,15 +701,21 @@ addPick(2,BARI.cx+2,BARI.s*(8.5+5.0),BARI.gy,BARI.n.bc);}
 
 /* ================= render ================= */
 const cv=$('c');
-const renderer=new THREE.WebGLRenderer({canvas:cv,antialias:!TOUCH,powerPreference:'high-performance'});
-renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,TOUCH?1.5:2));
+// gráficos: 0 automático, 1 leve, 2 bonito. PC sem placa de vídeo (driver básico do Windows) já começa no leve
+const GPU=(()=>{try{const g=document.createElement('canvas').getContext('webgl');const x=g&&g.getExtension('WEBGL_debug_renderer_info');return x?String(g.getParameter(x.UNMASKED_RENDERER_WEBGL)):''}catch(e){return ''}})();
+const SOFTGPU=/basic render|swiftshader|llvmpipe|software/i.test(GPU);
+if(CFG.gfx==null)CFG.gfx=0;
+let LOW=CFG.gfx===1||(CFG.gfx===0&&SOFTGPU);
+const renderer=new THREE.WebGLRenderer({canvas:cv,antialias:!TOUCH&&!LOW,powerPreference:'high-performance'});
+const PR_HI=Math.min(window.devicePixelRatio||1,TOUCH?1.5:2),PR_LO=SOFTGPU?0.5:0.75;
+renderer.setPixelRatio(LOW?PR_LO:PR_HI);
 renderer.autoClear=false;
-const SHADOWS=!TOUCH;
+const SHADOWS=!TOUCH&&!LOW;
 if(SHADOWS){renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap}
 const scene=new THREE.Scene();
 scene.background=new THREE.Color(0x9ad6ff);
-scene.fog=new THREE.Fog(0x9ad6ff,70,200);
-const camera=new THREE.PerspectiveCamera(75,1,0.05,400);camera.rotation.order='YXZ';
+scene.fog=new THREE.Fog(0x9ad6ff,LOW?45:70,LOW?130:200);
+const camera=new THREE.PerspectiveCamera(75,1,0.05,LOW?140:400);camera.rotation.order='YXZ';
 scene.add(new THREE.HemisphereLight(0xe8f6ff,0x6b5a45,0.85));
 const sun=new THREE.DirectionalLight(0xfff4e0,0.8);sun.position.set(30,60,25);scene.add(sun);
 if(SHADOWS){sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);const sc=sun.shadow.camera;sc.left=-80;sc.right=80;sc.top=55;sc.bottom=-55;sc.near=1;sc.far=200;sun.shadow.bias=-0.0006;scene.add(sun.target)}
@@ -1735,7 +1742,7 @@ function fs(){if(!TOUCH)return;const lock=()=>{try{const o=screen.orientation&&s
 let ROT=false;function checkRot(){ROT=TOUCH&&innerHeight>innerWidth;$('rot').hidden=!ROT}
 
 // escolha de personagem com prévia em 3D
-const pvR=new THREE.WebGLRenderer({canvas:$('pv'),antialias:true,alpha:true});pvR.setPixelRatio(Math.min(window.devicePixelRatio||1,2));pvR.setSize(400,460,false);
+const pvR=new THREE.WebGLRenderer({canvas:$('pv'),antialias:!LOW,alpha:true});pvR.setPixelRatio(LOW?0.6:Math.min(window.devicePixelRatio||1,2));pvR.setSize(400,460,false);
 const pvS=new THREE.Scene();pvS.add(new THREE.HemisphereLight(0xffffff,0x445544,1.0));{const d=new THREE.DirectionalLight(0xffffff,0.6);d.position.set(2,3,3);pvS.add(d)}
 const pvC=new THREE.PerspectiveCamera(32,400/460,0.1,20);pvC.position.set(0,1.25,4.4);pvC.lookAt(0,1.0,0);
 let pvM=null;
@@ -1748,6 +1755,7 @@ CHARS.forEach((C,i)=>{const b=document.createElement('button');b.type='button';b
 setChar(clamp(CFG.ch|0,0,CHARS.length-1));
 $('nm').value=CFG.name||'';$('nm').addEventListener('input',()=>{CFG.name=clean($('nm').value);saveCfg()});
 $('osize').value=String(clamp(CFG.size|0,2,5));$('oteam').value=String(CFG.team|0);$('oteam').onchange=()=>{CFG.team=+$('oteam').value;saveCfg();setChar(CFG.ch)};$('odif').value=String(CFG.dif|0);
+$('ogfx').value=String(CFG.gfx|0);$('ogfx').onchange=()=>{CFG.gfx=+$('ogfx').value;saveCfg();location.reload()};
 $('oaim').value=String(CFG.aim);$('oaim').onchange=()=>{CFG.aim=+$('oaim').value;saveCfg()};
 $('sens').value=CFG.sens;$('sens').addEventListener('input',()=>{CFG.sens=+$('sens').value;saveCfg()});
 $('ctl').textContent=TOUCH?'Lado esquerdo da tela anda. Arraste o lado direito pra mirar. Toque nas armas embaixo pra trocar.'+(BR?' KIT cura, PAREDE levanta uma parede de madeira, BOMBRIL joga o bombril aceso e MOCHILA mostra tudo que você tem.':''):'W A S D anda · mouse mira · clique atira · botão direito mira · espaço pula · C agacha · 1 2 3 troca de arma · Tab mostra o placar · M tira o som'+(BR?' · B abre a mochila · H usa o kit médico · F levanta parede de madeira · G joga bombril':'');
@@ -1808,7 +1816,11 @@ function resize(){checkRot();const w=innerWidth,h=innerHeight;renderer.setSize(w
 addEventListener('resize',resize);addEventListener('orientationchange',()=>setTimeout(resize,200));resize();
 setInterval(()=>{if(document.hidden&&NET.on&&NET.isHost&&HG&&HG.run){hostTick(0.05);stepPrj(0.05)}},50);
 let last=now();
-function frame(){const t=now(),dt=Math.min(0.05,(t-last)/1000);last=t;
+const FPSM={n:0,t:0,done:false};
+function goLow(){if(LOW)return;LOW=true;renderer.setPixelRatio(PR_LO);resize();if(renderer.shadowMap.enabled){renderer.shadowMap.enabled=false;sun.castShadow=false;scene.traverse(o=>{if(o.material)[].concat(o.material).forEach(m=>m.needsUpdate=true)})}
+  scene.fog.near=45;scene.fog.far=130;camera.far=140;camera.updateProjectionMatrix();msg('Gráficos no modo leve pra rodar melhor')}
+function fpsWatch(dt){if(FPSM.done||CFG.gfx!==0||LOW||!G||!G.run||document.hidden)return;FPSM.n++;FPSM.t+=dt;if(FPSM.t>=4){const fps=FPSM.n/FPSM.t;FPSM.n=0;FPSM.t=0;if(fps<22){goLow();FPSM.done=true}}}
+function frame(){const t=now(),dt=Math.min(0.05,(t-last)/1000);last=t;fpsWatch((t-(frame.lt||t))/1000);frame.lt=t;
   if(G&&G.run){const frozen=(G.paused||ROT)&&!NET.on;if(frozen&&G.br){G.t0+=dt*1000;if(HG&&HG.br)HG.t0+=dt*1000}
     if(!frozen){if(NET.isHost&&HG&&HG.run)hostTick(dt);updateMe(dt);stepPrj(dt);
     if(!NET.isHost&&ME.alive){NET.sT-=dt;if(NET.sT<=0){NET.sT=1/15;up({t:'st',p:[r2(ME.x),r2(ME.y),r2(ME.z),r2(ME.yaw),r2(ME.pitch),ME.wp,ME.cr?1:0,ME.ph,...(BR?[(ME.has[0]?1:0)|(ME.has[1]?2:0)|(ME.has[2]?4:0),ME.ammo[0],ME.ammo[1],ME.ammo[2],ME.scl+ME.scp[0]+ME.scp[1]+ME.scp[2]]:[])]})}}}}
