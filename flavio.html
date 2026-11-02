@@ -101,6 +101,7 @@ button{touch-action:manipulation}
     <div class="row">
       <button id="go-pick" type="button">escolher disfarce</button>
       <button class="ghost" id="go-home" type="button">voltar ao menu</button>
+      <button class="ghost" id="hud-edit" type="button">editar HUD</button>
       <span class="muted" id="best-txt"></span>
     </div>
   </div>
@@ -138,7 +139,7 @@ button{touch-action:manipulation}
 <section class="ov" id="scr-pause" hidden>
   <div class="box" style="align-items:center;text-align:center">
     <h2>Pausado</h2>
-    <div class="row" style="justify-content:center"><button id="resume" type="button">continuar</button><button class="ghost" id="quit" type="button">menu</button></div>
+    <div class="row" style="justify-content:center"><button id="resume" type="button">continuar</button><button class="ghost" id="hud-edit2" type="button">editar HUD</button><button class="ghost" id="quit" type="button">menu</button></div>
   </div>
 </section>
 
@@ -645,5 +646,29 @@ show('scr-menu');
 })();
 </script>
 
-<script>/* iPhone: reajusta a tela quando a barra do Safari aparece/some ou o celular gira */(function(){var f=function(){try{window.scrollTo(0,0)}catch(e){}window.dispatchEvent(new Event('resize'))};var t;if(window.visualViewport)visualViewport.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(f,120)});addEventListener('orientationchange',function(){setTimeout(f,350)})})();</script></body>
+<script>/* iPhone: reajusta a tela quando a barra do Safari aparece/some ou o celular gira */(function(){var f=function(){try{window.scrollTo(0,0)}catch(e){}window.dispatchEvent(new Event('resize'))};var t;if(window.visualViewport)visualViewport.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(f,120)});addEventListener('orientationchange',function(){setTimeout(f,350)})})();</script><script>/* configuração do editor de HUD deste modo */(function(){var $=function(i){return document.getElementById(i)};var ids=['lives','prog','info','mute'],B=null;
+window.__HUDCFG={key:'cff-hud',ids:ids,keepW:['prog'],
+ open:function(){B={s:[],h:$('hud').hidden,t:{}};document.querySelectorAll('section.ov').forEach(function(x){if(!x.hidden){B.s.push(x);x.hidden=true}});$('hud').hidden=false;
+   if(!$('lives').textContent.trim()){B.t.lives=1;$('lives').textContent='♥♥♥♥♥'}},
+ close:function(){if(!B)return;B.s.forEach(function(x){x.hidden=false});$('hud').hidden=B.h;if(B.t.lives)$('lives').textContent='';B=null}};
+$('hud-edit').onclick=function(){window.hudEdit&&hudEdit()};$('hud-edit2').onclick=function(){window.hudEdit&&hudEdit()};})();</script><script>/* editor de HUD: arraste cada botão pra onde quiser, mude o tamanho e salve */(function(){
+var C=window.__HUDCFG;if(!C)return;var $=function(i){return document.getElementById(i)};var S={};try{S=JSON.parse(localStorage.getItem(C.key)||'{}')||{}}catch(e){}
+var css=document.createElement('style');css.textContent='#hed{position:fixed;left:50%;top:max(8px,env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:200;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;width:max-content;max-width:calc(100% - 24px);padding:8px 12px;border-radius:12px;background:rgba(5,10,7,.94);border:1px solid rgba(61,255,116,.4);font:500 13px Rubik,system-ui,sans-serif;color:#eafff0}#hed[hidden]{display:none!important}#hed.down{top:auto;bottom:max(8px,env(safe-area-inset-bottom,0px))}#hed b{cursor:pointer}#hed b{font-family:Bungee,Impact,sans-serif;font-weight:400;font-size:13px;color:#3dff74}#hed button{font:400 12px Bungee,Impact,sans-serif;padding:7px 12px;border-radius:9px;border:2px solid #3dff74;background:#3dff74;color:#03140a;cursor:pointer}#hed button.g{background:transparent;color:#3dff74}#hed label{display:flex;gap:6px;align-items:center}#hed input{width:110px;accent-color:#3dff74}body.hed-on [data-hed]{pointer-events:auto!important;outline:2px dashed rgba(61,255,116,.85);outline-offset:3px;cursor:move;touch-action:none;min-width:24px;min-height:20px}body.hed-on [data-hed].hsel{outline:3px solid #ffd23a}body.hed-on canvas{filter:brightness(.55)}';document.head.appendChild(css);
+var bar=document.createElement('div');bar.id='hed';bar.hidden=true;bar.innerHTML='<b id="hedT" title="Toque pra mudar esta barra de lugar">Arraste pra onde quiser ⇅</b><label>tamanho <input type="range" id="hedS" min="0.6" max="1.8" step="0.05" value="1"></label><button type="button" id="hedOk">salvar</button><button type="button" class="g" id="hedRe">padrão</button><button type="button" class="g" id="hedNo">cancelar</button>';document.body.appendChild(bar);
+function ap(id){var el=$(id);if(!el)return;var p=S[id],st=el.style;if(p){st.setProperty('position','fixed','important');st.setProperty('left',p.x+'%','important');st.setProperty('top',p.y+'%','important');st.setProperty('right','auto','important');st.setProperty('bottom','auto','important');st.setProperty('margin','0','important');st.setProperty('transform','translate(-50%,-50%) scale('+(p.s||1)+')','important');if(p.w)st.setProperty('width',p.w+'px','important')}else{['position','left','top','right','bottom','margin','transform','width'].forEach(function(k){st.removeProperty(k)})}}
+function all(){C.ids.forEach(ap)}
+C.ids.forEach(function(id){var el=$(id);if(el)el.setAttribute('data-hed','')});all();
+var on=false,bak='{}',sel=null,drag=null;
+function pick(id){if(sel&&$(sel))$(sel).classList.remove('hsel');sel=id;var el=$(id);if(el)el.classList.add('hsel');$('hedS').value=(S[id]&&S[id].s)||1}
+function fix(id){if(S[id])return;var el=$(id),r=el.getBoundingClientRect();S[id]={x:(r.left+r.width/2)/innerWidth*100,y:(r.top+r.height/2)/innerHeight*100,s:1};if(C.keepW&&C.keepW.indexOf(id)>=0)S[id].w=Math.round(r.width);ap(id)}
+document.addEventListener('pointerdown',function(e){if(!on)return;var el=e.target.closest&&e.target.closest('[data-hed]');if(!el)return;e.preventDefault();e.stopPropagation();var id=el.id;fix(id);pick(id);var r=el.getBoundingClientRect();drag={id:id,dx:e.clientX-(r.left+r.width/2),dy:e.clientY-(r.top+r.height/2),pid:e.pointerId}},true);
+document.addEventListener('pointermove',function(e){if(!drag||e.pointerId!==drag.pid)return;e.preventDefault();var p=S[drag.id];p.x=Math.max(1,Math.min(99,(e.clientX-drag.dx)/innerWidth*100));p.y=Math.max(1,Math.min(99,(e.clientY-drag.dy)/innerHeight*100));ap(drag.id)},true);
+function end(e){if(drag&&e.pointerId===drag.pid)drag=null}document.addEventListener('pointerup',end,true);document.addEventListener('pointercancel',end,true);
+['click','touchstart','touchmove','touchend','mousedown'].forEach(function(t){document.addEventListener(t,function(e){if(on&&e.target.closest&&e.target.closest('[data-hed]')){if(e.cancelable)e.preventDefault();e.stopPropagation()}},{capture:true,passive:false})});
+$('hedS').addEventListener('input',function(){if(!sel)return;fix(sel);S[sel].s=+this.value;ap(sel)});
+window.hudEdit=function(){if(on)return;on=true;bak=JSON.stringify(S);document.body.classList.add('hed-on');bar.hidden=false;if(C.open)C.open();sel=null};
+window.hudEditing=function(){return on};
+function close(save){if(!on)return;if(save){try{localStorage.setItem(C.key,JSON.stringify(S))}catch(e){}}else{S=JSON.parse(bak)||{};all()}on=false;drag=null;if(sel&&$(sel))$(sel).classList.remove('hsel');document.body.classList.remove('hed-on');bar.hidden=true;if(C.close)C.close()}
+$('hedT').onclick=function(){bar.classList.toggle('down')};$('hedOk').onclick=function(){close(true)};$('hedNo').onclick=function(){close(false)};$('hedRe').onclick=function(){S={};all();if(sel)pick(sel)};
+})();</script></body>
 </html>
