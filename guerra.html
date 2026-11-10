@@ -699,6 +699,8 @@ function addPick(w,x,z,y,nd){PICKS.push({w,x,z,y});if(nd>=0)NODES[nd].pk=PICKS.l
 if(!BR){
 [[0,-45,0],[2,-25,0],[1,-5,0],[0,15,0],[2,35,0],[1,-35,5.3],[0,-15,-5.3],[2,5,5.3],[0,25,-5.3],[1,45,5.3],[0,-45,-5.3],[0,45,0]].forEach(([w,x,z])=>addPick(w,x,z,terrain(x,z),GN[x+','+z]));
 HOUSES.forEach((H,i)=>addPick([1,2,0,1,2][i],H.cx+1.0,H.s*(8.5+4.0),H.uy,H.n.u2));
+[[0,-35,0],[0,-15,0],[0,5,0],[0,25,0],[0,-25,5.3],[0,15,-5.3],
+ [3,-45,5.3],[3,-35,-5.3],[3,-15,5.3],[3,-5,-5.3],[3,5,-5.3],[3,15,5.3],[3,25,5.3],[3,35,-5.3]].forEach(([w,x,z])=>addPick(w,x,z,terrain(x,z),GN[x+','+z]));
 addPick(2,BARI.cx+2,BARI.s*(8.5+5.0),BARI.gy,BARI.n.bc);}
 
 /* ================= render ================= */
@@ -1117,7 +1119,9 @@ function damage(v,dmg,k,head,w,ps){if(!v||!v.alive||now()<v.inv)return;if(k&&k.t
     bc({t:'sc',s:[...E.values()].map(e=>[e.id,e.kills,e.deaths]),tk:HG.tk.slice()});
   }else if(!v.bot){v.hpSent=Math.ceil(v.hp);v.hpT=now();toId(v.id,{t:'hp',hp:v.hpSent,ar:Math.ceil(v.arm||0)})}}
 function hostPick(id,i){const H=HG,p=H.pk[i],P=PICKS[i];if(!p||!p.on||!P)return;const e=E.get(id);if(!e||!e.alive)return;if(Math.hypot(e.x-P.x,e.z-P.z)>3||Math.abs(e.y-P.y)>2)return;
-  p.on=0;p.at=now()+18000;bc({t:'pk',i,on:0});toId(id,{t:'got',w:P.w})}
+  if(P.w===3){if(e.hp>=HPMAX)return;e.hp=Math.min(HPMAX,e.hp+GKIT);e.hpSent=Math.ceil(e.hp);toId(id,{t:'hp',hp:e.hpSent})}
+  p.on=0;p.at=now()+(P.w===3?15000:12000);bc({t:'pk',i,on:0});toId(id,{t:'got',w:P.w})}
+const GKIT=80;
 function hostEnd(){const H=HG;H.run=false;const s=[...E.values()].sort((a,b)=>b.kills-a.kills||a.deaths-b.deaths).map(e=>[e.id,e.name,e.kills,e.deaths,e.team]);bc({t:'end',s,tk:H.tk.slice()})}
 function hostTick(dt){const H=HG;if(!H||!H.run)return;const t=now();if(E)psnTick(t);
   const m=E.get(myId);if(m&&m.alive&&ME.alive){m.x=ME.x;m.y=ME.y;m.z=ME.z;m.yaw=ME.yaw;m.pitch=ME.pitch;m.wp=ME.wp;m.cr=ME.cr;if(BR){if(ME.ph>m.ph)m.ph=ME.ph;m.has=ME.has.slice();m.ammo=ME.ammo.slice();m.scp=ME.scl+ME.scp[0]+ME.scp[1]+ME.scp[2]}}
@@ -1128,7 +1132,7 @@ function hostTick(dt){const H=HG;if(!H||!H.run)return;const t=now();if(E)psnTick
     if(e.bot)botThink(e,dt,t);
   }
   H.pk.forEach((p,i)=>{if(!p.on){if(t>=p.at){p.on=1;bc({t:'pk',i,on:1})}return}const P=PICKS[i];
-    for(const e of E.values())if(e.bot&&e.alive&&Math.abs(e.x-P.x)<1.1&&Math.abs(e.z-P.z)<1.1&&Math.abs(e.y-P.y)<1.3&&e.ammo[P.w]<WP[P.w].max){e.ammo[P.w]=Math.min(WP[P.w].max,e.ammo[P.w]+WP[P.w].pick);p.on=0;p.at=t+18000;bc({t:'pk',i,on:0});break}});
+    for(const e of E.values())if(e.bot&&e.alive&&Math.abs(e.x-P.x)<1.1&&Math.abs(e.z-P.z)<1.1&&Math.abs(e.y-P.y)<1.3&&(P.w===3?e.hp<HPMAX:e.ammo[P.w]<WP[P.w].max)){if(P.w===3)e.hp=Math.min(HPMAX,e.hp+GKIT);else e.ammo[P.w]=Math.min(WP[P.w].max,e.ammo[P.w]+WP[P.w].pick);p.on=0;p.at=t+(P.w===3?15000:12000);bc({t:'pk',i,on:0});break}});
   H.sT-=dt;if(H.sT<=0){H.sT=1/15;bc({t:'S',e:[...E.values()].map(e=>[e.id,r2(e.x),r2(e.y),r2(e.z),r2(e.yaw),r2(e.pitch),e.wp,e.cr?1:0,e.alive?1:0])})}
   if(t>=H.endAt)hostEnd();
 }
@@ -1141,7 +1145,7 @@ function findPath(a,b){const n=NODES.length,dist=new Float64Array(n).fill(1e9),p
   const p=[];for(let v=b;v>=0;v=prev[v]){p.unshift(v);if(v===a)break}return p[0]===a?p:[b]}
 function botGoal(e){const ws=[];let tot=0;const low=WP.map((w,i)=>e.ammo[i]<w.start*0.6);
   for(let i=0;i<NODES.length;i++){const n=NODES[i];let w=n.tag==='win'?2.2:n.tag==='up'?1.2:n.tag==='in'?0.8:n.tag.startsWith('sp')?0.05:1;
-    if(n.pk>=0){const P=PICKS[n.pk];if(low[P.w]&&HG.pk[n.pk].on)w+=7}
+    if(n.pk>=0){const P=PICKS[n.pk];if((P.w===3?e.hp<HPMAX*0.6:low[P.w])&&HG.pk[n.pk].on)w+=7}
     const prog=e.team===0?(n.x+60)/120:(60-n.x)/120;w*=0.4+prog*1.4;
     if(Math.hypot(n.x-e.x,n.z-e.z)<6)w*=0.1;ws.push(w);tot+=w}
   let r=Math.random()*tot;for(let i=0;i<ws.length;i++){r-=ws[i];if(r<=0)return i}return 0}
@@ -1501,6 +1505,7 @@ function onGot(d){if(BR&&d.k!=null){const K=ITK[d.k];
     else if(d.k===10){ME.scl++;const w=ME.wp>=0&&!ME.scp[ME.wp]?ME.wp:[0,1,2].find(i=>ME.has[i]&&!ME.scp[i]);if(w!=null&&attachScope(w)){msg('MIRA COLOCADA: '+WP[w].short);sfxPick();slotCache='';buildSlots();return}}
     else if(K.c===1)ME.ammo[K.w]=Math.min(WP[K.w].max,ME.ammo[K.w]+n);
     msg('+ '+K.n);sfxPick();slotCache='';buildSlots();return}
+  if(d.w===3){msg('+'+GKIT+' VIDA · KIT MÉDICO');sfxPick();return}
   const W=WP[d.w];ME.ammo[d.w]=Math.min(W.max,ME.ammo[d.w]+W.pick);msg('+'+W.pick+' '+W.short);sfxPick();buildSlots()}
 function onFx(d){if(d.id===myId)return;const p=PL.get(d.id);const team=p?p.team:-1;if(!Array.isArray(d.v)||!Array.isArray(d.o))return;
   for(const v of d.v)launch(d.o,v,d.w,d.id,team,0,true);
@@ -1535,12 +1540,13 @@ let hitT=0;function hitMark(h){hitT=0.18;$('hitm').className=h?'h':''}
 const PKV=PICKS.map((P,i)=>{const g=new THREE.Group();
   if(P.w===0){bx(g,0.42,0.3,0.24,0,0,0,0x2a62d6);bx(g,0.44,0.08,0.26,0,0.06,0,0xf4f4f4);for(let k=0;k<5;k++){const b=new THREE.Mesh(SPH,GELMAT);b.scale.setScalar(0.05);b.position.set(-0.14+k*0.07,0.2,0);g.add(b)}}
   else if(P.w===1){const s=new THREE.Mesh(new THREE.SphereGeometry(0.22,10,8),lam(0x9c8a6a));s.scale.set(1,0.8,1);g.add(s);bx(g,0.08,0.12,0.08,0,0.2,0,0x7a6a4a);for(let k=0;k<4;k++){const st=new THREE.Mesh(new THREE.DodecahedronGeometry(0.06,0),lam(0x8a8a86));st.position.set(-0.25+k*0.17,-0.12,0.22);g.add(st)}}
+  else if(P.w===3){bx(g,0.5,0.34,0.26,0,0,0,0xf2f2f2);bx(g,0.28,0.09,0.27,0,0.02,0,0xe02020);bx(g,0.09,0.28,0.27,0,0.02,0,0xe02020);bx(g,0.18,0.05,0.08,0,0.2,0,0x9a9a9a)}
   else{bx(g,0.36,0.42,0.2,0,0,0,0xe9dfc4);bx(g,0.37,0.12,0.21,0,0.02,0,0xc8352e);for(let k=0;k<6;k++){const b=new THREE.Mesh(SPH,lam(0x5a2e16));b.scale.set(0.035,0.025,0.045);b.position.set(-0.15+k*0.06,-0.2,0.2);g.add(b)}}
   const ring=new THREE.Mesh(new THREE.RingGeometry(0.42,0.5,24),new THREE.MeshBasicMaterial({color:0x3dff74,transparent:true,opacity:0.6,side:THREE.DoubleSide}));ring.rotation.x=-Math.PI/2;ring.position.y=-0.32;g.add(ring);
   g.position.set(P.x,P.y+0.45,P.z);scene.add(g);return {g,on:true,req:0}});
 function setPk(i,on){const p=PKV[i];if(!p)return;p.on=!!on;p.g.visible=!!on}
 function updatePk(dt,t){PKV.forEach((p,i)=>{if(!p.on)return;p.g.rotation.y+=dt*1.5;p.g.position.y=PICKS[i].y+0.45+Math.sin(t*0.003+i)*0.06})}
-function checkPickups(){if(BR)return brCheckPickups();const t=now();PKV.forEach((p,i)=>{if(!p.on||t<p.req)return;const P=PICKS[i];if(Math.abs(ME.x-P.x)<1.1&&Math.abs(ME.z-P.z)<1.1&&Math.abs(ME.y-P.y)<1.3&&ME.ammo[P.w]<WP[P.w].max){p.req=t+700;up({t:'pick',i})}})}
+function checkPickups(){if(BR)return brCheckPickups();const t=now();PKV.forEach((p,i)=>{if(!p.on||t<p.req)return;const P=PICKS[i];if(Math.abs(ME.x-P.x)<1.1&&Math.abs(ME.z-P.z)<1.1&&Math.abs(ME.y-P.y)<1.3&&(P.w===3?ME.hp<HPMAX:ME.ammo[P.w]<WP[P.w].max)){p.req=t+700;up({t:'pick',i})}})}
 
 /* ================= controles ================= */
 const K={};let mouseFire=false,mouseAds=false,locked=false;
@@ -1859,7 +1865,7 @@ requestAnimationFrame(frame);
     for(const id of HIDS)$(id).hidden=false;slotCache='';buildSlots();if(BR){if(!MINI.bg)miniInit();MINI.x.clearRect(0,0,168,77);MINI.x.drawImage(MINI.bg,0,0,168,77)}},
   close(){if(!HB)return;for(const id in HB.h)$(id).hidden=HB.h[id];showScreen(HB.scr);HB=null}};
  $('bHud').onclick=()=>window.hudEdit&&hudEdit();$('pHud').onclick=()=>window.hudEdit&&hudEdit();}
-window.__UG={TRN,trainAt,get NET(){return NET},dmg:(id,d)=>damage(E.get(id),d,null,false,4),BR,BIT,LOOT,ALLEYS,zoneAt,planeAt,brJump:()=>brJump(),useMed:()=>useMed(),punch:()=>punch(),ME,get E(){return E},get HG(){return HG},get G(){return G},RE,PL,NODES,PICKS,solids,TK,hostEnd:()=>hostEnd(),sim:n=>{for(let i=0;i<n;i++){hostTick(0.05);stepPrj(0.05)}},shoot:()=>shoot(),killFx:(n,h)=>killFx(n,h),swapTo:i=>swapTo(i),moveMe:(dx,dz,jump,n)=>{for(let i=0;i<n;i++)moveBody(ME,dx,dz,0.05,jump)}};
+window.__UG={TRN,trainAt,PICKS,get NET(){return NET},dmg:(id,d)=>damage(E.get(id),d,null,false,4),BR,BIT,LOOT,ALLEYS,zoneAt,planeAt,brJump:()=>brJump(),useMed:()=>useMed(),punch:()=>punch(),ME,get E(){return E},get HG(){return HG},get G(){return G},RE,PL,NODES,PICKS,solids,TK,hostEnd:()=>hostEnd(),sim:n=>{for(let i=0;i<n;i++){hostTick(0.05);stepPrj(0.05)}},shoot:()=>shoot(),killFx:(n,h)=>killFx(n,h),swapTo:i=>swapTo(i),moveMe:(dx,dz,jump,n)=>{for(let i=0;i<n;i++)moveBody(ME,dx,dz,0.05,jump)}};
 })();
 </script>
 <script>/* iPhone: reajusta a tela quando a barra do Safari aparece/some ou o celular gira */(function(){var f=function(){try{window.scrollTo(0,0)}catch(e){}window.dispatchEvent(new Event('resize'))};var t;if(window.visualViewport)visualViewport.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(f,120)});addEventListener('orientationchange',function(){setTimeout(f,350)})})();</script><script>/* editor de HUD: arraste cada botão pra onde quiser, mude o tamanho e salve */(function(){
