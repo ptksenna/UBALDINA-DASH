@@ -227,7 +227,7 @@ const CHARS=[
   {id:'c4',name:'NELSON BOLSONARISTA',tag:'Solta o passarinho e taca o cigarro',tk:'cig',limp:1,meta:{"idle":[204,289,103.6,285.1],"walk":[209,293,121.1,288.6],"jump":[176,273,84.5,269.3],"crouch":[142,198,49.2,194.5],"jab":[230,247,97.3,242.9],"punch":[245,248,114.7,243.8],"lowkick":[275,254,84.8,249.9],"highkick":[242,266,99.7,262.2],"block":[192,242,91.2,237.6],"hit":[195,239,129.7,235.0],"ko":[298,127,149.7,123.2],"special":[312,265,143.4,261.4],"fireball":[105,64,3.5,59.8],"win":[450,308,98.3,303.6]}},
   {id:'c2',name:'BODINHO',tag:'Magrelo, rápido e solta bola de fogo',meta:{"idle":[202,281,99.6,277.6],"walk":[199,279,97.5,275.2],"jump":[195,244,91.6,240.8],"crouch":[177,189,66.1,185.6],"jab":[268,252,113.8,248.8],"punch":[236,244,113.0,240.8],"lowkick":[264,231,72.4,227.2],"highkick":[242,264,93.2,260.8],"block":[184,234,89.6,230.4],"hit":[212,240,155.9,236.8],"ko":[401,117,189.8,113.6],"special":[312,218,131.7,214.4],"fireball":[186,143,3.2,139.2],"win":[196,288,97.9,284.8]}}
 ];
-const STAGES=[{id:'bar',name:'BAR DA ESQUINA',img:'img/bar.jpg',prev:'img/bar_p.jpg'},{id:'rua',name:'RUA DO GÁS',img:'img/rua.jpg',prev:'img/rua_p.jpg'}];
+const STAGES=[{id:'bar',name:'BAR DA ESQUINA',img:'img/bar.jpg',prev:'img/bar_p.jpg'},{id:'rua',name:'RUA DO GÁS',img:'img/rua.jpg',prev:'img/rua_p.jpg'},{id:'muro',name:'MURO DA BANDEIRA',img:'img/muro.jpg',prev:'img/muro_p.jpg'},{id:'praca',name:'PRAÇA DA IGREJA',img:'img/praca.jpg',prev:'img/praca_p.jpg'}];
 const SEL={p:0,c:2,s:0};
 const IM=CHARS.map(()=>({})),RC=CHARS.map(()=>({}));let loaded=0;const total=CHARS.reduce((n,c)=>n+Object.keys(c.meta).length,0)+STAGES.length+2;
 const BUS=new Image();BUS.onload=()=>loaded++;BUS.src='img/bus.png';
@@ -717,6 +717,6 @@ $('onBack').onclick=()=>{netClose();buildSel();show('sel')};
 // funciona sem internet: guarda o jogo no aparelho (o online continua precisando de internet)
 try{if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))addEventListener('load',()=>navigator.serviceWorker.register('../sw.js',{scope:'../'}).catch(()=>{}))}catch(e){}
 requestAnimationFrame(loop);
-window.__UF={get F(){return F},G,NET};
+window.__UF={get F(){return F},G,NET,SEL};
 })();
 </script>
