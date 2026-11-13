@@ -277,26 +277,19 @@ function sfx(type){if(NET.role==='host')NET.sq.push(type);if(NET.role==='guest'&
   else if(type==='bell')(tone(0.6,880,860,0.25,'triangle'),tone(0.6,1320,1300,0.15,'sine'));
 }
 
-/* ---------- funk (tamborzão feito na hora, 130 BPM) ---------- */
 const MUS={on:true,gain:null,next:0,step:0,iv:0};try{MUS.on=localStorage.getItem('ubf-mus')!=='0'}catch(e){}
-function musOut(){if(!MUS.gain){MUS.gain=AC.createGain();MUS.gain.gain.value=0.32;MUS.gain.connect(AC.destination)}return MUS.gain}
-function mNoise(t,dur,type,f,v,q){const b=AC.createBuffer(1,Math.ceil(AC.sampleRate*dur),AC.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;const s=AC.createBufferSource();s.buffer=b;const fl=AC.createBiquadFilter();fl.type=type;fl.frequency.value=f;if(q)fl.Q.value=q;const g=AC.createGain();g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(0.001,t+dur);s.connect(fl);fl.connect(g);g.connect(musOut());s.start(t);s.stop(t+dur)}
-function mTone(t,dur,f0,f1,v,type){const o=AC.createOscillator();o.type=type||'sine';o.frequency.setValueAtTime(f0,t);if(f1)o.frequency.exponentialRampToValueAtTime(f1,t+dur);const g=AC.createGain();g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(0.001,t+dur);o.connect(g);g.connect(musOut());o.start(t);o.stop(t+dur+0.02)}
-const N=n=>440*Math.pow(2,(n-69)/12);
-const KICK=[0,3,6,10,13],TOM=[2,8,11,14],CLAP=[4,12];
-const BASS=[[0,45],[3,45],[6,48],[10,43],[13,45]],BASS2=[[0,41],[3,41],[6,43],[10,40],[13,43]];
-const LEAD=[[0,69],[2,72],[4,74],[7,72],[8,76],[10,74],[12,72],[14,69]];
-function mStep(t,st){const bar=Math.floor(st/16)%4,s16=st%16,sd=60/130/4;
-  if(KICK.includes(s16))mTone(t,0.28,160,42,0.9);
-  if(TOM.includes(s16)){mTone(t,0.16,s16===14?260:200,s16===14?150:110,0.5,'triangle');mNoise(t,0.04,'bandpass',2500,0.25,2)}
-  if(CLAP.includes(s16)){for(const k of [0,0.012,0.024])mNoise(t+k,0.12,'bandpass',1600,0.55,1.2)}
-  if(s16%2===0)mNoise(t,0.035,'highpass',8000,s16%4===2?0.18:0.1);
-  const bs=(bar===3?BASS2:BASS).find(b=>b[0]===s16);if(bs)mTone(t,sd*2.6,N(bs[1]),N(bs[1])*0.98,0.55,'sine');
-  if(bar%2===1){const ld=LEAD.find(l=>l[0]===s16);if(ld){mTone(t,sd*1.4,N(ld[1]+(bar===3?-2:0)),0,0.07,'square');mTone(t,sd*1.4,N(ld[1]+7+(bar===3?-2:0)),0,0.04,'square')}}
-  if(bar===3&&s16===15)mNoise(t,0.25,'highpass',3000,0.3)}
-function musStart(){if(!AC||!MUS.on||MUS.iv)return;MUS.next=AC.currentTime+0.08;MUS.step=0;MUS.iv=setInterval(()=>{const sd=60/130/4;while(MUS.next<AC.currentTime+0.15){mStep(MUS.next,MUS.step);MUS.next+=sd;MUS.step++}},25)}
-function musStop(){clearInterval(MUS.iv);MUS.iv=0}
-function musToggle(){MUS.on=!MUS.on;try{localStorage.setItem('ubf-mus',MUS.on?'1':'0')}catch(e){}ac();if(MUS.on)musStart();else musStop();document.querySelectorAll('.musbtn').forEach(b=>{b.textContent=MUS.on?'♫ Música: ligada':'♫ Música: desligada';b.classList.toggle('on',MUS.on)})}
+/* ---------- músicas do Patrick: uma no menu/escolhas, outra (baixinha, de fundo) na luta ---------- */
+const TRK={menu:new Audio('som/menu.m4a'),luta:new Audio('som/luta.m4a')},TVOL={menu:0.8,luta:0.16};
+for(const k in TRK){TRK[k].loop=true;TRK[k].preload='auto';TRK[k].volume=TVOL[k]}
+MUS.scene='menu';
+function musWire(){if(MUS.wired||!AC)return;MUS.wired=1;for(const k in TRK){try{const s=AC.createMediaElementSource(TRK[k]),g=AC.createGain();g.gain.value=TVOL[k];s.connect(g);g.connect(AC.destination);TRK[k].volume=1}catch(e){TRK[k].volume=TVOL[k]}}}
+function musPlay(){musWire();for(const k in TRK){const a=TRK[k];if(MUS.on&&k===MUS.scene){if(a.paused){const p=a.play();if(p&&p.catch)p.catch(()=>{})}}else if(!a.paused)a.pause()}}
+function musScene(s){if(MUS.scene!==s){MUS.scene=s;try{TRK[s].currentTime=0}catch(e){}}musPlay()}
+function musStart(){musScene('luta')}
+function musStop(){for(const k in TRK)TRK[k].pause()}
+function musUnlock(){if(!MUS.on)return;if(!TRK[MUS.scene].paused&&(!AC||AC.state==='running'))return;ac();musPlay()}
+addEventListener('pointerdown',musUnlock,{passive:true});addEventListener('keydown',musUnlock);addEventListener('touchend',musUnlock,{passive:true});
+function musToggle(){MUS.on=!MUS.on;try{localStorage.setItem('ubf-mus',MUS.on?'1':'0')}catch(e){}ac();if(MUS.on)musPlay();else musStop();document.querySelectorAll('.musbtn').forEach(b=>{b.textContent=MUS.on?'♫ Música: ligada':'♫ Música: desligada';b.classList.toggle('on',MUS.on)})}
 
 /* ---------- controles ---------- */
 const KEY={left:0,right:0,up:0,down:0,lp:0,hp:0,lk:0,hk:0,sp:0,tk:0};const PRESS={};
@@ -679,7 +672,7 @@ function draw(){
 function setDif(d){G.dif=d;try{localStorage.setItem('ubf-dif',d)}catch(e){}for(let i=0;i<3;i++)$('d'+i).classList.toggle('on',i===d)}
 setDif(G.dif|0);for(let i=0;i<3;i++)$('d'+i).onclick=()=>setDif(i);
 function startMatch(){ac();crowdSetup();musStart();clearTimeout(ARC.tm);$('vs').hidden=true;if(TOUCH)$('touch').hidden=false;F=[mkF(0),mkF(1)];F[0].isP=true;G.round=1;$('menu').hidden=true;$('over').hidden=true;$('stg').hidden=true;$('sel').hidden=true;resetRound();try{cv.requestFullscreen&&TOUCH&&document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}}
-function show(id){for(const o of ['menu','sel','stg','over','pause','vs','onl'])$(o).hidden=o!==id;$('touch').hidden=true}
+function show(id){for(const o of ['menu','sel','stg','over','pause','vs','onl'])$(o).hidden=o!==id;$('touch').hidden=true;if(['menu','sel','stg','onl'].includes(id))musScene('menu')}
 function buildSel(){const g=$('chars');g.textContent='';CHARS.forEach((ch,ci)=>{const b=document.createElement('button');b.type='button';b.className=ci===SEL.p?'sel':'';b.setAttribute('aria-pressed',ci===SEL.p);
   const im=document.createElement('img');im.src='img/sel/'+ch.id+'.jpg';im.alt='';const n=document.createElement('span');n.textContent=ch.name;b.append(im,n);
   b.onclick=()=>{SEL.p=ci;buildSel();$('chars').children[ci].focus()};b.ondblclick=()=>{SEL.p=ci;$('selOk').click()};b.onpointerenter=()=>selPreview(ci);b.onpointerleave=()=>selPreview(SEL.p);b.onfocus=()=>selPreview(ci);g.appendChild(b)});selPreview(SEL.p)}
@@ -758,6 +751,6 @@ $('onBack').onclick=()=>{netClose();buildSel();show('sel')};
 // funciona sem internet: guarda o jogo no aparelho (o online continua precisando de internet)
 try{if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))addEventListener('load',()=>navigator.serviceWorker.register('../sw.js',{scope:'../'}).catch(()=>{}))}catch(e){}
 requestAnimationFrame(loop);
-window.__UF={get F(){return F},G,NET,SEL,crowdSetup};
+window.__UF={get F(){return F},G,NET,SEL,crowdSetup,MUS,TRK};
 })();
 </script>
