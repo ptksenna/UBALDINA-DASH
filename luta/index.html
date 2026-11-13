@@ -621,7 +621,7 @@ function hudSide(i){const f=F[i],right=i===1,dir=right?-1:1,ox=right?W:0;const X
   ctx.shadowBlur=0;
   // retrato
   const im=PORT[f.c];if(im&&im.complete&&im.naturalWidth){ctx.save();rrect(px,py,pw,pw,9);ctx.clip();if(f.alt)ctx.filter='brightness(.45) saturate(.5) hue-rotate(220deg)';
-    const sw=im.naturalWidth*0.78,sx=(im.naturalWidth-sw)/2,sy=im.naturalHeight*0.04;if(right){ctx.translate(px+pw,py);ctx.scale(-1,1);ctx.drawImage(im,sx,sy,sw,sw,0,0,pw,pw)}else ctx.drawImage(im,sx,sy,sw,sw,px,py,pw,pw);ctx.restore()}
+    const sw=im.naturalWidth,sx=0,sy=0;if(right){ctx.translate(px+pw,py);ctx.scale(-1,1);ctx.drawImage(im,sx,sy,sw,sw,0,0,pw,pw)}else ctx.drawImage(im,sx,sy,sw,sw,px,py,pw,pw);ctx.restore()}
   // barra de vida
   ctx.fillStyle='#0b0d12';ctx.fillRect(barX-4,barY-4,bw+8,bh+8);ctx.strokeStyle='#f4f7ff';ctx.lineWidth=2;ctx.strokeRect(barX-4,barY-4,bw+8,bh+8);
   ctx.fillStyle='#2a2f38';ctx.fillRect(barX,barY,bw,bh);
