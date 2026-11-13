@@ -638,10 +638,25 @@ function drawHud(){hudSide(0);hudSide(1);
   const t=String(Math.max(0,G.timer)).padStart(2,'0');ctx.font='44px Bungee, Impact, sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.lineWidth=5;ctx.strokeStyle='#070b24';ctx.strokeText(t,W/2,by+58);
   const g2=ctx.createLinearGradient(0,by+38,0,by+80);if(G.timer<=10){g2.addColorStop(0,'#ffb0b8');g2.addColorStop(1,'#ff3b4e')}else{g2.addColorStop(0,'#dfe6ff');g2.addColorStop(1,'#6f7dff')}ctx.fillStyle=g2;ctx.fillText(t,W/2,by+58);ctx.restore()}
 function txt(s,x,y,size,col,align,glow){ctx.save();ctx.font=size+'px Bungee, Impact, sans-serif';ctx.textAlign=align||'center';ctx.textBaseline='middle';ctx.lineWidth=Math.max(3,size/9);ctx.strokeStyle='#050806';ctx.strokeText(s,x,y);if(glow){ctx.shadowColor=glow;ctx.shadowBlur=size/3}ctx.fillStyle=col;ctx.fillText(s,x,y);ctx.restore()}
+
+/* ---------- torcida no fundo (2 quadros por pessoa, trocando = torcendo) ---------- */
+const NPC_N=17;const NPC=[...Array(NPC_N)].map((_,k)=>['a','b'].map(f=>{const i=new Image();i.src='img/npc/n'+k+f+'.png';return i}));const CART=new Image();CART.src='img/npc/cart.png';
+const CROWD={bar:[[40,374,.8],[178,372,.78],[262,374,.8],[600,374,.8],[722,374,.8],[848,374,.82],[925,374,.8]],
+  rua:[[60,368,.8],[170,366,.78],[640,366,.78],[760,368,.8],[890,368,.82],[505,338,.55],[395,334,.5]],
+  muro:[[70,377,.8],[185,377,.8],[300,377,.78],[560,377,.8],[690,377,.8],[795,377,.8],['cart',885,381,.92]],
+  praca:[[330,350,.6],[40,373,.8],[140,373,.78],[250,373,.8],[470,373,.8],[775,373,.78],[865,373,.8],[935,373,.8]]};
+let CROWDP=[];
+function crowdSetup(){const st=STAGES[SEL.s].id,pos=CROWD[st]||[];const pool=[...Array(NPC_N).keys()];for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]}let k=0;
+  CROWDP=pos.map(p=>p[0]==='cart'?{cart:1,x:p[1],y:p[2],s:p[3]}:{n:pool[k++%pool.length],x:p[0],y:p[1],s:p[2],flip:p[0]<W/2,ph:Math.floor(Math.random()*40),sp:12+Math.floor(Math.random()*14)})}
+function drawCrowd(){if(!CROWDP.length)return;const hype=G.shake>3||(G.cb&&G.cb.t>55)||G.mode==='ko'||(G.cut&&G.cut.t>0);ctx.save();ctx.filter='saturate(.85) brightness(.9)';
+  for(const c of CROWDP){if(c.cart){if(CART.complete&&CART.naturalWidth){const w=CART.naturalWidth*c.s,h=CART.naturalHeight*c.s;const fr=Math.floor(G.tf/30)%2;ctx.drawImage(CART,c.x-w/2,c.y-h-(fr&&hype?2:0),w,h)}continue}
+    const sp=hype?6:c.sp,fr=Math.floor((G.tf+c.ph)/sp)%2,im=NPC[c.n][fr];if(!im.complete||!im.naturalWidth)continue;const w=im.naturalWidth*c.s,h=im.naturalHeight*c.s,bob=hype?Math.abs(Math.sin((G.tf+c.ph)*0.4))*4:0;
+    ctx.save();ctx.translate(c.x,c.y-bob);if(c.flip)ctx.scale(-1,1);ctx.drawImage(im,-w/2,-h,w,h);ctx.restore()}ctx.restore()}
 function draw(){
   ctx.save();if(G.shake)ctx.translate((Math.random()-.5)*G.shake,(Math.random()-.5)*G.shake);
   const BG=BGS[SEL.s];if(BG.complete&&BG.naturalWidth)ctx.drawImage(BG,-8,-8,W+16,H+16);else{ctx.fillStyle='#111';ctx.fillRect(0,0,W,H)}
   if(loaded<total){ctx.restore();txt('CARREGANDO…',W/2,H/2,28,'#3dff74');return}
+  drawCrowd();
   drawSuperBack();
   const order=F[0].state==='atk'||F[0].state==='super'?[F[1],F[0]]:[F[0],F[1]];for(const f of order)drawF(f);
   drawProj(F[0]);drawProj(F[1]);
@@ -663,7 +678,7 @@ function draw(){
 /* ---------- menus ---------- */
 function setDif(d){G.dif=d;try{localStorage.setItem('ubf-dif',d)}catch(e){}for(let i=0;i<3;i++)$('d'+i).classList.toggle('on',i===d)}
 setDif(G.dif|0);for(let i=0;i<3;i++)$('d'+i).onclick=()=>setDif(i);
-function startMatch(){ac();musStart();clearTimeout(ARC.tm);$('vs').hidden=true;if(TOUCH)$('touch').hidden=false;F=[mkF(0),mkF(1)];F[0].isP=true;G.round=1;$('menu').hidden=true;$('over').hidden=true;$('stg').hidden=true;$('sel').hidden=true;resetRound();try{cv.requestFullscreen&&TOUCH&&document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}}
+function startMatch(){ac();crowdSetup();musStart();clearTimeout(ARC.tm);$('vs').hidden=true;if(TOUCH)$('touch').hidden=false;F=[mkF(0),mkF(1)];F[0].isP=true;G.round=1;$('menu').hidden=true;$('over').hidden=true;$('stg').hidden=true;$('sel').hidden=true;resetRound();try{cv.requestFullscreen&&TOUCH&&document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}}
 function show(id){for(const o of ['menu','sel','stg','over','pause','vs','onl'])$(o).hidden=o!==id;$('touch').hidden=true}
 function buildSel(){const g=$('chars');g.textContent='';CHARS.forEach((ch,ci)=>{const b=document.createElement('button');b.type='button';b.className=ci===SEL.p?'sel':'';b.setAttribute('aria-pressed',ci===SEL.p);
   const im=document.createElement('img');im.src='img/sel/'+ch.id+'.jpg';im.alt='';const n=document.createElement('span');n.textContent=ch.name;b.append(im,n);
@@ -743,6 +758,6 @@ $('onBack').onclick=()=>{netClose();buildSel();show('sel')};
 // funciona sem internet: guarda o jogo no aparelho (o online continua precisando de internet)
 try{if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))addEventListener('load',()=>navigator.serviceWorker.register('../sw.js',{scope:'../'}).catch(()=>{}))}catch(e){}
 requestAnimationFrame(loop);
-window.__UF={get F(){return F},G,NET,SEL};
+window.__UF={get F(){return F},G,NET,SEL,crowdSetup};
 })();
 </script>
