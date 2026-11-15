@@ -78,7 +78,7 @@ body.tri .sel2{background:#4a0a1b}
 body.tri .selbg{background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0),rgba(10,2,5,.8) 82%),repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,#7a0f2a 0 9%,#f1f1ee 9% 10.2%,#0c5c34 10.2% 19.2%,#f1f1ee 19.2% 20.4%)}
 body.tri .selbg::before,body.tri .selbg::after{background:linear-gradient(90deg,transparent,#f4f4f0 30%,#fff 50%,#f4f4f0 70%,transparent);opacity:.5}
 body.tri .cards{gap:1cqh}
-body.tri .cards button{width:11.2cqh;background:#5c0c22}
+body.tri .cards button{width:10.2cqh;background:#5c0c22}
 body.tri .cards span{background:#0b4d2b;font-size:1.3cqh;min-height:4.2cqh}
 body.tri .cards button.sel{border-color:#3dff8f;box-shadow:0 0 0 .35cqh #3dff8f,0 0 2.6cqh rgba(61,255,143,.9)}
 body.tri .bigcap{color:#ffd6de;text-shadow:0 2px 0 #050806,0 0 10px rgba(255,60,90,.8)}
@@ -270,11 +270,12 @@ const CHARS=[
   {"id":"t5","name":"CEREJA","tag":"Cospe bola de fogo e gira no chute","sp":"fire","meta":{"idle":[188,292,96.6,288.3],"walk":[235,290,119.4,286.7],"jump":[181,288,98.3,284.2],"crouch":[165,198,70.8,194.4],"jab":[242,265,95.9,260.9],"punch":[255,265,123.5,260.9],"lowkick":[262,262,71.7,258.4],"highkick":[243,269,51.8,265.1],"block":[206,262,108.9,258.4],"hit":[221,249,132.3,245.1],"ko":[310,116,173.5,112.2],"special":[254,253,122.0,249.3],"fireball":[303,142,0.8,137.9],"win":[209,272,109.0,268.4]}},
   {"id":"t6","name":"LC","tag":"Bumerangue que pega na ida e na volta","sp":"boom","meta":{"idle":[198,292,103.5,288.4],"walk":[228,295,119.8,290.9],"jump":[171,279,94.1,275.8],"crouch":[149,194,66.2,190.3],"jab":[259,271,109.5,267.4],"punch":[252,269,123.1,265.7],"lowkick":[259,267,67.5,263.2],"highkick":[263,275,75.1,271.6],"block":[208,265,110.0,261.5],"ko":[323,124,176.5,120.7],"special":[361,260,150.2,256.5],"fireball":[72,68,3.4,64.5],"hit":[248,244,149.5,240.6],"win":[229,282,120.1,278.3]}},
   {"id":"t7","name":"JOÃO VITOR","tag":"Torneira gigante que joga água","sp":"water","meta":{"idle":[206,292,108.1,288.3],"walk":[226,300,119.1,296.6],"jump":[193,278,102.1,274.2],"crouch":[146,196,60.4,191.9],"jab":[263,264,103.7,260.1],"punch":[258,265,126.7,261.7],"lowkick":[255,251,62.9,247.6],"highkick":[255,275,57.7,271.7],"block":[212,265,111.2,261.7],"hit":[244,250,146.3,245.9],"ko":[333,119,180.1,115.5],"special":[321,252,131.0,248.4],"fireball":[338,235,0.8,231.0],"win":[366,247,159.1,243.5]}},
-  {"id":"t8","name":"GAROFALO","tag":"Pescoço que estica e acerta de longe","sp":"neck","meta":{"idle":[192,292,95.6,288.4],"walk":[222,286,111.0,282.5],"jump":[205,299,87.9,295.1],"crouch":[142,203,61.1,199.5],"punch":[217,258,109.5,254.0],"jab":[234,251,113.2,247.3],"lowkick":[271,235,72.3,231.4],"highkick":[228,256,78.3,252.3],"block":[207,260,106.0,256.5],"hit":[178,236,103.5,232.2],"ko":[314,92,153.8,88.0],"special":[379,252,149.3,248.1],"win":[196,257,94.0,253.1],"nbody":[379,252,149.3,248.1],"nhead":[107,138,48.1,69.0]}}
+  {"id":"t8","name":"GAROFALO","tag":"Pescoço que estica e acerta de longe","sp":"neck","meta":{"idle":[192,292,95.6,288.4],"walk":[222,286,111.0,282.5],"jump":[205,299,87.9,295.1],"crouch":[142,203,61.1,199.5],"punch":[217,258,109.5,254.0],"jab":[234,251,113.2,247.3],"lowkick":[271,235,72.3,231.4],"highkick":[228,256,78.3,252.3],"block":[207,260,106.0,256.5],"hit":[178,236,103.5,232.2],"ko":[314,92,153.8,88.0],"special":[379,252,149.3,248.1],"win":[196,257,94.0,253.1],"nbody":[379,252,149.3,248.1],"nhead":[107,138,48.1,69.0]}},
+  {"id":"t9","name":"RAPHAEL","tag":"Vira um furacão e avança rápido","sp":"hurr","meta":{"idle":[201,292,99.2,288.4],"walk":[225,285,112.5,281.6],"jump":[176,296,90.4,291.8],"crouch":[145,203,63.4,199.3],"punch":[229,257,108.8,253.6],"jab":[239,251,117.2,247.7],"lowkick":[277,240,66.2,235.8],"highkick":[214,263,70.2,259.6],"block":[215,256,109.0,251.9],"hit":[201,242,120.1,238.3],"ko":[322,89,155.6,84.8],"special":[362,244,126.4,240.0],"win":[220,255,96.7,251.1]}}
 ];
 const STAGES=[{id:'bar',name:'BAR DA ESQUINA',img:'img/bar.jpg',prev:'img/bar_p.jpg'},{id:'rua',name:'RUA DO GÁS',img:'img/rua.jpg',prev:'img/rua_p.jpg'},{id:'muro',name:'MURO DA BANDEIRA',img:'img/muro.jpg',prev:'img/muro_p.jpg'},{id:'praca',name:'PRAÇA DA IGREJA',img:'img/praca.jpg',prev:'img/praca_p.jpg'},{id:'burg',name:'HAMBÚRGUER 3 POR 15',img:'img/burg.jpg',prev:'img/burg_p.jpg'},{id:'mara',name:'MARACANÃ',img:'img/mara.jpg',prev:'img/mara_p.jpg'},{id:'lara',name:'LARANJEIRAS',img:'img/lara.jpg',prev:'img/lara_p.jpg'}];
 // duas edições: cada uma com seus lutadores e cenários
-const EDS={ubf:{chars:['c1','c3','c4','c2'],stages:['bar','rua','muro','praca']},tri:{chars:['c1','t1','t2','t3','t4','t5','t6','t7','t8'],stages:['burg','mara','lara']}};
+const EDS={ubf:{chars:['c1','c3','c4','c2'],stages:['bar','rua','muro','praca']},tri:{chars:['c1','t1','t2','t3','t4','t5','t6','t7','t8','t9'],stages:['burg','mara','lara']}};
 let ED='ubf';try{ED=localStorage.getItem('ubf-ed')==='tri'?'tri':'ubf'}catch(e){}
 const CI=id=>CHARS.findIndex(c=>c.id===id),SI=id=>STAGES.findIndex(c=>c.id===id);
 const RO=()=>EDS[ED].chars.map(CI),STO=()=>EDS[ED].stages.map(SI);
@@ -308,6 +309,7 @@ const MOVES={
   dive:{spr:'special',start:10,act:40,rec:20,dmg:14,reach:130,y0:210,y1:20,stun:20,push:4,lvl:'m',dive:1},
   bus:{spr:'highkick',start:8,act:1,rec:26,dmg:0,busc:1},
   cig:{spr:'punch',start:9,act:1,rec:20,dmg:0,proj:1,cig:1},
+  hurr:{spr:'special',start:6,act:26,rec:14,dmg:14,reach:170,y0:270,y1:0,stun:22,push:9,lvl:'m',dash:1,kd:1},
   neck:{spr:'special',start:9,act:7,rec:20,dmg:13,reach:300,y0:290,y1:160,stun:22,push:8,lvl:'h'},
   wom:{spr:'special',start:10,act:1,rec:24,dmg:0,womc:1},
   dash:{spr:'lowkick',start:6,act:22,rec:16,dmg:12,reach:150,y0:110,y1:0,stun:20,push:5,lvl:'l',dash:1,kd:1},
@@ -390,6 +392,7 @@ function startMove(f,k){const ch=CHARS[f.c];
   if(k==='sp'&&ch.px){if(f.isP||!f.ground)return false;return ptkStart(f,ptkAI(f))}
   if(k==='sp'&&ch.sp==='dive'){if(!f.ground)return false;f.mv=MOVES.dive;f.state='atk';f.t=0;f.hitDone=false;f.vx=0;say(f,'SAI DA FRENTE!');return true}
   if(k==='tk'&&ch.tk==='cig'){if(!f.ground||f.proj)return false;f.mv=MOVES.cig;f.state='atk';f.t=0;f.hitDone=false;f.vx=0;say(f,'TOMA ESSA!');return true}
+  if(k==='sp'&&ch.sp==='hurr'){if(!f.ground)return false;f.mv=MOVES.hurr;f.state='atk';f.t=0;f.hitDone=false;f.vx=0;say(f,'FURACÃO!');sfx('whoosh');return true}
   if(k==='sp'&&ch.sp==='neck'){if(!f.ground)return false;f.mv=MOVES.neck;f.state='atk';f.t=0;f.hitDone=false;f.vx=0;say(f,'PESCOÇÃO!');sfx('whoosh');return true}
   if(k==='sp'&&ch.sp==='women'){if(!f.ground||f.wm)return false;f.mv=MOVES.wom;f.state='atk';f.t=0;f.hitDone=false;f.vx=0;say(f,'VAI, MENINAS!');return true}
   if(k==='tk'&&ch.tk==='dash'){if(!f.ground)return false;f.mv=MOVES.dash;f.state='atk';f.t=0;f.hitDone=false;f.vx=0;say(f,'SAI DA FRENTE!');sfx('whoosh');return true}
@@ -474,7 +477,7 @@ function step(f){
   else if(f.state==='atk'&&f.mv.px){stepPtk(f)}
   else if(f.state==='atk'&&f.mv.womc){const m=f.mv;if(f.t===m.start){f.wm={dir:f.face,x:f.face>0?-330:W+330,hits:[0,0,0,0],n:0};sfx('whoosh')}if(f.t>=m.start+m.act+m.rec){f.state='idle';f.mv=null}}
   else if(f.state==='atk'&&f.mv.dash){const m=f.mv;
-    if(f.t>=m.start&&f.t<m.start+m.act){f.vx=f.hitDone?f.vx*0.7:12.5*f.face;if(f.t%2===0)G.parts.push({x:f.x-f.face*40,y:GROUND-8,vx:-f.face*2,vy:-0.8,l:14,col:'rgba(220,210,190,.8)'});
+    if(f.t>=m.start&&f.t<m.start+m.act){f.vx=f.hitDone?f.vx*0.7:(m===MOVES.hurr?15:12.5)*f.face;if(f.t%2===0)G.parts.push({x:f.x-f.face*40,y:GROUND-8,vx:-f.face*2,vy:-0.8,l:14,col:'rgba(220,210,190,.8)'});
       if(!f.hitDone&&hitTest(f,m)){f.hitDone=true;const d=F[1-f.i];applyHit(f,d,m,(f.x+d.x)/2,f.y-60)}}
     else if(f.t>=m.start+m.act){f.vx*=0.6;if(f.t>=m.start+m.act+m.rec){f.state='idle';f.mv=null;f.vx=0}}}
   else if(f.state==='atk'){const m=f.mv;
@@ -583,7 +586,7 @@ function cpu(f){const o=F[0],dist=Math.abs(o.x-f.x),A=f.ai,lv=[{r:26,agg:0.3,blk
 
 
 /* ---------- ESPECIAL: barra que enche batendo e apanhando; cheia, ↓↘→↓↘→ + soco forte ---------- */
-const SUPS={c1:{kind:'rush',name:'CHUVA DE SOCOS'},c2:{kind:'rush',name:'PORRADA DE RUA'},c3:{kind:'news',name:'EXTRA! EXTRA!'},c4:{kind:'birds',name:'REVOADA'},t1:{kind:'haze',name:'NÉVOA 4:20'},t2:{kind:'smoke',name:'BRISA VERDE'},t3:{kind:'rush',name:'SOCO E CHUTE'},t4:{kind:'rush',name:'FÚRIA DO DEMÔNIO'},t5:{kind:'rush',name:'PORRADA DA CEREJA'},t6:{kind:'rush',name:'VAI E VOLTA NA MÃO'},t7:{kind:'flood',name:'INUNDAÇÃO'},t8:{kind:'neck',name:'PESCOÇO GIGANTE'}};
+const SUPS={c1:{kind:'rush',name:'CHUVA DE SOCOS'},c2:{kind:'rush',name:'PORRADA DE RUA'},c3:{kind:'news',name:'EXTRA! EXTRA!'},c4:{kind:'birds',name:'REVOADA'},t1:{kind:'haze',name:'NÉVOA 4:20'},t2:{kind:'smoke',name:'BRISA VERDE'},t3:{kind:'rush',name:'SOCO E CHUTE'},t4:{kind:'rush',name:'FÚRIA DO DEMÔNIO'},t5:{kind:'rush',name:'PORRADA DA CEREJA'},t6:{kind:'rush',name:'VAI E VOLTA NA MÃO'},t7:{kind:'flood',name:'INUNDAÇÃO'},t8:{kind:'neck',name:'PESCOÇO GIGANTE'},t9:{kind:'rush',name:'RAJADA DO FURACÃO'}};
 // efeitos de tela que somem sozinhos (fumaça do S7)
 function fxDecay(){G.ex=(G.ex||[]).filter(e=>--e.l>0);const x=G.fx;if(x.smoke>0&&!(F.some(f=>f.state==='super'&&f.sup&&f.sup.kind==='smoke')))x.smoke=Math.max(0,x.smoke-1/190)}
 // no TRICOLORES o PTK usa a arte de camisa do Flu (fundo grená e verde, igual aos outros)
