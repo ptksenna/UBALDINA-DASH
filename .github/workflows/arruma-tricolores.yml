@@ -1,0 +1,239 @@
+name: Arrumar arquivos do TRICOLORES
+on:
+  push:
+    paths: ['.github/workflows/arruma-tricolores.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  arrumar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Coloca cada arquivo na pasta certa e apaga os soltos da raiz
+        run: |
+          set -e
+          cat > /tmp/map.txt <<'MAPA'
+          c08590d912b4bbe891253c062b0ef56ec198032a	burg.jpg	luta/img/burg.jpg
+          c08590d912b4bbe891253c062b0ef56ec198032a	burg_p.jpg	luta/img/burg_p.jpg
+          c08590d912b4bbe891253c062b0ef56ec198032a	lara.jpg	luta/img/lara.jpg
+          c08590d912b4bbe891253c062b0ef56ec198032a	lara_p.jpg	luta/img/lara_p.jpg
+          c08590d912b4bbe891253c062b0ef56ec198032a	mara.jpg	luta/img/mara.jpg
+          c08590d912b4bbe891253c062b0ef56ec198032a	mara_p.jpg	luta/img/mara_p.jpg
+          c08590d912b4bbe891253c062b0ef56ec198032a	c1t.jpg	luta/img/sel/c1t.jpg
+          c08590d912b4bbe891253c062b0ef56ec198032a	t1.jpg	luta/img/sel/t1.jpg
+          c08590d912b4bbe891253c062b0ef56ec198032a	t2.jpg	luta/img/sel/t2.jpg
+          c08590d912b4bbe891253c062b0ef56ec198032a	t3.jpg	luta/img/sel/t3.jpg
+          c08590d912b4bbe891253c062b0ef56ec198032a	t4.jpg	luta/img/sel/t4.jpg
+          c08590d912b4bbe891253c062b0ef56ec198032a	t5.jpg	luta/img/sel/t5.jpg
+          c08590d912b4bbe891253c062b0ef56ec198032a	t6.jpg	luta/img/sel/t6.jpg
+          c08590d912b4bbe891253c062b0ef56ec198032a	t7.jpg	luta/img/sel/t7.jpg
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	block.png	luta/img/t1/block.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	crouch.png	luta/img/t1/crouch.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	fireball.png	luta/img/t1/fireball.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	highkick.png	luta/img/t1/highkick.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	hit.png	luta/img/t1/hit.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	idle.png	luta/img/t1/idle.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	jab.png	luta/img/t1/jab.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	jump.png	luta/img/t1/jump.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	ko.png	luta/img/t1/ko.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	lowkick.png	luta/img/t1/lowkick.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	punch.png	luta/img/t1/punch.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	special.png	luta/img/t1/special.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	walk.png	luta/img/t1/walk.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	win.png	luta/img/t1/win.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	winbig.png	luta/img/t1/winbig.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	block (1).png	luta/img/t2/block.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	crouch (2).png	luta/img/t2/crouch.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	fireball (3).png	luta/img/t2/fireball.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	highkick (4).png	luta/img/t2/highkick.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	hit (5).png	luta/img/t2/hit.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	idle (6).png	luta/img/t2/idle.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	jab (7).png	luta/img/t2/jab.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	jump (8).png	luta/img/t2/jump.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	ko (9).png	luta/img/t2/ko.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	lowkick (10).png	luta/img/t2/lowkick.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	punch (11).png	luta/img/t2/punch.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	special (12).png	luta/img/t2/special.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	walk (13).png	luta/img/t2/walk.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	win (14).png	luta/img/t2/win.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	winbig (15).png	luta/img/t2/winbig.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	block (16).png	luta/img/t3/block.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	crouch (17).png	luta/img/t3/crouch.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	highkick (18).png	luta/img/t3/highkick.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	hit (19).png	luta/img/t3/hit.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	idle (20).png	luta/img/t3/idle.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	jab (21).png	luta/img/t3/jab.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	jump (22).png	luta/img/t3/jump.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	ko (23).png	luta/img/t3/ko.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	lowkick (24).png	luta/img/t3/lowkick.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	punch (25).png	luta/img/t3/punch.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	special (26).png	luta/img/t3/special.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	walk (27).png	luta/img/t3/walk.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	win (28).png	luta/img/t3/win.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	winbig (29).png	luta/img/t3/winbig.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	women.png	luta/img/t3/women.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	block (30).png	luta/img/t4/block.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	crouch (31).png	luta/img/t4/crouch.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	fireball (32).png	luta/img/t4/fireball.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	highkick (33).png	luta/img/t4/highkick.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	hit (34).png	luta/img/t4/hit.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	idle (35).png	luta/img/t4/idle.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	jab (36).png	luta/img/t4/jab.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	jump (37).png	luta/img/t4/jump.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	ko (38).png	luta/img/t4/ko.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	lowkick (39).png	luta/img/t4/lowkick.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	punch (40).png	luta/img/t4/punch.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	special (41).png	luta/img/t4/special.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	walk (42).png	luta/img/t4/walk.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	win (43).png	luta/img/t4/win.png
+          827f08ee087a3eaf68606e431f99bdc7e8a38ae1	winbig (44).png	luta/img/t4/winbig.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	block.png	luta/img/t5/block.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	crouch.png	luta/img/t5/crouch.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	fireball.png	luta/img/t5/fireball.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	highkick.png	luta/img/t5/highkick.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	hit.png	luta/img/t5/hit.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	idle.png	luta/img/t5/idle.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	jab.png	luta/img/t5/jab.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	jump.png	luta/img/t5/jump.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	ko.png	luta/img/t5/ko.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	lowkick.png	luta/img/t5/lowkick.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	punch.png	luta/img/t5/punch.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	special.png	luta/img/t5/special.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	walk.png	luta/img/t5/walk.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	win.png	luta/img/t5/win.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	winbig.png	luta/img/t5/winbig.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	block (1).png	luta/img/t6/block.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	crouch (2).png	luta/img/t6/crouch.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	fireball (3).png	luta/img/t6/fireball.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	highkick (4).png	luta/img/t6/highkick.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	hit (5).png	luta/img/t6/hit.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	idle (6).png	luta/img/t6/idle.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	jab (7).png	luta/img/t6/jab.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	jump (8).png	luta/img/t6/jump.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	ko (9).png	luta/img/t6/ko.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	lowkick (10).png	luta/img/t6/lowkick.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	punch (11).png	luta/img/t6/punch.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	special (12).png	luta/img/t6/special.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	walk (13).png	luta/img/t6/walk.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	win (14).png	luta/img/t6/win.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	winbig (15).png	luta/img/t6/winbig.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	block (16).png	luta/img/t7/block.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	crouch (17).png	luta/img/t7/crouch.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	fireball (18).png	luta/img/t7/fireball.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	highkick (19).png	luta/img/t7/highkick.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	hit (20).png	luta/img/t7/hit.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	idle (21).png	luta/img/t7/idle.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	jab (22).png	luta/img/t7/jab.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	jump (23).png	luta/img/t7/jump.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	ko (24).png	luta/img/t7/ko.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	lowkick (25).png	luta/img/t7/lowkick.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	punch (26).png	luta/img/t7/punch.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	special (27).png	luta/img/t7/special.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	walk (28).png	luta/img/t7/walk.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	win (29).png	luta/img/t7/win.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	winbig (30).png	luta/img/t7/winbig.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	tri_logo.png	luta/img/tri_logo.png
+          c08590d912b4bbe891253c062b0ef56ec198032a	tri_menu.mp3	luta/snd/tri_menu.mp3
+          MAPA
+          cat > /tmp/junk.txt <<'SOLTOS'
+          block (1).png
+          block (16).png
+          block (30).png
+          block.png
+          burg.jpg
+          burg_p.jpg
+          c1t.jpg
+          crouch (17).png
+          crouch (2).png
+          crouch (31).png
+          crouch.png
+          fireball (18).png
+          fireball (3).png
+          fireball (32).png
+          fireball.png
+          highkick (18).png
+          highkick (19).png
+          highkick (33).png
+          highkick (4).png
+          highkick.png
+          hit (19).png
+          hit (20).png
+          hit (34).png
+          hit (5).png
+          hit.png
+          idle (20).png
+          idle (21).png
+          idle (35).png
+          idle (6).png
+          idle.png
+          jab (21).png
+          jab (22).png
+          jab (36).png
+          jab (7).png
+          jab.png
+          jump (22).png
+          jump (23).png
+          jump (37).png
+          jump (8).png
+          jump.png
+          ko (23).png
+          ko (24).png
+          ko (38).png
+          ko (9).png
+          ko.png
+          lara.jpg
+          lara_p.jpg
+          lowkick (10).png
+          lowkick (24).png
+          lowkick (25).png
+          lowkick (39).png
+          lowkick.png
+          mara.jpg
+          mara_p.jpg
+          punch (11).png
+          punch (25).png
+          punch (26).png
+          punch (40).png
+          punch.png
+          special (12).png
+          special (26).png
+          special (27).png
+          special (41).png
+          special.png
+          t1.jpg
+          t2.jpg
+          t3.jpg
+          t4.jpg
+          t5.jpg
+          t6.jpg
+          t7.jpg
+          tri_logo.png
+          tri_menu.mp3
+          walk (13).png
+          walk (27).png
+          walk (28).png
+          walk (42).png
+          walk.png
+          win (14).png
+          win (28).png
+          win (29).png
+          win (43).png
+          win.png
+          winbig (15).png
+          winbig (29).png
+          winbig (30).png
+          winbig (44).png
+          winbig.png
+          women.png
+          SOLTOS
+          sed -i 's/^          //' /tmp/map.txt /tmp/junk.txt
+          while IFS=$'\t' read -r c n t; do [ -z "$t" ] && continue; mkdir -p "$(dirname "$t")"; git show "$c:$n" > "$t"; git add "$t"; done < /tmp/map.txt
+          while IFS= read -r j; do [ -z "$j" ] && continue; git rm -q --ignore-unmatch -- "$j"; done < /tmp/junk.txt
+          git rm -q .github/workflows/arruma-tricolores.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -q -m "Arruma arquivos do TRICOLORES nas pastas certas"
+          git push
