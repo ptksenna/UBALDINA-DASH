@@ -78,7 +78,7 @@ body.tri .sel2{background:#4a0a1b}
 body.tri .selbg{background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0),rgba(10,2,5,.8) 82%),repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,#7a0f2a 0 9%,#f1f1ee 9% 10.2%,#0c5c34 10.2% 19.2%,#f1f1ee 19.2% 20.4%)}
 body.tri .selbg::before,body.tri .selbg::after{background:linear-gradient(90deg,transparent,#f4f4f0 30%,#fff 50%,#f4f4f0 70%,transparent);opacity:.5}
 body.tri .cards{gap:1cqh}
-body.tri .cards button{width:12.4cqh;background:#5c0c22}
+body.tri .cards button{width:11.2cqh;background:#5c0c22}
 body.tri .cards span{background:#0b4d2b;font-size:1.3cqh;min-height:4.2cqh}
 body.tri .cards button.sel{border-color:#3dff8f;box-shadow:0 0 0 .35cqh #3dff8f,0 0 2.6cqh rgba(61,255,143,.9)}
 body.tri .bigcap{color:#ffd6de;text-shadow:0 2px 0 #050806,0 0 10px rgba(255,60,90,.8)}
@@ -269,11 +269,12 @@ const CHARS=[
   {"id":"t4","name":"MATHEUS","tag":"Vira demônio, cospe fogo e voa rasteiro","sp":"fire","tk":"dash","meta":{"idle":[189,292,96.8,288.3],"walk":[233,292,122.1,288.3],"jump":[172,284,85.7,280.0],"crouch":[157,202,67.1,198.1],"jab":[239,276,100.9,272.5],"punch":[259,275,130.0,271.6],"lowkick":[268,264,68.1,260.8],"highkick":[249,274,53.3,270.0],"block":[208,264,111.0,259.9],"hit":[243,248,146.6,244.0],"ko":[314,132,175.6,127.9],"special":[287,270,160.7,266.6],"fireball":[219,137,0.8,132.9],"win":[292,263,155.5,259.1]}},
   {"id":"t5","name":"CEREJA","tag":"Cospe bola de fogo e gira no chute","sp":"fire","meta":{"idle":[188,292,96.6,288.3],"walk":[235,290,119.4,286.7],"jump":[181,288,98.3,284.2],"crouch":[165,198,70.8,194.4],"jab":[242,265,95.9,260.9],"punch":[255,265,123.5,260.9],"lowkick":[262,262,71.7,258.4],"highkick":[243,269,51.8,265.1],"block":[206,262,108.9,258.4],"hit":[221,249,132.3,245.1],"ko":[310,116,173.5,112.2],"special":[254,253,122.0,249.3],"fireball":[303,142,0.8,137.9],"win":[209,272,109.0,268.4]}},
   {"id":"t6","name":"LC","tag":"Bumerangue que pega na ida e na volta","sp":"boom","meta":{"idle":[198,292,103.5,288.4],"walk":[228,295,119.8,290.9],"jump":[171,279,94.1,275.8],"crouch":[149,194,66.2,190.3],"jab":[259,271,109.5,267.4],"punch":[252,269,123.1,265.7],"lowkick":[259,267,67.5,263.2],"highkick":[263,275,75.1,271.6],"block":[208,265,110.0,261.5],"ko":[323,124,176.5,120.7],"special":[361,260,150.2,256.5],"fireball":[72,68,3.4,64.5],"hit":[248,244,149.5,240.6],"win":[229,282,120.1,278.3]}},
-  {"id":"t7","name":"JOÃO VITOR","tag":"Torneira gigante que joga água","sp":"water","meta":{"idle":[206,292,108.1,288.3],"walk":[226,300,119.1,296.6],"jump":[193,278,102.1,274.2],"crouch":[146,196,60.4,191.9],"jab":[263,264,103.7,260.1],"punch":[258,265,126.7,261.7],"lowkick":[255,251,62.9,247.6],"highkick":[255,275,57.7,271.7],"block":[212,265,111.2,261.7],"hit":[244,250,146.3,245.9],"ko":[333,119,180.1,115.5],"special":[321,252,131.0,248.4],"fireball":[338,235,0.8,231.0],"win":[366,247,159.1,243.5]}}
+  {"id":"t7","name":"JOÃO VITOR","tag":"Torneira gigante que joga água","sp":"water","meta":{"idle":[206,292,108.1,288.3],"walk":[226,300,119.1,296.6],"jump":[193,278,102.1,274.2],"crouch":[146,196,60.4,191.9],"jab":[263,264,103.7,260.1],"punch":[258,265,126.7,261.7],"lowkick":[255,251,62.9,247.6],"highkick":[255,275,57.7,271.7],"block":[212,265,111.2,261.7],"hit":[244,250,146.3,245.9],"ko":[333,119,180.1,115.5],"special":[321,252,131.0,248.4],"fireball":[338,235,0.8,231.0],"win":[366,247,159.1,243.5]}},
+  {"id":"t8","name":"GAROFALO","tag":"Pescoço que estica e acerta de longe","sp":"neck","meta":{"idle":[192,292,95.6,288.4],"walk":[222,286,111.0,282.5],"jump":[205,299,87.9,295.1],"crouch":[142,203,61.1,199.5],"punch":[217,258,109.5,254.0],"jab":[234,251,113.2,247.3],"lowkick":[271,235,72.3,231.4],"highkick":[228,256,78.3,252.3],"block":[207,260,106.0,256.5],"hit":[178,236,103.5,232.2],"ko":[314,92,153.8,88.0],"special":[379,252,149.3,248.1],"win":[196,257,94.0,253.1],"nbody":[379,252,149.3,248.1],"nhead":[107,138,48.1,69.0]}}
 ];
 const STAGES=[{id:'bar',name:'BAR DA ESQUINA',img:'img/bar.jpg',prev:'img/bar_p.jpg'},{id:'rua',name:'RUA DO GÁS',img:'img/rua.jpg',prev:'img/rua_p.jpg'},{id:'muro',name:'MURO DA BANDEIRA',img:'img/muro.jpg',prev:'img/muro_p.jpg'},{id:'praca',name:'PRAÇA DA IGREJA',img:'img/praca.jpg',prev:'img/praca_p.jpg'},{id:'burg',name:'HAMBÚRGUER 3 POR 15',img:'img/burg.jpg',prev:'img/burg_p.jpg'},{id:'mara',name:'MARACANÃ',img:'img/mara.jpg',prev:'img/mara_p.jpg'},{id:'lara',name:'LARANJEIRAS',img:'img/lara.jpg',prev:'img/lara_p.jpg'}];
 // duas edições: cada uma com seus lutadores e cenários
-const EDS={ubf:{chars:['c1','c3','c4','c2'],stages:['bar','rua','muro','praca']},tri:{chars:['c1','t1','t2','t3','t4','t5','t6','t7'],stages:['burg','mara','lara']}};
+const EDS={ubf:{chars:['c1','c3','c4','c2'],stages:['bar','rua','muro','praca']},tri:{chars:['c1','t1','t2','t3','t4','t5','t6','t7','t8'],stages:['burg','mara','lara']}};
 let ED='ubf';try{ED=localStorage.getItem('ubf-ed')==='tri'?'tri':'ubf'}catch(e){}
 const CI=id=>CHARS.findIndex(c=>c.id===id),SI=id=>STAGES.findIndex(c=>c.id===id);
 const RO=()=>EDS[ED].chars.map(CI),STO=()=>EDS[ED].stages.map(SI);
@@ -307,6 +308,7 @@ const MOVES={
   dive:{spr:'special',start:10,act:40,rec:20,dmg:14,reach:130,y0:210,y1:20,stun:20,push:4,lvl:'m',dive:1},
   bus:{spr:'highkick',start:8,act:1,rec:26,dmg:0,busc:1},
   cig:{spr:'punch',start:9,act:1,rec:20,dmg:0,proj:1,cig:1},
+  neck:{spr:'special',start:9,act:7,rec:20,dmg:13,reach:300,y0:290,y1:160,stun:22,push:8,lvl:'h'},
   wom:{spr:'special',start:10,act:1,rec:24,dmg:0,womc:1},
   dash:{spr:'lowkick',start:6,act:22,rec:16,dmg:12,reach:150,y0:110,y1:0,stun:20,push:5,lvl:'l',dash:1,kd:1},
   tk:{spr:'highkick',start:7,act:36,rec:12,dmg:6,reach:150,y0:250,y1:120,stun:18,push:3,lvl:'h',spin:1}
@@ -388,6 +390,7 @@ function startMove(f,k){const ch=CHARS[f.c];
   if(k==='sp'&&ch.px){if(f.isP||!f.ground)return false;return ptkStart(f,ptkAI(f))}
   if(k==='sp'&&ch.sp==='dive'){if(!f.ground)return false;f.mv=MOVES.dive;f.state='atk';f.t=0;f.hitDone=false;f.vx=0;say(f,'SAI DA FRENTE!');return true}
   if(k==='tk'&&ch.tk==='cig'){if(!f.ground||f.proj)return false;f.mv=MOVES.cig;f.state='atk';f.t=0;f.hitDone=false;f.vx=0;say(f,'TOMA ESSA!');return true}
+  if(k==='sp'&&ch.sp==='neck'){if(!f.ground)return false;f.mv=MOVES.neck;f.state='atk';f.t=0;f.hitDone=false;f.vx=0;say(f,'PESCOÇÃO!');sfx('whoosh');return true}
   if(k==='sp'&&ch.sp==='women'){if(!f.ground||f.wm)return false;f.mv=MOVES.wom;f.state='atk';f.t=0;f.hitDone=false;f.vx=0;say(f,'VAI, MENINAS!');return true}
   if(k==='tk'&&ch.tk==='dash'){if(!f.ground)return false;f.mv=MOVES.dash;f.state='atk';f.t=0;f.hitDone=false;f.vx=0;say(f,'SAI DA FRENTE!');sfx('whoosh');return true}
   if(k==='tk'&&ch.tk==='bus'){if(!f.ground||G.bus)return false;f.mv=MOVES.bus;f.state='atk';f.t=0;f.hitDone=false;f.vx=0;say(f,'OLHA O BUSÃO!');return true}
@@ -580,7 +583,7 @@ function cpu(f){const o=F[0],dist=Math.abs(o.x-f.x),A=f.ai,lv=[{r:26,agg:0.3,blk
 
 
 /* ---------- ESPECIAL: barra que enche batendo e apanhando; cheia, ↓↘→↓↘→ + soco forte ---------- */
-const SUPS={c1:{kind:'rush',name:'CHUVA DE SOCOS'},c2:{kind:'rush',name:'PORRADA DE RUA'},c3:{kind:'news',name:'EXTRA! EXTRA!'},c4:{kind:'birds',name:'REVOADA'},t1:{kind:'haze',name:'NÉVOA 4:20'},t2:{kind:'smoke',name:'BRISA VERDE'},t3:{kind:'rush',name:'SOCO E CHUTE'},t4:{kind:'rush',name:'FÚRIA DO DEMÔNIO'},t5:{kind:'rush',name:'PORRADA DA CEREJA'},t6:{kind:'rush',name:'VAI E VOLTA NA MÃO'},t7:{kind:'flood',name:'INUNDAÇÃO'}};
+const SUPS={c1:{kind:'rush',name:'CHUVA DE SOCOS'},c2:{kind:'rush',name:'PORRADA DE RUA'},c3:{kind:'news',name:'EXTRA! EXTRA!'},c4:{kind:'birds',name:'REVOADA'},t1:{kind:'haze',name:'NÉVOA 4:20'},t2:{kind:'smoke',name:'BRISA VERDE'},t3:{kind:'rush',name:'SOCO E CHUTE'},t4:{kind:'rush',name:'FÚRIA DO DEMÔNIO'},t5:{kind:'rush',name:'PORRADA DA CEREJA'},t6:{kind:'rush',name:'VAI E VOLTA NA MÃO'},t7:{kind:'flood',name:'INUNDAÇÃO'},t8:{kind:'neck',name:'PESCOÇO GIGANTE'}};
 // efeitos de tela que somem sozinhos (fumaça do S7)
 function fxDecay(){G.ex=(G.ex||[]).filter(e=>--e.l>0);const x=G.fx;if(x.smoke>0&&!(F.some(f=>f.state==='super'&&f.sup&&f.sup.kind==='smoke')))x.smoke=Math.max(0,x.smoke-1/190)}
 // no TRICOLORES o PTK usa a arte de camisa do Flu (fundo grená e verde, igual aos outros)
@@ -622,6 +625,17 @@ function stepSuper(a){const d=F[1-a.i],S=a.sup,t=a.t;if(!S){a.state='idle';retur
     if(S.fin&&t>S.fin+14)endSuper(a,true);
     if(t>260)endSuper(a,true);
     return}
+  if(S.kind==='neck'){
+    if(t===6){say(a,'OLHA O PESCOÇO!');sfx('whoosh')}
+    if(t===12)superLock(a,d);
+    if(t>=12){if(!S.path){const M=CHARS[a.c].meta.nbody,x0=a.x+a.face*(M[0]*0.76-M[2])*K,y0=a.y-(M[3]-M[1]*0.25)*K,rows=[y0,y0+70,y0+140,y0-70,y0-140,y0-210];let dir=a.face,x=x0,pts=[[x0,y0]];
+        for(let r=0;r<rows.length;r++){const ex=dir>0?W-40:40;if(r>0)pts.push([x,rows[r]]);pts.push([ex,rows[r]]);x=ex;dir=-dir}
+        S.path=pts;S.L=0;S.hit={};let tot=0;for(let q=1;q<pts.length;q++)tot+=Math.hypot(pts[q][0]-pts[q-1][0],pts[q][1]-pts[q-1][1]);S.tot=tot}
+      if(!S.ret){S.L=Math.min(S.tot,S.L+64);const tp=neckTip(S);
+        if(tp.h&&!S.hit[tp.seg]&&tp.y>d.y-285&&tp.y<d.y-10&&Math.abs(tp.x-d.x)<55){S.hit[tp.seg]=1;superHit(a,d,6,tp.x,tp.y,false,5);G.shake=8}
+        if(S.L>=S.tot){S.ret=1;superHit(a,d,8,d.x,d.y-150,true,5)}}
+      else{S.L-=160;if(S.L<=0){endSuper(a,true)}}}
+    return}
   if(S.kind==='haze'){
     if(t===6){say(a,'É 4:20!');sfx('whoosh')}
     if(t>=6&&t<30)G.fx.haze=(t-6)/24;
@@ -662,6 +676,12 @@ function drawWom(f){const w=f.wm;if(!w)return;const M=CHARS[f.c].meta.women,im=(
   ctx.save();ctx.globalAlpha=0.3;ctx.fillStyle='#000';ctx.beginPath();ctx.ellipse(w.x,GROUND+4,ww*0.45,12,0,0,6.283);ctx.fill();ctx.restore();
   ctx.save();ctx.translate(w.x,GROUND+6-bob);ctx.scale(w.dir,1);ctx.drawImage(im,-ww/2,-hh,ww,hh);ctx.restore()}
 function drawDizzy(f){if(!(f.dizzy>0))return;for(let k=0;k<3;k++){const a=G.tf*0.12+k*2.09;star(f.x+Math.cos(a)*42,f.y-292+Math.sin(a)*10,7,'#ffe14a')}}
+function neckTip(S){let L=S.L,p=S.path;for(let q=1;q<p.length;q++){const sl=Math.hypot(p[q][0]-p[q-1][0],p[q][1]-p[q-1][1]);if(L<=sl){const k=sl?L/sl:0;return{x:p[q-1][0]+(p[q][0]-p[q-1][0])*k,y:p[q-1][1]+(p[q][1]-p[q-1][1])*k,seg:q,h:p[q][1]===p[q-1][1],dir:Math.sign(p[q][0]-p[q-1][0])||0}}L-=sl}const n=p.length-1;return{x:p[n][0],y:p[n][1],seg:n,h:true,dir:Math.sign(p[n][0]-p[n-1][0])}}
+function drawNeck(f){const S=f.sup;if(!(f.state==='super'&&S&&S.kind==='neck'&&S.path&&S.L>0))return;const tp=neckTip(S),p=S.path;
+  ctx.save();ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();ctx.moveTo(p[0][0],p[0][1]);let L=S.L;for(let q=1;q<p.length&&L>0;q++){const sl=Math.hypot(p[q][0]-p[q-1][0],p[q][1]-p[q-1][1]);if(L>=sl)ctx.lineTo(p[q][0],p[q][1]);else{ctx.lineTo(tp.x,tp.y)}L-=sl}
+  ctx.strokeStyle='#2a140a';ctx.lineWidth=34;ctx.stroke();ctx.strokeStyle='#d98a55';ctx.lineWidth=26;ctx.stroke();ctx.strokeStyle='rgba(255,210,170,.55)';ctx.lineWidth=7;ctx.stroke();ctx.restore();
+  let dir=tp.dir||f.face;if(!tp.h){for(let q=Math.min(tp.seg,p.length-1);q>0;q--){if(p[q][1]===p[q-1][1]){dir=Math.sign(p[q][0]-p[q-1][0]);break}}}
+  const M=CHARS[f.c].meta.nhead,im=(f.alt?RC:IM)[f.c].nhead;if(M&&im){ctx.save();ctx.translate(tp.x,tp.y);ctx.scale(dir,1);ctx.drawImage(im,-M[2]*K,-M[3]*K,M[0]*K,M[1]*K);ctx.restore()}}
 function drawSuperBack(){if(G.sf>0||(G.cut&&G.cut.t>0)){ctx.save();ctx.fillStyle='rgba(0,0,10,.62)';ctx.fillRect(0,0,W,H);ctx.restore()}}
 function drawBirds(){const im=IM[3]&&CHARS.findIndex(c=>c.id==='c4');const ci=CHARS.findIndex(c=>c.id==='c4');if(ci<0||!G.birds||!G.birds.length)return;const M=CHARS[ci].meta.fireball,img=IM[ci].fireball;if(!img)return;
   for(const b of G.birds){const s=K*1.15,fl=Math.sin(G.tf*0.9+b.x);ctx.save();ctx.translate(b.x,b.y);ctx.scale(b.vx>0?1:-1,1);ctx.rotate(Math.atan2(b.vy,Math.abs(b.vx))*0.5);ctx.drawImage(img,-M[0]*s/2,-M[1]*s*(0.5+fl*0.12),M[0]*s,M[1]*s*(1+fl*0.24));ctx.restore()}}
@@ -721,7 +741,7 @@ function sprFor(f){
   if(f.state==='atk'&&f.mv.px)return ptkSpr(f);
   if(f.state==='super'&&f.sup){const S=f.sup;if(G.sf>0)return S.kind==='birds'?'special':S.kind==='news'?'block':'idle';
     if(S.kind==='rush'){if(!S.lock)return f.t%6<3?'walk':'jump';const k=f.t-S.k;if(k<60)return['jab','punch','lowkick','highkick'][Math.floor(k/5)%4];return k<74?'punch':'idle'}
-    if(S.kind==='birds')return f.t<8?'idle':'special';if(S.kind==='haze')return f.t<6?'idle':'win';if(S.kind==='smoke'||S.kind==='flood')return f.t<6?'idle':'special';return'block'}
+    if(S.kind==='birds')return f.t<8?'idle':'special';if(S.kind==='neck')return f.t<12?'punch':'nbody';if(S.kind==='haze')return f.t<6?'idle':'win';if(S.kind==='smoke'||S.kind==='flood')return f.t<6?'idle':'special';return'block'}
   if(f.state==='atk'&&f.mv.dive){const m=f.mv;return f.t<m.start?'crouch':f.t<m.start+m.act+8?'special':'crouch'}
   if(f.state==='atk'&&f.mv.busc)return f.t<4?'idle':'highkick';
   if(f.state==='throw')return f.t<12?'punch':'win';
@@ -845,7 +865,7 @@ function draw(){
   const order=F[0].state==='atk'||F[0].state==='super'?[F[1],F[0]]:[F[0],F[1]];for(const f of order)drawF(f);
   drawProj(F[0]);drawProj(F[1]);
   if(G.bus&&BUS.complete){const b=G.bus,w=560,h=194;ctx.save();ctx.translate(b.x,GROUND+14);ctx.fillStyle='rgba(0,0,0,.35)';ctx.beginPath();ctx.ellipse(0,-4,w*0.48,16,0,0,6.283);ctx.fill();ctx.drawImage(b.dir>0?BUSR:BUS,-w/2,-h,w,h);ctx.restore()}
-  drawWom(F[0]);drawWom(F[1]);drawPtk(F[0]);drawPtk(F[1]);drawEx();drawFx();
+  drawNeck(F[0]);drawNeck(F[1]);drawWom(F[0]);drawWom(F[1]);drawPtk(F[0]);drawPtk(F[1]);drawEx();drawFx();
   drawNews(F[0]);drawNews(F[1]);drawBirds();
   if(G.white>0){ctx.save();ctx.fillStyle='rgba(255,255,255,'+G.white+')';ctx.fillRect(-20,-20,W+40,H+40);ctx.restore();for(const f of F)if(f.state==='shit'||f.state==='ko')drawF(f)}
   for(const p of G.parts){ctx.save();ctx.globalAlpha=Math.min(1,p.l/10);if(p.ring){ctx.strokeStyle=p.col;ctx.lineWidth=4;ctx.beginPath();ctx.arc(p.x,p.y,(12-p.l)*5+8,0,6.283);ctx.stroke()}else{ctx.fillStyle=p.col;ctx.fillRect(p.x-3,p.y-3,6,6)}ctx.restore()}
