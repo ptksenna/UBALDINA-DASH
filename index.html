@@ -152,7 +152,7 @@ body{font-family:var(--u-body)}
 #mm button{flex:1 1 calc(50% - 4px);min-width:0;text-align:left;padding:9px 12px!important;font-size:min(3.2vw,14px)!important;line-height:1.1;background:var(--u-card)!important;color:var(--u-ink)!important;border:1px solid var(--u-line)!important;display:flex;flex-direction:column;gap:3px}
 #mm button::after{font:500 min(2.4vw,11px)/1.25 var(--u-body);letter-spacing:0;color:var(--u-dim)}
 #mm #bIni{flex-basis:100%;background:var(--u-neon)!important;color:var(--u-neon-ink)!important;border:2px solid var(--u-neon)!important;font-size:min(3.8vw,17px)!important;padding:11px 14px!important}
-#mm #bIni::after{content:"Modo Dash: corra pela rua até o bar";color:#0b3a1c}
+#mm #bIni::after{content:"Missão 1: atravesse a rua até a esquina e alcance o Bodinho";color:#0b3a1c}
 #mm #bLuta::after{content:"Ubaldina Fighter: sozinho ou contra um amigo"}
 #mm #bKart::after{content:"Corrida de kart, solo ou online"}
 #mm #bHide::after{content:"Vire objeto da rua e se esconda"}
@@ -228,7 +228,7 @@ button{touch-action:manipulation}
 <div id="hsel"><div id="htop"><button id="hB">◀ MENU PRINCIPAL</button><img data-logo class="kl" alt=""></div><h2>ESCONDE-ESCONDE</h2><p class="hp">Um atirador é sorteado. Os outros viram objetos da rua e têm 30s para se esconder. O atirador tem 1min30 para achar 70% deles.</p><div id="hbt"><button id="hC">Criar sala</button><input id="hcd" maxlength="4" placeholder="CÓDIGO"><button id="hE">Entrar</button><button id="hT" class="alt">Treino com bots</button></div><div id="hpl"></div><div id="hact"><button id="hRd" style="display:none">PRONTO</button><button id="hmic">🎤</button></div><div id="hst"></div></div>
 <div id="xhud"><div id="xrole"></div><div id="xtm"></div><div id="xinfo"></div></div><div id="xmsg"></div><div id="xblind"><b></b><span></span></div><div id="xres"></div><div id="xcross">✛</div><button id="xmic">🎤</button>
 <div id="splash"><div class="sp"><div class="crown">♛</div><div class="spn">Patraca</div><div class="spg"><i></i>Games<i></i></div></div></div><div id="wipe"></div><img data-logo id="wm" alt=""><button id="hHome" title="Menu inicial">🏠</button><div id="menu"><div class="tt"><img data-logo id="mlogo" alt="Rua Ubaldina — Patraca Games"></div>
-<div id="mm"><div id="mmain" style="display:flex;flex-direction:column;gap:12px"><button id="bIni">Iniciar</button><button id="bDif" class="alt">Dificuldade: Médio</button><button id="bLuta">Luta</button><button id="bKart">Kart</button><button id="bHide">Esconde-esconde</button><button id="bFlav">Corre, o Flávio fugiu!</button><button id="bGuerra">Guerra na Ubaldina</button></div>
+<div id="mm"><div id="mmain" style="display:flex;flex-direction:column;gap:12px"><button id="bIni">Iniciar</button><button id="bDif" class="alt" style="display:none">Dificuldade: Médio</button><button id="bLuta">Luta</button><button id="bKart">Kart</button><button id="bHide">Esconde-esconde</button><button id="bFlav">Corre, o Flávio fugiu!</button><button id="bGuerra">Guerra na Ubaldina</button></div>
 <div id="msub" style="flex-direction:column;gap:12px"><button id="de">Molezinha</button><button id="dm" class="alt">Médio</button><button id="dh">Difícil pra caralho</button></div></div>
 <div id="logo">🎮 <b>Patraca</b> Games<br><button id="bInst">📲 INSTALAR APP</button></div></div>
 <div id="ov"><div><img data-logo class="rl" alt=""><h1>Rua Ubaldina, 2018</h1>
@@ -1379,7 +1379,7 @@ function finishGame(){st=0;mode=1;document.body.classList.add('m');$('#ov').styl
 
 $('#sk').onclick=()=>{if(cs)endCine()};
 document.body.classList.add('m');
-$('#bIni').onclick=()=>fade(()=>{$('#menu').style.display='none';$('#dsel').style.display='flex'});
+$('#bIni').onclick=()=>{location.href='slug/'};
 $('#bDif').onclick=()=>{$('#mmain').style.display='none';$('#msub').style.display='flex'};
 for(const q of['e','m','h'])$('#d'+q).onclick=()=>{DF=DFS[q];$('#bDif').textContent='Dificuldade: '+DF.n;$('#msub').style.display='none';$('#mmain').style.display='flex'};
 function goHome(){if(!(typeof confirm!=='function'||confirm('Voltar ao menu inicial? Você perde o progresso desta partida.')))return;

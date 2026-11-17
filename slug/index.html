@@ -17,13 +17,14 @@ body.touch #dpad{display:block}
 #btns b{width:72px;height:72px;border-radius:50%;background:rgba(10,22,14,.55);border:2px solid rgba(61,255,116,.5);display:flex;align-items:center;justify-content:center;font:800 12px Rubik,sans-serif;color:#eafff0;letter-spacing:.05em}
 #btns b.big{width:86px;height:86px;border-color:#ffd23d;color:#ffd23d}
 b.on{background:rgba(61,255,116,.35)!important}
+#home{position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);left:calc(50% - 230px);z-index:5;width:42px;height:42px;border-radius:50%;background:rgba(10,22,14,.75);border:2px solid rgba(61,255,116,.6);color:#3dff74;font:800 24px Rubik,sans-serif;display:flex;align-items:center;justify-content:center;text-decoration:none}
 #rot{position:fixed;inset:0;background:#050806;display:none;align-items:center;justify-content:center;text-align:center;z-index:9;font:800 18px Rubik;padding:24px}
 @media (orientation:portrait){body.touch #rot{display:flex}}
 </style></head><body>
 <div id="wrap"><canvas id="c" width="1052" height="592"></canvas></div>
 <div id="dpad"><b class="u" data-k="up">▲</b><b class="l" data-k="left">◀</b><b class="r" data-k="right">▶</b><b class="d" data-k="down">▼</b></div>
 <div id="btns" class="pad"><b data-k="bomb">BOMBA</b><b data-k="jump">PULO</b><b class="big" data-k="fire">TIRO</b></div>
-<div id="rot">Vire o celular de lado pra jogar 📱↔️</div>
+<a id="home" href="../" aria-label="Menu">⌂</a><div id="rot">Vire o celular de lado pra jogar 📱↔️</div>
 <script>
 'use strict';
 const cv=document.getElementById('c'),ctx=cv.getContext('2d');
@@ -49,7 +50,7 @@ if(matchMedia('(pointer:coarse)').matches)document.body.classList.add('touch');
 const touchMap=new Map();
 function btnAt(x,y){const el=document.elementFromPoint(x,y);return el&&el.dataset&&el.dataset.k?el:null}
 function syncTouch(){const now=new Set();touchMap.forEach(el=>el&&now.add(el.dataset.k));['left','right','up','down','fire','jump','bomb'].forEach(k=>{const v=now.has(k)?1:0;if(v&&!K[k])P1[k]=1;K[k]=v});document.querySelectorAll('[data-k]').forEach(el=>el.classList.toggle('on',now.has(el.dataset.k)))}
-function tch(e){e.preventDefault();ac();for(const t of e.changedTouches){if(e.type==='touchend'||e.type==='touchcancel')touchMap.delete(t.identifier);else touchMap.set(t.identifier,btnAt(t.clientX,t.clientY))}syncTouch();if(e.type==='touchstart')startOr()}
+function tch(e){if(e.target&&e.target.id==='home')return;e.preventDefault();ac();for(const t of e.changedTouches){if(e.type==='touchend'||e.type==='touchcancel')touchMap.delete(t.identifier);else touchMap.set(t.identifier,btnAt(t.clientX,t.clientY))}syncTouch();if(e.type==='touchstart')startOr()}
 ['touchstart','touchmove','touchend','touchcancel'].forEach(n=>addEventListener(n,tch,{passive:false}));
 cv.addEventListener('mousedown',()=>{ac();startOr()});
 // ---------- fase ----------
