@@ -512,7 +512,7 @@ function buildHide(){
     const rf=new T.Mesh(new T.BoxGeometry(1.5,.06,cl-.3),col(c));rf.position.set(0,1.47,cz);gr.add(rf);
     if(type==='taxi'){const sg=new T.Mesh(new T.BoxGeometry(.6,.18,.25),col('#f4f1ea'));sg.position.set(0,1.58,cz);gr.add(sg)}
     [[-.8,len/2-.75],[.8,len/2-.75],[-.8,-len/2+.75],[.8,-len/2+.75]].forEach(([x,zz])=>{const w=new T.Mesh(wheelG,col('#18191b'));w.position.set(x,.32,zz);gr.add(w)});
-    stat(gr);cars.push({x:s*2.45,z,r:2})}
+    stat(gr);cars.push({x:s*2.45,z,r:2,hl:len/2})}
   [[1,-7,'#5b7a9a','sedan'],[1,-50,'#9a9c9e','car'],[1,-57,'#e9e9e6','car'],[1,-80,'#f2d21b','taxi'],[1,-87.5,'#1d1f22','pickup'],[1,-95,'#f2d21b','taxi'],[-1,-30,'#9fa3a6','car'],[-1,-68,'#e9e9e6','taxi'],[-1,-90,'#b8bbbd','car']].forEach(([s,z,c,t])=>car(s,z,c,t,rn()<.3));
   // postes e fios
   [[-1,[70,40,-6,-38,-70,-102,-134]],[1,[56,24,-20,-52,-84,-116,-148]]].forEach(([s,zs])=>zs.forEach(z=>pole(s,z)));
@@ -955,7 +955,9 @@ $('#kmic').onclick=()=>{if(!KMS)return;const q=KMS.getAudioTracks()[0];if(q){q.e
 // ===== ESCONDE-ESCONDE (Prop Hunt online) =====
 const HNM=['PTK SENNA','DIEGADA','VIGRALHOS','EVANDRO','SEU MIZAQUE','SEU MIRANDA'];
 const HLK=FC5.map(c=>c.o).concat([{skin:0xc49a6c,shirt:0x7a1f1f,shorts:0x111111,w:.8,hair:true}]);
-const HT={hide:30,seek:90,res:9,need:.7,pen:3,max:6};
+const HT={hide:30,seek:90,res:9,need:.7,pen:3,max:6,swap:20};
+function hdCarPush(o){if(!HM||!HM.cars)return;for(const c of HM.cars){const hw=1.0+.4,hl=(c.hl||2.3)+.4,dx=o.x-c.x,dz=o.z-c.z;if(Math.abs(dx)<hw&&Math.abs(dz)<hl){if(hw-Math.abs(dx)<hl-Math.abs(dz))o.x=c.x+(dx<0?-hw:hw);else o.z=c.z+(dz<0?-hl:hl)}}}
+function hdSwap(){const G=HG,m={};G.pl.forEach(p=>{if(!p.left&&p.id!==G.sk&&p.alive){let n=p.prop;for(let k=0;k<8&&n===p.prop;k++)n=Math.floor(Math.random()*PROPS.length);m[p.id]=n}});const d={t:'swap',m};hdBc(d);hdApply(d)}
 let HM=null,HR=null,HG=null,HP2=null,HMS=null;const HRA=[];
 const HPM={};const hpm=c=>HPM[c]||(HPM[c]=new T.MeshLambertMaterial({color:c}));
 const hbx=(g,w,h,d,c,x,y,z)=>{const m=new T.Mesh(new T.BoxGeometry(w,h,d),hpm(c));m.position.set(x,y,z);g.add(m);return m};
@@ -1064,6 +1066,7 @@ function hdEnd(w){const G=HG;if(G.ph==='res')return;const sk=G.pl.find(p=>p.id==
 function hdHostTick(dt){const G=HG;
  if(G.ph==='hide'){G.tm-=dt;if(G.tm<=0){const d={t:'ph',ph:'seek',tm:HT.seek};hdBc(d);hdApply(d)}}
  else if(G.ph==='seek'){G.tm-=dt;const sk=G.pl.find(p=>p.id===G.sk);
+  G.sw=(G.sw==null?HT.swap:G.sw)-dt;if(G.sw<=0)hdSwap();
   if(G.kills>=G.need)hdEnd('s');else if(G.tm<=0||hdAlive()+G.kills<G.need||!sk||sk.left)hdEnd('h')}
  else if(G.ph==='res'){G.tm-=dt;if(G.tm<=0){if(G.r+1<G.order.length)hdHostRound(G.r+1);else{G.ph='fin';G.again={};const d={t:'fin',sc:hdScores()};hdBc(d);hdApply(d)}}}
  if(G.ph==='hide'||G.ph==='seek')hdBots(dt)}
@@ -1073,11 +1076,11 @@ function hdBots(dt){const G=HG;G.pl.forEach(p=>{if(!p.bot||p.left||!p.alive&&p.i
   const dx=p.bx-p.x,dz=p.bz-p.z,dd=Math.hypot(dx,dz);
   if(p.bk&&dd>7){p.x+=dx/dd*4*dt;p.z+=dz/dd*4*dt;p.hd=Math.atan2(dx,dz);p.mv=1}
   else{p.mv=0;if(p.bk){p.bk=0;hdHostShot(p.id,{x:p.x,z:p.z,a:Math.atan2(-dx,-dz)})}}
-  p.tx=p.x;p.tz=p.z}
+  hdCarPush(p);p.tx=p.x;p.tz=p.z}
  else{
-  if(p.bt<=0){p.bt=3+Math.random()*6;const r=Math.random();if(r<.5){p.lock=1;p.mv=0}else{p.lock=0;p.bx=cl(p.x+(Math.random()-.5)*10,-4.5,4.5);p.bz=cl(p.z+(Math.random()-.5)*14,-95,6);p.bk=1}if(Math.random()<.12)p.prop=Math.floor(Math.random()*PROPS.length)}
+  if(p.bt<=0){p.bt=3+Math.random()*6;const r=Math.random();if(r<.5){p.lock=1;p.mv=0}else{p.lock=0;p.bx=cl(p.x+(Math.random()-.5)*10,-4.5,4.5);p.bz=cl(p.z+(Math.random()-.5)*14,-95,6);p.bk=1}if(G.ph==='hide'&&Math.random()<.12)p.prop=Math.floor(Math.random()*PROPS.length)}
   if(!p.lock&&p.bk){const dx=p.bx-p.x,dz=p.bz-p.z,dd=Math.hypot(dx,dz);if(dd>.3){p.x+=dx/dd*2.2*dt;p.z+=dz/dd*2.2*dt;p.hd=Math.atan2(dx,dz);p.mv=1}else{p.mv=0;p.bk=0}}else p.mv=0;
-  p.tx=p.x;p.tz=p.z}})}
+  hdCarPush(p);p.tx=p.x;p.tz=p.z}})}
 function hdHostShot(id,d){const G=HG;if(G.ph!=='seek'||id!==G.sk)return;const sx=d.x,sz=d.z,fx=-Math.sin(d.a),fz=-Math.cos(d.a);let best=null,bd=1e9;
  const test=(x,z,r,o)=>{const vx=x-sx,vz=z-sz,al=vx*fx+vz*fz;if(al<.6||al>24)return;const lat=Math.abs(vx*fz-vz*fx);if(lat<r+.35+al*.05&&al<bd){bd=al;best=o}};
  G.pl.forEach(p=>{if(!p.left&&p.id!==G.sk&&p.alive)test(p.x,p.z,PROPS[p.prop].r,{h:p})});
@@ -1099,11 +1102,11 @@ function hdMsg(s,ms){const m=$('#xmsg');m.textContent=s;m.style.display='block';
 function hdRole(){const G=HG;const sk=G.sk===G.me;$('#bP').style.display='';$('#bJ').style.display=sk?'none':'';$('#bR').style.display=sk?'':'none';$('#bP').textContent=sk?'ATIRAR':'TRAVAR';$('#bJ').textContent='OBJETO';$('#bR').textContent='CORRER'}
 function hdApply(d){const G=HG;if(!G)return;const pf=id=>G.pl.find(p=>p.id===id);
  if(d.t==='rnd'){G.r=d.r;G.sk=d.sk;G.need=d.need;G.kills=0;G.ph='hide';G.tm=HT.hide;G.res=null;$('#xres').style.display='none';
-  G.pl.forEach(p=>{const s=d.sp[p.id];if(!s||p.left)return;p.alive=true;p.lock=0;p.mv=0;p.x=p.tx=s[0];p.z=p.tz=s[1];p.y=HM.groundAt(p.x,p.z);p.prop=s[2];p.hd=0;if(p.g){p.g.rotation.x=0}});
+  G.pl.forEach(p=>{const s=d.sp[p.id];if(!s||p.left)return;p.alive=true;p.lock=0;p.mv=0;p.x=p.tx=s[0];p.z=p.tz=s[1];hdCarPush(p);p.tx=p.x;p.tz=p.z;p.y=HM.groundAt(p.x,p.z);p.prop=s[2];p.hd=0;if(p.g){p.g.rotation.x=0}});
   G.yaw=0;G.pit=0;G.cd=0;mode=4;hdRole();const sk=G.sk===G.me;
   if(sk){$('#xblind').style.display='flex';$('#xblind').firstChild.textContent='Você é o ATIRADOR'}else $('#xblind').style.display='none';
-  hdMsg(sk?'VOCÊ É O ATIRADOR! Espere os outros se esconderem.':'ESCONDA-SE! Vire um objeto e fique parado. '+HNM[G.sk]+' é o atirador.',5);sfxChime()}
- else if(d.t==='ph'){G.ph=d.ph;G.tm=d.tm;$('#xblind').style.display='none';mode=2;hdMsg(G.sk===G.me?'PROCURE E ATIRE! Achar '+G.need+' ganha. Errar custa '+HT.pen+'s.':'O atirador foi liberado!',3.5);try{sfxBam()}catch(e){}}
+  hdMsg(sk?'VOCÊ É O ATIRADOR! Espere os outros se esconderem.':'ESCONDA-SE! Escolha seu objeto agora. Na procura ele troca sozinho a cada '+HT.swap+'s. '+HNM[G.sk]+' é o atirador.',5);sfxChime()}
+ else if(d.t==='ph'){G.ph=d.ph;G.tm=d.tm;G.sw=HT.swap;$('#xblind').style.display='none';mode=2;hdMsg(G.sk===G.me?'PROCURE E ATIRE! Achar '+G.need+' ganha. Errar custa '+HT.pen+'s.':'O atirador foi liberado!',3.5);try{sfxBam()}catch(e){}}
  else if(d.t==='s'){G.tm=d.tm;if(d.ph!==G.ph&&G.ph!=='res'&&G.ph!=='fin')G.ph=d.ph;d.pl.forEach(a=>{const p=pf(a[0]);if(!p||p.id===G.me)return;p.tx=a[1];p.tz=a[2];p.hd=a[3];p.prop=a[4];p.mv=a[5];p.lock=a[6]})}
  else if(d.t==='ev'){const sh=pf(d.id),fx=-Math.sin(d.a),fz=-Math.cos(d.a),none=d.k==='none';
   G.tr.push({x:d.x,z:d.z,a:d.a,t:.12,l:none?16:Math.max(1,Math.hypot(d.vx-d.x,d.vz-d.z)-.4)});
@@ -1112,6 +1115,9 @@ function hdApply(d){const G=HG;if(!G)return;const pf=id=>G.pl.find(p=>p.id===id)
   if(d.k==='kill'){const p=pf(d.vid);if(p)p.alive=false;G.kills=d.kills;d.sc.forEach(a=>{const q=pf(a[0]);if(q)q.score=a[1]});hdSnd('kill');hdSnd('thud');if(d.id===G.me)hdHitMark();
    hdMsg(d.vid===G.me?'VOCÊ FOI ENCONTRADO!':HNM[d.vid]+' foi achado! ('+G.kills+'/'+G.need+')',3);if(d.vid===G.me)hdRole2()}
   else if(d.k==='miss'){hdSnd('ping');G.tm=d.tm;if(G.sk===G.me)hdMsg('Era só um objeto! -'+HT.pen+'s',2)}}
+ else if(d.t==='swap'){G.sw=HT.swap;const me=pf(G.me);for(const k in d.m){const p=pf(+k);if(!p||!p.alive)continue;p.prop=d.m[k];if(HM)hdImpact(p.x,HM.groundAt(p.x,p.z)+.6,p.z,'dust')}
+  try{hdSnd('ping')}catch(e){}
+  if(me&&me.alive&&G.sk!==G.me&&d.m[G.me]!=null)hdMsg('TROCOU! Agora você é: '+PROPS[me.prop].n.toUpperCase(),2.6);else if(G.sk===G.me)hdMsg('Os objetos trocaram! Olha a fumaça!',2.2)}
  else if(d.t==='gone'){const p=pf(d.id);if(p){p.alive=false;p.left=1;if(p.g)p.g.visible=false}hdMsg(HNM[d.id]+' saiu',2.5)}
  else if(d.t==='end'){G.ph='res';G.tm=HT.res;d.sc.forEach(a=>{const q=pf(a[0]);if(q)q.score=a[1]});G.kills=d.kills;mode=1;
   const sk=pf(G.sk);const win=d.w==='s';const meSk=G.sk===G.me;const meWin=meSk?win:!win;
@@ -1141,7 +1147,8 @@ function hdSnd(k){if(!AC||mute)return;const t0=AC.currentTime;if(k==='ping'){ton
 // ---------- controles e quadro a quadro ----------
 function hdIn(){let fw=0,sd=0;if(joy.on){fw=Math.abs(joy.y)>.15?-joy.y:0;sd=Math.abs(joy.x)>.15?joy.x:0}fw+=(k.w||k.arrowup?1:0)-(k.s||k.arrowdown?1:0);sd+=(k.d?1:0)-(k.a?1:0);return[cl(fw,-1,1),cl(sd,-1,1)]}
 function hdAct(a){const G=HG;if(st!==7||!G||!G.ready)return;const me=G.pl.find(p=>p.id===G.me);if(!me||!me.alive)return;const sk=G.sk===G.me;
- if(a==='obj'&&!sk&&(G.ph==='hide'||G.ph==='seek')){me.prop=(me.prop+1)%PROPS.length;hdMsg(PROPS[me.prop].n,1.2)}
+ if(a==='obj'&&!sk&&G.ph==='hide'){me.prop=(me.prop+1)%PROPS.length;hdMsg(PROPS[me.prop].n,1.2)}
+ else if(a==='obj'&&!sk&&G.ph==='seek'){hdMsg('Agora o objeto troca sozinho a cada '+HT.swap+'s',1.6)}
  else if(a==='act'){if(sk){if(G.ph==='seek'&&G.cd<=0){G.cd=.85;me.rc=.25;me.fl=.07;G.shake=.25;hdSnd('shot');const d={x:me.x,z:me.z,a:G.yaw};if(G.host)hdHostShot(G.me,d);else hdSend(Object.assign({t:'shot'},d))}}
   else if(G.ph==='hide'||G.ph==='seek'){me.lock=me.lock?0:1;$('#bP').textContent=me.lock?'SOLTAR':'TRAVAR'}}}
 $('#bJ').addEventListener('pointerdown',()=>hdAct('obj'));$('#bP').addEventListener('pointerdown',()=>hdAct('act'));
@@ -1152,7 +1159,7 @@ function hdMoveMe(dt,me){const G=HG;if(!me||!me.alive)return;const sk=G.sk===G.m
  G.yaw+=((k.arrowleft?1:0)-(k.arrowright?1:0))*1.9*dt;
  const can=(G.ph==='hide'||G.ph==='seek')&&!(sk&&G.ph==='hide')&&!(!sk&&me.lock);
  let mv=0;if(can){const[fw,sd]=hdIn();const fx=-Math.sin(G.yaw),fz=-Math.cos(G.yaw),rx=Math.cos(G.yaw),rz=-Math.sin(G.yaw);let dx=fx*fw+rx*sd,dz=fz*fw+rz*sd;const L=Math.hypot(dx,dz);
-  if(L>.05){if(L>1){dx/=L;dz/=L}const sp=sk?((run||k.shift)?9:6.2):4.3;me.x=cl(me.x+dx*sp*dt,-4.9,4.9);me.z=cl(me.z+dz*sp*dt,-97,12);me.hd=Math.atan2(dx,dz);mv=1}}
+  if(L>.05){if(L>1){dx/=L;dz/=L}const sp=sk?((run||k.shift)?9:6.2):4.3;me.x=cl(me.x+dx*sp*dt,-4.9,4.9);me.z=cl(me.z+dz*sp*dt,-97,12);hdCarPush(me);me.hd=Math.atan2(dx,dz);mv=1}}
  if(sk)me.hd=G.yaw+Math.PI;me.mv=mv;me.tx=me.x;me.tz=me.z;if(G.cd>0)G.cd-=dt}
 function hdNet(me){const G=HG;const pl=G.pl.filter(p=>!p.left);
  if(G.host){hdBc({t:'s',ph:G.ph,tm:+G.tm.toFixed(2),pl:pl.map(p=>[p.id,+p.x.toFixed(2),+p.z.toFixed(2),+p.hd.toFixed(2),p.prop,p.mv,p.lock])})}
@@ -1171,14 +1178,15 @@ function hdCam(me,dt){const G=HG;let tg=me;if(!me||!me.alive)tg=G.pl.find(p=>p.i
  const fx=-Math.sin(G.yaw),fz=-Math.cos(G.yaw),pt=G.pit||0,ba=Math.max(-.12,Math.min(1.25,.31-pt)),RR=6.5,hh=Math.cos(ba)*RR;let cx=cl(tg.x-fx*hh,-4.9,4.9),cz=cl(tg.z-fz*hh,-99,16);const cy=Math.max(tg.y+1.3+Math.sin(ba)*RR,HM.groundAt(cx,cz)+.9);
  const b=HR.position;C.position.set(b.x+cx,b.y+cy,b.z+cz);if(G.shake>0){C.position.x+=(Math.random()-.5)*G.shake*.4;C.position.y+=(Math.random()-.5)*G.shake*.3;G.shake=Math.max(0,G.shake-.02)}C.lookAt(b.x+tg.x+fx*3,b.y+tg.y+1.3+pt*4.5,b.z+tg.z+fz*3)}
 function hdHud(){const G=HG;const me=G.pl.find(p=>p.id===G.me);const sk=G.sk===G.me;const tm=Math.max(0,Math.ceil(G.tm));
- let role=!me?'':!me.alive?'ELIMINADO — assistindo':sk?'ATIRADOR':'ESCONDIDO: '+PROPS[me.prop].n;
+ const swn=G.ph==='seek'&&G.sw!=null?Math.max(0,Math.ceil(G.sw)):null;
+ let role=!me?'':!me.alive?'ELIMINADO — assistindo':sk?'ATIRADOR':'ESCONDIDO: '+PROPS[me.prop].n+(swn!=null&&swn<=3?' — TROCA EM '+swn+'!':'');
  const ph=G.ph==='hide'?'Esconder: ':G.ph==='seek'?'Procurar: ':'';
  $('#xcross').style.display=(G.sk===G.me&&me&&me.alive&&G.ph==='seek')?'block':'none';$('#xrole').textContent=role;$('#xtm').textContent=ph+Math.floor(tm/60)+':'+String(tm%60).padStart(2,'0');
- $('#xinfo').textContent='Rodada '+(G.r+1)+'/'+G.order.length+' · Achados '+G.kills+'/'+G.need+' · Vivos '+hdAlive();
+ $('#xinfo').textContent='Rodada '+(G.r+1)+'/'+G.order.length+' · Achados '+G.kills+'/'+G.need+' · Vivos '+hdAlive()+(swn!=null?' · Troca de objeto em '+swn+'s':'');
  if(G.sk===G.me&&G.ph==='hide'){$('#xblind').lastChild.textContent='Os outros estão se escondendo: '+tm+'s'}
  if(G.msgT>0){G.msgT-=.15;if(G.msgT<=0)$('#xmsg').style.display='none'}}
 function hdUpd(dt){const G=HG;if(!G||!G.ready||!HM)return;const me=G.pl.find(p=>p.id===G.me);
- hdMoveMe(dt,me);if(G.host)hdHostTick(dt);else if(G.ph==='hide'||G.ph==='seek')G.tm=Math.max(0,G.tm-dt);
+ hdMoveMe(dt,me);if(G.host)hdHostTick(dt);else if(G.ph==='hide'||G.ph==='seek'){G.tm=Math.max(0,G.tm-dt);if(G.ph==='seek'&&G.sw!=null)G.sw=Math.max(0,G.sw-dt)}
  G.acc+=dt;if(G.acc>=.085){G.acc=0;hdNet(me)}
  G.pl.forEach(p=>hdShow(p,dt));hdCam(me,dt);
  G.tr=G.tr.filter(o=>{if(!o.m){o.m=new T.Mesh(new T.BoxGeometry(.04,.04,1),new T.MeshBasicMaterial({color:0xffe27a}));HM.dyn.add(o.m);const sk=G.pl.find(p=>p.id===G.sk);const y=(sk?sk.y:0)+1.3,sx=o.x-Math.sin(o.a)*.5,sz=o.z-Math.cos(o.a)*.5;o.m.scale.z=o.l;o.m.position.set(sx-Math.sin(o.a)*o.l/2,y,sz-Math.cos(o.a)*o.l/2);o.m.rotation.y=o.a+Math.PI}
