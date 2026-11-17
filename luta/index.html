@@ -78,7 +78,7 @@ body.tri .sel2{background:#4a0a1b}
 body.tri .selbg{background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0),rgba(10,2,5,.8) 82%),repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,#7a0f2a 0 9%,#f1f1ee 9% 10.2%,#0c5c34 10.2% 19.2%,#f1f1ee 19.2% 20.4%)}
 body.tri .selbg::before,body.tri .selbg::after{background:linear-gradient(90deg,transparent,#f4f4f0 30%,#fff 50%,#f4f4f0 70%,transparent);opacity:.5}
 body.tri .cards{gap:1cqh}
-body.tri .cards button{width:10.2cqh;background:#5c0c22}
+body.tri .cards button{width:9.3cqh;background:#5c0c22}
 body.tri .cards span{background:#0b4d2b;font-size:1.3cqh;min-height:4.2cqh}
 body.tri .cards button.sel{border-color:#3dff8f;box-shadow:0 0 0 .35cqh #3dff8f,0 0 2.6cqh rgba(61,255,143,.9)}
 body.tri .bigcap{color:#ffd6de;text-shadow:0 2px 0 #050806,0 0 10px rgba(255,60,90,.8)}
@@ -271,11 +271,12 @@ const CHARS=[
   {"id":"t6","name":"LC","tag":"Bumerangue que pega na ida e na volta","sp":"boom","meta":{"idle":[198,292,103.5,288.4],"walk":[228,295,119.8,290.9],"jump":[171,279,94.1,275.8],"crouch":[149,194,66.2,190.3],"jab":[259,271,109.5,267.4],"punch":[252,269,123.1,265.7],"lowkick":[259,267,67.5,263.2],"highkick":[263,275,75.1,271.6],"block":[208,265,110.0,261.5],"ko":[323,124,176.5,120.7],"special":[361,260,150.2,256.5],"fireball":[72,68,3.4,64.5],"hit":[248,244,149.5,240.6],"win":[229,282,120.1,278.3]}},
   {"id":"t7","name":"JOÃO VITOR","tag":"Torneira gigante que joga água","sp":"water","meta":{"idle":[206,292,108.1,288.3],"walk":[226,300,119.1,296.6],"jump":[193,278,102.1,274.2],"crouch":[146,196,60.4,191.9],"jab":[263,264,103.7,260.1],"punch":[258,265,126.7,261.7],"lowkick":[255,251,62.9,247.6],"highkick":[255,275,57.7,271.7],"block":[212,265,111.2,261.7],"hit":[244,250,146.3,245.9],"ko":[333,119,180.1,115.5],"special":[321,252,131.0,248.4],"fireball":[338,235,0.8,231.0],"win":[366,247,159.1,243.5]}},
   {"id":"t8","name":"GAROFALO","tag":"Pescoço que estica e acerta de longe","sp":"neck","meta":{"idle":[192,292,95.6,288.4],"walk":[222,286,111.0,282.5],"jump":[205,299,87.9,295.1],"crouch":[142,203,61.1,199.5],"punch":[217,258,109.5,254.0],"jab":[234,251,113.2,247.3],"lowkick":[271,235,72.3,231.4],"highkick":[228,256,78.3,252.3],"block":[207,260,106.0,256.5],"hit":[178,236,103.5,232.2],"ko":[314,92,153.8,88.0],"special":[379,252,149.3,248.1],"win":[196,257,94.0,253.1],"nbody":[379,252,149.3,248.1],"nhead":[107,138,48.1,69.0]}},
-  {"id":"t9","name":"RAPHAEL","tag":"Vira um furacão e avança rápido","sp":"hurr","meta":{"idle":[201,292,99.2,288.4],"walk":[225,285,112.5,281.6],"jump":[176,296,90.4,291.8],"crouch":[145,203,63.4,199.3],"punch":[229,257,108.8,253.6],"jab":[239,251,117.2,247.7],"lowkick":[277,240,66.2,235.8],"highkick":[214,263,70.2,259.6],"block":[215,256,109.0,251.9],"hit":[201,242,120.1,238.3],"ko":[322,89,155.6,84.8],"special":[362,244,126.4,240.0],"win":[220,255,96.7,251.1]}}
+  {"id":"t9","name":"RAPHAEL","tag":"Vira um furacão e avança rápido","sp":"hurr","meta":{"idle":[201,292,99.2,288.4],"walk":[225,285,112.5,281.6],"jump":[176,296,90.4,291.8],"crouch":[145,203,63.4,199.3],"punch":[229,257,108.8,253.6],"jab":[239,251,117.2,247.7],"lowkick":[277,240,66.2,235.8],"highkick":[214,263,70.2,259.6],"block":[215,256,109.0,251.9],"hit":[201,242,120.1,238.3],"ko":[322,89,155.6,84.8],"special":[362,244,126.4,240.0],"win":[220,255,96.7,251.1]}},
+  {"id":"t10","name":"VH","tag":"Taca iPhone e cega com o flash","sp":"phone","meta":{"idle":[216,292,111.7,288.2],"walk":[221,299,118.3,295.4],"jump":[167,304,96.8,300.2],"crouch":[190,245,91.1,241.8],"punch":[260,263,107.1,259.4],"jab":[246,254,110.3,250.6],"lowkick":[243,252,53.5,249.0],"highkick":[237,250,118.6,246.6],"block":[208,242,98.2,238.6],"hit":[220,250,150.5,246.6],"ko":[365,142,154.5,138.5],"special":[264,248,141.1,245.0],"win":[164,273,81.8,269.8],"fireball":[48,38,24.0,19.0]}}
 ];
 const STAGES=[{id:'bar',name:'BAR DA ESQUINA',img:'img/bar.jpg',prev:'img/bar_p.jpg'},{id:'rua',name:'RUA DO GÁS',img:'img/rua.jpg',prev:'img/rua_p.jpg'},{id:'muro',name:'MURO DA BANDEIRA',img:'img/muro.jpg',prev:'img/muro_p.jpg'},{id:'praca',name:'PRAÇA DA IGREJA',img:'img/praca.jpg',prev:'img/praca_p.jpg'},{id:'burg',name:'HAMBÚRGUER 3 POR 15',img:'img/burg.jpg',prev:'img/burg_p.jpg'},{id:'mara',name:'MARACANÃ',img:'img/mara.jpg',prev:'img/mara_p.jpg'},{id:'lara',name:'LARANJEIRAS',img:'img/lara.jpg',prev:'img/lara_p.jpg'}];
 // duas edições: cada uma com seus lutadores e cenários
-const EDS={ubf:{chars:['c1','c3','c4','c2'],stages:['bar','rua','muro','praca']},tri:{chars:['c1','t1','t2','t3','t4','t5','t6','t7','t8','t9'],stages:['burg','mara','lara']}};
+const EDS={ubf:{chars:['c1','c3','c4','c2'],stages:['bar','rua','muro','praca']},tri:{chars:['c1','t1','t2','t3','t4','t5','t6','t7','t8','t9','t10'],stages:['burg','mara','lara']}};
 let ED='ubf';try{ED=localStorage.getItem('ubf-ed')==='tri'?'tri':'ubf'}catch(e){}
 const CI=id=>CHARS.findIndex(c=>c.id===id),SI=id=>STAGES.findIndex(c=>c.id===id);
 const RO=()=>EDS[ED].chars.map(CI),STO=()=>EDS[ED].stages.map(SI);
@@ -550,7 +551,7 @@ function drawPtk(f){if(!(f.state==='atk'&&f.mv&&f.mv.px))return;const m=f.mv,t=f
   if(m.px==='rep'&&t>=6&&t<12)dr('fx_sp1',f.x+f.face*110,f.y-30,K,0.9,0)}
 function drawEx(){for(const e of (G.ex||[])){const M=CHARS[e.c]&&CHARS[e.c].meta[e.k],im=IM[e.c]&&IM[e.c][e.k];if(!M||!im)continue;const k=1-e.l/e.L,s=K*(e.s0+(e.s1-e.s0)*k);ctx.save();ctx.globalAlpha=Math.min(1,e.l/(e.L*0.5));ctx.translate(e.x,e.y);ctx.scale(e.fl,1);ctx.drawImage(im,-M[0]*s/2,-M[1]*s/2,M[0]*s,M[1]*s);ctx.restore()}}
 function separate(){const a=F[0],b=F[1];if(['thrown','down','throw'].includes(a.state)||['thrown','down','throw'].includes(b.state))return;const d=b.x-a.x,min=72;if(Math.abs(d)<min&&Math.abs(a.y-b.y)<160&&a.state!=='ko'&&b.state!=='ko'){const push=(min-Math.abs(d))/2*(d>=0?1:-1);a.x-=push;b.x+=push;a.x=Math.max(60,Math.min(W-60,a.x));b.x=Math.max(60,Math.min(W-60,b.x))}}
-const PJ={leaf:{dx:140,dy:175,vx:10,life:120,say:'SEGURA A FOLHA!'},smoke:{dx:110,dy:200,vx:6,life:150,say:'SENTE O CHEIRO!'},boom:{dx:120,dy:175,vx:12.5,life:240,say:'VAI E VOLTA!'},water:{dx:150,dy:160,vx:10,life:120,say:'ABRE A TORNEIRA!'},fire:{dx:170,dy:215,vx:9,life:120,say:'TOMA FOGO!'}};
+const PJ={phone:{dx:130,dy:185,vx:12.5,life:110,say:'TOMA IPHONE!'},leaf:{dx:140,dy:175,vx:10,life:120,say:'SEGURA A FOLHA!'},smoke:{dx:110,dy:200,vx:6,life:150,say:'SENTE O CHEIRO!'},boom:{dx:120,dy:175,vx:12.5,life:240,say:'VAI E VOLTA!'},water:{dx:150,dy:160,vx:10,life:120,say:'ABRE A TORNEIRA!'},fire:{dx:170,dy:215,vx:9,life:120,say:'TOMA FOGO!'}};
 function shoot(f){const k=CHARS[f.c].sp,q=PJ[k]||PJ.fire;f.proj={c:f.c,kind:k,x:f.x+f.face*q.dx,y:f.y-q.dy,vx:q.vx*f.face,dir:f.face,owner:f.i,life:q.life,rot:0,age:0};sfx(k==='water'||k==='smoke'?'whoosh':'fire');say(f,q.say)}
 MOVES.boom_hit={dmg:9,stun:20,push:5,lvl:'m'};MOVES.water_hit={dmg:13,stun:22,push:11,lvl:'m'};
 function stepProj(f){const p=f.proj;if(!p)return;p.age=(p.age||0)+1;
@@ -559,7 +560,7 @@ function stepProj(f){const p=f.proj;if(!p)return;p.age=(p.age||0)+1;
   if(p.kind==='leaf')p.rot+=0.3;
   p.x+=p.vx;p.life--;if(p.vy)p.y=Math.min(p.y+p.vy,p.yMax);if(p.kind==='cig'){p.rot=(p.rot||0)+0.5;if(G.tf%2===0)G.parts.push({x:p.x-p.vx,y:p.y-4,vx:-p.vx*0.05,vy:-0.4,l:22,col:'rgba(225,225,225,.55)'})}const d=F[1-f.i];const h=hurt(d);
   const o=F[1-f.i].proj;if(o&&Math.abs(o.x-p.x)<60){spark((o.x+p.x)/2,p.y,'#9fdcff',18);f.proj=null;F[1-f.i].proj=null;sfx('block');return}
-  const fe=p.x+(p.vx>0?55:-55);if(h&&!p.hit&&fe>h.x0-10&&fe<h.x1+10&&p.y>h.y0&&p.y<h.y1){applyHit(f,d,p.kind==='wave'?MOVES.wave_hit:p.kind==='kaiser'?(p.big?MOVES.kw_big:MOVES.kw_hit):p.kind==='cig'?MOVES.cig_hit:p.kind==='boom'?MOVES.boom_hit:p.kind==='water'?MOVES.water_hit:MOVES.sp_hit,fe,p.y,1);if(p.kind==='cig')spark(fe,p.y,'#ff8a1a',14);if(p.kind==='leaf'||p.kind==='smoke')spark(fe,p.y,'#5dff6a',14);if(p.kind==='water')spark(fe,p.y,'#8fd6ff',16);if(p.kind==='wave')exAdd(p.c,'fx_w4',fe,p.y,14,0.9,1.1,p.vx>0?1:-1);if(p.kind==='kaiser')exAdd(p.c,'fx_k4',fe,p.y,16,p.big?1:0.8,p.big?1.6:1.2);if(p.kind==='boom'){p.hit=true;return}f.proj=null;return}
+  const fe=p.x+(p.vx>0?55:-55);if(h&&!p.hit&&fe>h.x0-10&&fe<h.x1+10&&p.y>h.y0&&p.y<h.y1){applyHit(f,d,p.kind==='wave'?MOVES.wave_hit:p.kind==='kaiser'?(p.big?MOVES.kw_big:MOVES.kw_hit):p.kind==='cig'?MOVES.cig_hit:p.kind==='boom'?MOVES.boom_hit:p.kind==='water'?MOVES.water_hit:MOVES.sp_hit,fe,p.y,1);if(p.kind==='cig')spark(fe,p.y,'#ff8a1a',14);if(p.kind==='leaf'||p.kind==='smoke')spark(fe,p.y,'#5dff6a',14);if(p.kind==='water')spark(fe,p.y,'#8fd6ff',16);if(p.kind==='phone')spark(fe,p.y,'#ffffff',14);if(p.kind==='wave')exAdd(p.c,'fx_w4',fe,p.y,14,0.9,1.1,p.vx>0?1:-1);if(p.kind==='kaiser')exAdd(p.c,'fx_k4',fe,p.y,16,p.big?1:0.8,p.big?1.6:1.2);if(p.kind==='boom'){p.hit=true;return}f.proj=null;return}
   if(p.life<=0||p.x<-200||p.x>W+200)f.proj=null}
 MOVES.sp_hit={dmg:14,stun:22,push:7,lvl:'m'};
 MOVES.cig_hit={dmg:10,stun:18,push:5,lvl:'h'};
@@ -586,7 +587,7 @@ function cpu(f){const o=F[0],dist=Math.abs(o.x-f.x),A=f.ai,lv=[{r:26,agg:0.3,blk
 
 
 /* ---------- ESPECIAL: barra que enche batendo e apanhando; cheia, ↓↘→↓↘→ + soco forte ---------- */
-const SUPS={c1:{kind:'rush',name:'CHUVA DE SOCOS'},c2:{kind:'rush',name:'PORRADA DE RUA'},c3:{kind:'news',name:'EXTRA! EXTRA!'},c4:{kind:'birds',name:'REVOADA'},t1:{kind:'haze',name:'NÉVOA 4:20'},t2:{kind:'smoke',name:'BRISA VERDE'},t3:{kind:'fox',name:'RAPOSA GIGANTE'},t4:{kind:'rush',name:'FÚRIA DO DEMÔNIO'},t5:{kind:'rush',name:'PORRADA DA CEREJA'},t6:{kind:'rush',name:'VAI E VOLTA NA MÃO'},t7:{kind:'flood',name:'INUNDAÇÃO'},t8:{kind:'neck',name:'PESCOÇO GIGANTE'},t9:{kind:'rush',name:'RAJADA DO FURACÃO'}};
+const SUPS={c1:{kind:'rush',name:'CHUVA DE SOCOS'},c2:{kind:'rush',name:'PORRADA DE RUA'},c3:{kind:'news',name:'EXTRA! EXTRA!'},c4:{kind:'birds',name:'REVOADA'},t1:{kind:'haze',name:'NÉVOA 4:20'},t2:{kind:'smoke',name:'BRISA VERDE'},t3:{kind:'fox',name:'RAPOSA GIGANTE'},t4:{kind:'rush',name:'FÚRIA DO DEMÔNIO'},t5:{kind:'rush',name:'PORRADA DA CEREJA'},t6:{kind:'rush',name:'VAI E VOLTA NA MÃO'},t7:{kind:'flood',name:'INUNDAÇÃO'},t8:{kind:'neck',name:'PESCOÇO GIGANTE'},t9:{kind:'rush',name:'RAJADA DO FURACÃO'},t10:{kind:'flash',name:'FLASH NA CARA'}};
 // efeitos de tela que somem sozinhos (fumaça do S7)
 function fxDecay(){G.ex=(G.ex||[]).filter(e=>--e.l>0);{const gx=G.gfox;if(gx&&gx.ph==='leave'){gx.t++;if(gx.t>14)gx.x+=26*gx.dir;if(gx.x<-500||gx.x>W+500)G.gfox=null}}const x=G.fx;if(x.smoke>0&&!(F.some(f=>f.state==='super'&&f.sup&&f.sup.kind==='smoke')))x.smoke=Math.max(0,x.smoke-1/190)}
 // no TRICOLORES o PTK usa a arte de camisa do Flu (fundo grená e verde, igual aos outros)
@@ -627,6 +628,13 @@ function stepSuper(a){const d=F[1-a.i],S=a.sup,t=a.t;if(!S){a.state='idle';retur
     if(t>8+16*5&&!G.birds.length){if(!S.fin){S.fin=t;superHit(a,d,4,d.x,d.y-150,true)}}
     if(S.fin&&t>S.fin+14)endSuper(a,true);
     if(t>260)endSuper(a,true);
+    return}
+  if(S.kind==='flash'){
+    if(t===6){say(a,'SORRIA!');sfx('whoosh')}
+    if(t===12)superLock(a,d);
+    if(G.white>0)G.white=Math.max(0,G.white-0.16);
+    if(t>=16&&t<16+22*5&&(t-16)%5===0){const n=(t-16)/5,last=n===21;G.white=0.95;superHit(a,d,last?4:1.4,d.x+(Math.random()-.5)*60,d.y-60-Math.random()*170,last);if(!last)G.shake=Math.max(G.shake,3)}
+    if(t>=16+22*5+14)endSuper(a,true);
     return}
   if(S.kind==='fox'){
     if(t===6){say(a,'PEGA ELE, RAPOSA!');sfx('whoosh')}
@@ -759,7 +767,7 @@ function sprFor(f){
   if(f.state==='atk'&&f.mv.px)return ptkSpr(f);
   if(f.state==='super'&&f.sup){const S=f.sup;if(G.sf>0)return S.kind==='birds'?'special':S.kind==='news'?'block':'idle';
     if(S.kind==='rush'){if(!S.lock)return f.t%6<3?'walk':'jump';const k=f.t-S.k;if(k<60)return['jab','punch','lowkick','highkick'][Math.floor(k/5)%4];return k<74?'punch':'idle'}
-    if(S.kind==='birds')return f.t<8?'idle':'special';if(S.kind==='neck')return f.t<12?'punch':'nbody';if(S.kind==='haze')return f.t<6?'idle':'win';if(S.kind==='smoke'||S.kind==='flood')return f.t<6?'idle':'special';return'block'}
+    if(S.kind==='birds')return f.t<8?'idle':'special';if(S.kind==='neck')return f.t<12?'punch':'nbody';if(S.kind==='flash')return f.t<8?'idle':'win';if(S.kind==='haze')return f.t<6?'idle':'win';if(S.kind==='smoke'||S.kind==='flood')return f.t<6?'idle':'special';return'block'}
   if(f.state==='atk'&&f.mv.dive){const m=f.mv;return f.t<m.start?'crouch':f.t<m.start+m.act+8?'special':'crouch'}
   if(f.state==='atk'&&f.mv.busc)return f.t<4?'idle':'highkick';
   if(f.state==='throw')return f.t<12?'punch':'win';
@@ -817,6 +825,7 @@ function drawF(f){let k0=sprFor(f);const MM=CHARS[f.c].meta;if(MM.gd1&&f.ground)
   ctx.drawImage(im,-ax,-ay,w,h);ctx.restore();drawDizzy(f)}
 function drawProj(f){const p=f.proj;if(!p)return;
   if(p.kind==='wave'||p.kind==='kaiser'){const ag=p.age||0,k=p.kind==='wave'?'fx_w'+(ag<4?1:ag<8?2:(G.tf%8<5?3:2)):(ag<3?'fx_k2':'fx_k3'),M=CHARS[p.c].meta[k],im=IM[p.c][k];if(!M||!im)return;const s=K*(p.big?1.45:1)*(1+Math.sin(G.tf*0.6)*0.04);ctx.save();ctx.translate(p.x,p.y);ctx.scale(p.vx>0?1:-1,1);ctx.drawImage(im,-M[0]*s*0.75,-M[1]*s/2,M[0]*s,M[1]*s);ctx.globalCompositeOperation='lighter';ctx.globalAlpha=0.3;ctx.drawImage(im,-M[0]*s*0.75,-M[1]*s/2,M[0]*s,M[1]*s);ctx.restore();return}
+  if(p.kind==='phone'){const M=CHARS[p.c].meta.fireball,im=IM[p.c].fireball;if(!M||!im)return;const s=K*1.9;for(let q=0;q<3;q++){const a=G.tf*0.35+q*2.1;ctx.save();ctx.translate(p.x-Math.sign(p.vx)*q*34,p.y+Math.sin(a)*16+(q-1)*14);ctx.rotate(a*(p.vx>0?1:-1));ctx.drawImage(im,-M[0]*s/2,-M[1]*s/2,M[0]*s,M[1]*s);ctx.restore()}return}
   if(p.kind==='leaf'||p.kind==='boom'||p.kind==='smoke'||p.kind==='water'){const M=CHARS[p.c].meta.fireball,im=IM[p.c].fireball;if(!M||!im)return;ctx.save();ctx.translate(p.x,p.y);
     if(p.kind==='leaf'||p.kind==='boom'){const s=K*(p.kind==='boom'?1.15:0.95);ctx.rotate(p.rot*(p.dir||1));ctx.drawImage(im,-M[0]*s/2,-M[1]*s/2,M[0]*s,M[1]*s)}
     else if(p.kind==='smoke'){const s=K*(0.8+Math.min(0.5,(p.age||0)/120));ctx.scale(p.vx>0?1:-1,1);ctx.globalAlpha=Math.min(0.95,p.life/30);ctx.drawImage(im,-M[0]*s*0.55,-M[1]*s/2,M[0]*s,M[1]*s)}
