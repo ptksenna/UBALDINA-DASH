@@ -227,7 +227,21 @@ button{touch-action:manipulation}
 <div id="bres"><div><img data-logo class="rl" alt=""><h2 id="brh"></h2><p id="brp"></p><button id="brb1"></button><button id="brb2">MENU</button></div></div>
 <div id="hsel"><div id="htop"><button id="hB">◀ MENU PRINCIPAL</button><img data-logo class="kl" alt=""></div><h2>ESCONDE-ESCONDE</h2><p class="hp">Um atirador é sorteado. Os outros viram objetos da rua e têm 30s para se esconder. O atirador tem 1min30 para achar 70% deles.</p><div id="hbt"><button id="hC">Criar sala</button><input id="hcd" maxlength="4" placeholder="CÓDIGO"><button id="hE">Entrar</button><button id="hT" class="alt">Treino com bots</button></div><div id="hpl"></div><div id="hact"><button id="hRd" style="display:none">PRONTO</button><button id="hmic">🎤</button></div><div id="hst"></div></div>
 <div id="xhud"><div id="xrole"></div><div id="xtm"></div><div id="xinfo"></div></div><div id="xmsg"></div><div id="xblind"><b></b><span></span></div><div id="xres"></div><div id="xcross">✛</div><button id="xmic">🎤</button>
-<div id="splash"><div class="sp"><div class="crown">♛</div><div class="spn">Patraca</div><div class="spg"><i></i>Games<i></i></div></div></div><div id="wipe"></div><img data-logo id="wm" alt=""><button id="hHome" title="Menu inicial">🏠</button><div id="menu"><div class="tt"><img data-logo id="mlogo" alt="Rua Ubaldina — Patraca Games"></div>
+<div id="splash"><div class="sp"><div class="crown">♛</div><div class="spn">Patraca</div><div class="spg"><i></i>Games<i></i></div></div></div><div id="wipe"></div><img data-logo id="wm" alt=""><div id="pick"><style>
+#pick{position:fixed;inset:0;z-index:900;background:radial-gradient(120% 90% at 50% 30%,#0b2a14,#020503 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:calc(env(safe-area-inset-top,0px) + 16px) max(16px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 16px) max(16px,env(safe-area-inset-left,0px));font-family:inherit}
+#pick h2{margin:0;color:#7dff7a;font-size:13px;letter-spacing:.3em;text-transform:uppercase;opacity:.8}
+#pick .pw{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;width:100%;max-width:760px}
+#pick button{flex:1 1 260px;max-width:360px;min-height:150px;border-radius:18px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;font-family:inherit;font-weight:900;font-size:22px;line-height:1.1;letter-spacing:.04em;text-transform:uppercase;transition:transform .12s}
+#pick button:active{transform:scale(.96)}
+#pick img{max-height:96px;max-width:90%;object-fit:contain}
+#pick .pu{background:#04130a;border:2px solid #39ff14;color:#39ff14;box-shadow:0 0 22px #39ff1455,inset 0 0 18px #39ff1422}
+#pick .pc{background:#140804;border:2px solid #ff8a1f;color:#ffb23f;box-shadow:0 0 22px #ff6a0055,inset 0 0 18px #ff6a0022}
+#pick small{font-size:11px;font-weight:600;letter-spacing:.2em;opacity:.7}
+#pick .pf{color:#7dff7a;font-size:11px;letter-spacing:.25em;opacity:.55}
+@media (max-height:460px){#pick button{min-height:110px}#pick img{max-height:60px}}
+</style><h2>Escolha o jogo</h2><div class="pw"><button class="pu" id="pickU"><img src="icon-512.png" alt="">Rua Ubaldina<small>todos os modos</small></button><button class="pc" id="pickC"><img src="luta/img/caze_logo.png" alt="">Cazé Fighter<small>luta • roda de bobo</small></button></div><div class="pf">PATRACA GAMES</div>
+<script>(function(){var p=document.getElementById('pick');document.getElementById('pickU').onclick=function(){p.remove()};document.getElementById('pickC').onclick=function(){location.href='luta/?ed=caze'}})();</script></div>
+<button id="hHome" title="Menu inicial">🏠</button><div id="menu"><div class="tt"><img data-logo id="mlogo" alt="Rua Ubaldina — Patraca Games"></div>
 <div id="mm"><div id="mmain" style="display:flex;flex-direction:column;gap:12px"><button id="bIni">Iniciar</button><button id="bDif" class="alt" style="display:none">Dificuldade: Médio</button><button id="bLuta">Luta</button><button id="bKart">Kart</button><button id="bHide">Esconde-esconde</button><button id="bFlav">Corre, o Flávio fugiu!</button><button id="bGuerra">Guerra na Ubaldina</button></div>
 <div id="msub" style="flex-direction:column;gap:12px"><button id="de">Molezinha</button><button id="dm" class="alt">Médio</button><button id="dh">Difícil pra caralho</button></div></div>
 <div id="logo">🎮 <b>Patraca</b> Games<br><button id="bInst">📲 INSTALAR APP</button></div></div>
