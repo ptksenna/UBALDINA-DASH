@@ -250,21 +250,36 @@ button{touch-action:manipulation}
 #czPay .b1{background:#ff8a1f;color:#140804}#czPay .b2{background:#25d366;color:#04130a}#czPay .b3{background:transparent;color:#ffb23f;border:1px solid #ff8a1f55!important}
 #czPay input{background:#000;border:2px solid #39ff14;border-radius:10px;color:#39ff14;font:900 22px monospace;letter-spacing:.25em;text-align:center;padding:10px;text-transform:uppercase;width:100%;box-sizing:border-box}
 #czPay .wt{font-size:13px;color:#39ff14;animation:czp 1.4s infinite}@keyframes czp{50%{opacity:.45}}#czPay summary{list-style:none}#czPay .msg{min-height:18px;font-size:13px;color:#ff6b6b}#czPay .sm{font-size:12px;opacity:.75}
+#pickG{background:#0a0f0b;border:1px solid #39ff1488;color:#7dff7a;border-radius:12px;padding:12px 22px;font-weight:900;font-size:14px;letter-spacing:.15em;cursor:pointer;font-family:inherit}
+#czAdm{position:fixed;inset:0;z-index:950;background:#000c;display:flex;align-items:center;justify-content:center;padding:16px}#czAdm[hidden]{display:none}
+#czAdm .bx{background:#04130a;border:2px solid #39ff14;border-radius:18px;max-width:420px;width:100%;max-height:100%;overflow:auto;padding:18px;color:#d9ffd6;box-shadow:0 0 30px #39ff1444;display:flex;flex-direction:column;gap:10px;text-align:center}
+#czAdm h3{margin:0;color:#39ff14;font-size:19px;letter-spacing:.08em}#czAdm .sm{font-size:12px;opacity:.8}
+#czAdm .cd{font:900 30px monospace;letter-spacing:.2em;color:#fff;background:#000;border:1px dashed #39ff14;border-radius:12px;padding:12px}
+#czAdm input{background:#000;border:2px solid #ff8a1f;border-radius:10px;color:#ffb23f;font:900 22px monospace;letter-spacing:.25em;text-align:center;padding:10px;text-transform:uppercase;width:100%;box-sizing:border-box}
+#czAdm button{width:100%;border:0;border-radius:12px;padding:12px;font-weight:900;font-size:15px;cursor:pointer;background:#39ff14;color:#04130a;font-family:inherit}#czAdm .b3{background:transparent;color:#7dff7a;border:1px solid #39ff1455}
+#czAdm hr{border:0;border-top:1px solid #39ff1433;width:100%;margin:4px 0}
 @media (max-height:460px){#pick .pw button{min-height:110px}#pick .pw img{max-height:60px}}
-</style><h2>Escolha o jogo</h2><div class="pw"><button class="pu" id="pickU"><img src="icon-512.png" alt="">Rua Ubaldina<small>todos os modos</small></button><button class="pc" id="pickC"><span class="lk">🔒 R$ 5</span><img src="luta/img/caze_logo.png" alt="">Cazé Fighter<small id="czSub">luta • roda de bobo</small></button></div><div class="pf">PATRACA GAMES</div>
+</style><h2>Escolha o jogo</h2><div class="pw"><button class="pu" id="pickU"><img src="icon-512.png" alt="">Rua Ubaldina<small>todos os modos</small></button><button class="pc" id="pickC"><span class="lk">🔒 R$ 5</span><img src="luta/img/caze_logo.png" alt="">Cazé Fighter<small id="czSub">luta • roda de bobo</small></button></div><button id="pickG" hidden>⚙️ GESTÃO</button><div class="pf">PATRACA GAMES</div>
+<div id="czAdm" hidden><div class="bx"><h3>⚙️ GESTÃO</h3><div class="sm">Cazé Fighter — liberar pra quem você quiser</div>
+<div class="sm">Código padrão (libera qualquer conta):</div><div class="cd">PATRACA5</div><button id="czAP">Copiar código padrão</button><hr>
+<div class="sm">Código individual (só vale pra conta da pessoa).<br>Peça o <b>código de jogador</b> que aparece pra ela em "Tenho um código de liberação":</div>
+<input id="czAI" maxlength="6" placeholder="JOGADOR" autocomplete="off"><div class="sm">Código de liberação dela:</div><div class="cd" id="czAO">——</div><button id="czAC">Copiar mensagem pra mandar</button><div class="sm" id="czAM"></div>
+<button class="b3" id="czAX">Fechar</button></div></div>
 <div id="czPay" hidden><div class="bx"><h3>🔒 CAZÉ FIGHTER</h3><div class="sm">Libere o jogo pra sempre na sua conta</div><div class="pr">R$ 5,00</div>
 <div id="czA"><button class="b2" id="czGen">Pagar com Pix</button></div>
 <div id="czQ" hidden style="flex-direction:column;gap:10px"><img id="czImg" alt="QR Code do Pix" style="width:200px;max-width:70%;align-self:center;background:#fff;border-radius:10px;padding:8px;margin:0 auto;display:block"><div class="sm">Ou copie o Pix copia e cola:</div><div class="k" id="czKey"></div><button class="b1" id="czCopy">Copiar Pix copia e cola</button><div class="wt" id="czWt">⏳ Aguardando pagamento… pague no app do seu banco que a tela muda sozinha.</div></div>
 <div class="msg" id="czMsg"></div>
-<details id="czDet"><summary class="sm" style="cursor:pointer">Tenho um código de liberação</summary><div style="display:flex;flex-direction:column;gap:8px;margin-top:8px"><input id="czIn" maxlength="10" placeholder="CÓDIGO" autocomplete="off"><button class="b1" id="czGo">Liberar</button></div></details>
+<details id="czDet"><summary class="sm" style="cursor:pointer">Tenho um código de liberação</summary><div style="display:flex;flex-direction:column;gap:8px;margin-top:8px"><div class="sm">Seu código de jogador: <b id="czId" style="color:#39ff14;font-family:monospace;font-size:16px;letter-spacing:.15em">------</b></div><input id="czIn" maxlength="10" placeholder="CÓDIGO" autocomplete="off"><button class="b1" id="czGo">Liberar</button></div></details>
 <button class="b3" id="czX">Voltar</button></div></div>
 <script>(function(){var CZS='da3a9df2b7b68fb6';function czH(s){var h=2166136261>>>0,g=5381;for(var i=0;i<s.length;i++){var c=s.charCodeAt(i);h=Math.imul(h^c,16777619)>>>0;g=(Math.imul(g,33)+c)>>>0}var A='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',o='',x=h,y=g;for(var j=0;j<6;j++){var v=(j<3?x:y)%32;o+=A[v];if(j<3)x=Math.floor(x/32);else y=Math.floor(y/32)}return o};function czId(u){return czH('ID|'+u)}function czOk(u,c){if(!u||!c)return false;var k=String(c).toUpperCase().replace(/[^A-Z0-9]/g,'');return k==='PATRACA5'||k===czH('CZF|'+czId(u)+'|'+CZS)}
 var FN='https://caze-pix.magnetismolabel.workers.dev/';
+var ADM=['patruca2007@gmail.com'];
 var p=document.getElementById('pick'),M=document.getElementById('czPay'),$=function(i){return document.getElementById(i)},poll=null;
 function uid(){try{if(window.CONTA&&CONTA.perfil&&CONTA.perfil.uid)return CONTA.perfil.uid;var c=JSON.parse(localStorage.getItem('ub-conta')||'null');return c&&c.uid}catch(e){return null}}
 function lsg(k){try{return localStorage.getItem(k)||''}catch(e){return ''}}function lss(k,v){try{if(v)localStorage.setItem(k,v);else localStorage.removeItem(k)}catch(e){}}
-function liberado(){var u=uid();if(!u)return false;return lsg('cz-pago-'+u)==='1'||czOk(u,lsg('cz-lib-'+u)||(window.CONTA&&CONTA.perfil&&CONTA.perfil.czcode))}
-function marca(){var l=p&&p.querySelector('.lk');if(l)l.style.display=liberado()?'none':''}
+function adm(){try{var us=window.firebase&&firebase.auth&&firebase.auth().currentUser;if(us&&us.email&&ADM.indexOf(us.email.toLowerCase())>=0){lss('cz-adm',us.uid);return true}var u=uid();return !!u&&lsg('cz-adm')===u}catch(e){return false}}
+function liberado(){var u=uid();if(!u)return false;return adm()||lsg('cz-pago-'+u)==='1'||czOk(u,lsg('cz-lib-'+u)||(window.CONTA&&CONTA.perfil&&CONTA.perfil.czcode))}
+function marca(){var l=p&&p.querySelector('.lk');if(l)l.style.display=liberado()?'none':'';var g=$('pickG');if(g)g.hidden=!adm()}
 function msg(t,ok){$('czMsg').style.color=ok?'#39ff14':'#ff6b6b';$('czMsg').textContent=t||''}
 function entra(){stop();msg('✅ Pagamento confirmado! Bora lutar…',1);$('czWt').hidden=true;setTimeout(function(){location.href='luta/?ed=caze'},900)}
 function stop(){if(poll){clearInterval(poll);poll=null}}
@@ -274,8 +289,14 @@ function api(acao){var us=window.firebase&&firebase.auth&&firebase.auth().curren
  return us.getIdToken().then(function(t){return fetch(FN,{method:'POST',headers:{'Authorization':'Bearer '+t,'Content-Type':'application/json'},body:JSON.stringify({acao:acao})})}).then(function(r){return r.json().then(function(j){if(!r.ok)throw j;return j})})}
 $('pickU').onclick=function(){stop();p.remove()};
 $('pickC').onclick=function(){if(liberado()){location.href='luta/?ed=caze';return}abre()};
-function abre(){msg('');$('czQ').hidden=true;$('czQ').style.display='';$('czA').hidden=false;$('czGen').disabled=false;$('czGen').textContent='Pagar com Pix';if(!uid())msg('Entre na sua conta primeiro (login do jogo) pra liberar.');M.hidden=false}
+function abre(){msg('');$('czQ').hidden=true;$('czQ').style.display='';$('czA').hidden=false;$('czGen').disabled=false;$('czGen').textContent='Pagar com Pix';var u=uid();$('czId').textContent=u?czId(u):'------';if(!u)msg('Entre na sua conta primeiro (login do jogo) pra liberar.');M.hidden=false}
 $('czX').onclick=function(){stop();M.hidden=true};
+$('pickG').onclick=function(){if(!adm())return;$('czAI').value='';$('czAO').textContent='——';$('czAM').textContent='';$('czAdm').hidden=false};
+$('czAX').onclick=function(){$('czAdm').hidden=true};
+function cp(t,el,ok){try{navigator.clipboard.writeText(t).then(function(){el.textContent=ok},function(){el.textContent='Selecione e copie: '+t})}catch(e){el.textContent='Selecione e copie: '+t}}
+$('czAP').onclick=function(){cp('PATRACA5',$('czAM'),'Código padrão copiado ✔')};
+$('czAI').oninput=function(){var v=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'');this.value=v;$('czAO').textContent=v.length===6?czH('CZF|'+v+'|'+CZS):'——';$('czAM').textContent=''};
+$('czAC').onclick=function(){var c=$('czAO').textContent;if(c.length!==6){$('czAM').textContent='Digite o código de jogador primeiro.';return}cp('Seu código de liberação do CAZÉ FIGHTER: '+c+'\nAbra o jogo, toque em CAZÉ FIGHTER > "Tenho um código de liberação" e digite.',$('czAM'),'Mensagem copiada ✔ — cole no WhatsApp da pessoa')};
 $('czGen').onclick=function(){var b=this;if(FN.indexOf('http')){msg('Pagamento automático chegando em breve. Se você tem um código, use abaixo.');return}
  if(!uid()){msg('Entre na sua conta primeiro.');return}b.disabled=true;b.textContent='Gerando Pix…';msg('');
  api('criar').then(function(j){var u=uid();if(j.pago){lss('cz-pago-'+u,'1');entra();return}
@@ -1514,4 +1535,4 @@ ubHud({mode:()=>st===1?'dash':st===5?'kart':st===6?'beat':st===7?'hide':null,sho
  pause:on=>{window.__hp=on&&(st===1||st===6)?1:0},
  css:'body.hedit #joy,body.hedit #btns{display:block!important}body.hedit #bJ,body.hedit #bP,body.hedit #bR{display:block!important}body.hedit.k #bRe{display:block!important}'});
 loop(last);
-</script><script>/* modo CORRE, O FLÁVIO FUGIU! */(function(){var b=document.getElementById('bFlav');if(!b)return;b.onclick=function(){var go=function(){location.href='flavio.html'};try{if(typeof fade==='function'){fade(go);return}}catch(e){}go()}})();</script><script>/* modo GUERRA NA UBALDINA */(function(){var b=document.getElementById('bGuerra');if(!b)return;b.onclick=function(){var go=function(){location.href='guerra.html'};try{if(typeof fade==='function'){fade(go);return}}catch(e){}go()}})();</script><script>/* iPhone: reajusta a tela quando a barra do Safari aparece/some ou o celular gira */(function(){var f=function(){try{window.scrollTo(0,0)}catch(e){}window.dispatchEvent(new Event('resize'))};var t;if(window.visualViewport)visualViewport.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(f,120)});addEventListener('orientationchange',function(){setTimeout(f,350)})})();</script><script src="conta.js?v=4"></script></body></html>
+</script><script>/* modo CORRE, O FLÁVIO FUGIU! */(function(){var b=document.getElementById('bFlav');if(!b)return;b.onclick=function(){var go=function(){location.href='flavio.html'};try{if(typeof fade==='function'){fade(go);return}}catch(e){}go()}})();</script><script>/* modo GUERRA NA UBALDINA */(function(){var b=document.getElementById('bGuerra');if(!b)return;b.onclick=function(){var go=function(){location.href='guerra.html'};try{if(typeof fade==='function'){fade(go);return}}catch(e){}go()}})();</script><script>/* iPhone: reajusta a tela quando a barra do Safari aparece/some ou o celular gira */(function(){var f=function(){try{window.scrollTo(0,0)}catch(e){}window.dispatchEvent(new Event('resize'))};var t;if(window.visualViewport)visualViewport.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(f,120)});addEventListener('orientationchange',function(){setTimeout(f,350)})})();</script><script src="conta.js?v=5"></script></body></html>
