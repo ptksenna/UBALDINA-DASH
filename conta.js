@@ -15,6 +15,7 @@ var C=window.CONTA={user:null,perfil:cache,offline:false,_cb:[],
   sair:function(){lsSet(null);C.perfil=null;try{firebase.auth().signOut()}catch(e){}abrir('login')},
   salvarNome:function(n){n=limpa(n);if(!n||!C.user||!C.db||!C.perfil||C.perfil.nome===n)return;C.perfil.nome=n;lsSet(C.perfil);chip();
     C.db.collection('jogadores').doc(C.user.uid).set({nome:n},{merge:true}).catch(function(){})}};
+C.salvarCz=function(code){if(!C.user||!C.db)return;if(C.perfil){C.perfil.czcode=code;lsSet(C.perfil)}C.db.collection('jogadores').doc(C.user.uid).set({czcode:code},{merge:true}).catch(function(){})};
 function limpa(n){return String(n||'').toUpperCase().replace(/[^A-Z0-9ÁÂÃÀÉÊÍÓÔÕÚÇ ]/g,'').replace(/\s+/g,' ').trim().slice(0,12)}
 
 /* ---------- visual ---------- */
@@ -136,7 +137,7 @@ function ref(){return C.db.collection('jogadores').doc(C.user.uid)}
 function buscarPerfil(u){
   return ref().get().then(function(d){
     if(!d.exists){abrir('nome',{foto:u.photoURL,sugestao:(cache&&cache.uid===u.uid&&cache.nome)||(u.displayName||'').split(' ')[0]});return}
-    var x=d.data();var p={uid:u.uid,nome:x.nome||limpa(u.displayName),foto:x.foto||u.photoURL||'',moedas:x.moedas|0,skins:x.skins||[]};
+    var x=d.data();var p={uid:u.uid,nome:x.nome||limpa(u.displayName),foto:x.foto||u.photoURL||'',moedas:x.moedas|0,skins:x.skins||[],czcode:x.czcode||''};
     pronto(p);
     var up={ultimo:firebase.firestore.FieldValue.serverTimestamp()};if(u.photoURL&&u.photoURL!==x.foto)up.foto=u.photoURL;ref().set(up,{merge:true}).catch(function(){})})}
 function criarPerfil(n,b){b.disabled=true;b.textContent='SALVANDO…';var u=C.user;

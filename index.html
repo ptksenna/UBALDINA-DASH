@@ -231,16 +231,65 @@ button{touch-action:manipulation}
 #pick{position:fixed;inset:0;z-index:900;background:radial-gradient(120% 90% at 50% 30%,#0b2a14,#020503 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:calc(env(safe-area-inset-top,0px) + 16px) max(16px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 16px) max(16px,env(safe-area-inset-left,0px));font-family:inherit}
 #pick h2{margin:0;color:#7dff7a;font-size:13px;letter-spacing:.3em;text-transform:uppercase;opacity:.8}
 #pick .pw{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;width:100%;max-width:760px}
-#pick button{flex:1 1 260px;max-width:360px;min-height:150px;border-radius:18px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;font-family:inherit;font-weight:900;font-size:22px;line-height:1.1;letter-spacing:.04em;text-transform:uppercase;transition:transform .12s}
-#pick button:active{transform:scale(.96)}
-#pick img{max-height:96px;max-width:90%;object-fit:contain}
+#pick .pw button{flex:1 1 260px;max-width:360px;min-height:150px;border-radius:18px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;font-family:inherit;font-weight:900;font-size:22px;line-height:1.1;letter-spacing:.04em;text-transform:uppercase;transition:transform .12s}
+#pick .pw button:active{transform:scale(.96)}
+#pick .pw img{max-height:96px;max-width:90%;object-fit:contain}
 #pick .pu{background:#04130a;border:2px solid #39ff14;color:#39ff14;box-shadow:0 0 22px #39ff1455,inset 0 0 18px #39ff1422}
 #pick .pc{background:#140804;border:2px solid #ff8a1f;color:#ffb23f;box-shadow:0 0 22px #ff6a0055,inset 0 0 18px #ff6a0022}
 #pick small{font-size:11px;font-weight:600;letter-spacing:.2em;opacity:.7}
 #pick .pf{color:#7dff7a;font-size:11px;letter-spacing:.25em;opacity:.55}
-@media (max-height:460px){#pick button{min-height:110px}#pick img{max-height:60px}}
-</style><h2>Escolha o jogo</h2><div class="pw"><button class="pu" id="pickU"><img src="icon-512.png" alt="">Rua Ubaldina<small>todos os modos</small></button><button class="pc" id="pickC"><img src="luta/img/caze_logo.png" alt="">Cazé Fighter<small>luta • roda de bobo</small></button></div><div class="pf">PATRACA GAMES</div>
-<script>(function(){var p=document.getElementById('pick');document.getElementById('pickU').onclick=function(){p.remove()};document.getElementById('pickC').onclick=function(){location.href='luta/?ed=caze'}})();</script></div>
+#pick .pc{position:relative}#pick .lk{position:absolute;top:10px;right:12px;background:#ff8a1f;color:#140804;border-radius:999px;padding:5px 10px;font-size:13px;font-weight:900;letter-spacing:.05em}
+#czPay{position:fixed;inset:0;z-index:950;background:#000c;display:flex;align-items:center;justify-content:center;padding:16px}
+#czPay[hidden]{display:none}
+#czPay .bx{background:#120704;border:2px solid #ff8a1f;border-radius:18px;max-width:420px;width:100%;max-height:100%;overflow:auto;padding:18px;color:#ffe2c2;box-shadow:0 0 30px #ff6a0055;display:flex;flex-direction:column;gap:10px;text-align:center}
+#czPay h3{margin:0;color:#ffb23f;font-size:20px;letter-spacing:.05em}
+#czPay .pr{font-size:34px;font-weight:900;color:#fff}
+#czPay .k{background:#000;border:1px dashed #ff8a1f;border-radius:10px;padding:10px;font-family:monospace;font-size:14px;word-break:break-all;user-select:all;color:#fff}
+#czPay .id{font-family:monospace;font-size:22px;letter-spacing:.2em;color:#39ff14}
+#czPay button,#czPay a.b{width:100%;box-sizing:border-box;border:0;border-radius:12px;padding:12px;font-weight:900;font-size:15px;cursor:pointer;text-decoration:none;display:block}
+#czPay .b1{background:#ff8a1f;color:#140804}#czPay .b2{background:#25d366;color:#04130a}#czPay .b3{background:transparent;color:#ffb23f;border:1px solid #ff8a1f55!important}
+#czPay input{background:#000;border:2px solid #39ff14;border-radius:10px;color:#39ff14;font:900 22px monospace;letter-spacing:.25em;text-align:center;padding:10px;text-transform:uppercase;width:100%;box-sizing:border-box}
+#czPay .wt{font-size:13px;color:#39ff14;animation:czp 1.4s infinite}@keyframes czp{50%{opacity:.45}}#czPay summary{list-style:none}#czPay .msg{min-height:18px;font-size:13px;color:#ff6b6b}#czPay .sm{font-size:12px;opacity:.75}
+@media (max-height:460px){#pick .pw button{min-height:110px}#pick .pw img{max-height:60px}}
+</style><h2>Escolha o jogo</h2><div class="pw"><button class="pu" id="pickU"><img src="icon-512.png" alt="">Rua Ubaldina<small>todos os modos</small></button><button class="pc" id="pickC"><span class="lk">🔒 R$ 5</span><img src="luta/img/caze_logo.png" alt="">Cazé Fighter<small id="czSub">luta • roda de bobo</small></button></div><div class="pf">PATRACA GAMES</div>
+<div id="czPay" hidden><div class="bx"><h3>🔒 CAZÉ FIGHTER</h3><div class="sm">Libere o jogo pra sempre na sua conta</div><div class="pr">R$ 5,00</div>
+<div id="czA"><button class="b2" id="czGen">Pagar com Pix</button></div>
+<div id="czQ" hidden style="flex-direction:column;gap:10px"><img id="czImg" alt="QR Code do Pix" style="width:200px;max-width:70%;align-self:center;background:#fff;border-radius:10px;padding:8px;margin:0 auto;display:block"><div class="sm">Ou copie o Pix copia e cola:</div><div class="k" id="czKey"></div><button class="b1" id="czCopy">Copiar Pix copia e cola</button><div class="wt" id="czWt">⏳ Aguardando pagamento… pague no app do seu banco que a tela muda sozinha.</div></div>
+<div class="msg" id="czMsg"></div>
+<details id="czDet"><summary class="sm" style="cursor:pointer">Tenho um código de liberação</summary><div style="display:flex;flex-direction:column;gap:8px;margin-top:8px"><input id="czIn" maxlength="10" placeholder="CÓDIGO" autocomplete="off"><button class="b1" id="czGo">Liberar</button></div></details>
+<button class="b3" id="czX">Voltar</button></div></div>
+<script>(function(){var CZS='da3a9df2b7b68fb6';function czH(s){var h=2166136261>>>0,g=5381;for(var i=0;i<s.length;i++){var c=s.charCodeAt(i);h=Math.imul(h^c,16777619)>>>0;g=(Math.imul(g,33)+c)>>>0}var A='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',o='',x=h,y=g;for(var j=0;j<6;j++){var v=(j<3?x:y)%32;o+=A[v];if(j<3)x=Math.floor(x/32);else y=Math.floor(y/32)}return o};function czId(u){return czH('ID|'+u)}function czOk(u,c){if(!u||!c)return false;var k=String(c).toUpperCase().replace(/[^A-Z0-9]/g,'');return k==='PATRACA5'||k===czH('CZF|'+czId(u)+'|'+CZS)}
+var FN='__FN__';
+var p=document.getElementById('pick'),M=document.getElementById('czPay'),$=function(i){return document.getElementById(i)},poll=null;
+function uid(){try{if(window.CONTA&&CONTA.perfil&&CONTA.perfil.uid)return CONTA.perfil.uid;var c=JSON.parse(localStorage.getItem('ub-conta')||'null');return c&&c.uid}catch(e){return null}}
+function lsg(k){try{return localStorage.getItem(k)||''}catch(e){return ''}}function lss(k,v){try{if(v)localStorage.setItem(k,v);else localStorage.removeItem(k)}catch(e){}}
+function liberado(){var u=uid();if(!u)return false;return lsg('cz-pago-'+u)==='1'||czOk(u,lsg('cz-lib-'+u)||(window.CONTA&&CONTA.perfil&&CONTA.perfil.czcode))}
+function marca(){var l=p&&p.querySelector('.lk');if(l)l.style.display=liberado()?'none':''}
+function msg(t,ok){$('czMsg').style.color=ok?'#39ff14':'#ff6b6b';$('czMsg').textContent=t||''}
+function entra(){stop();msg('✅ Pagamento confirmado! Bora lutar…',1);$('czWt').hidden=true;setTimeout(function(){location.href='luta/?ed=caze'},900)}
+function stop(){if(poll){clearInterval(poll);poll=null}}
+// confere no banco do jogo se essa conta já pagou
+function confere(){var u=uid();if(!u||!window.CONTA||!CONTA.db)return;CONTA.db.collection('compras').doc(u).get().then(function(d){lss('cz-pago-'+u,d.exists&&d.data().caze===true?'1':'');marca()}).catch(function(){})}
+function api(acao){var us=window.firebase&&firebase.auth&&firebase.auth().currentUser;if(!us)return Promise.reject({login:1});
+ return us.getIdToken().then(function(t){return fetch(FN,{method:'POST',headers:{'Authorization':'Bearer '+t,'Content-Type':'application/json'},body:JSON.stringify({acao:acao})})}).then(function(r){return r.json().then(function(j){if(!r.ok)throw j;return j})})}
+$('pickU').onclick=function(){stop();p.remove()};
+$('pickC').onclick=function(){if(liberado()){location.href='luta/?ed=caze';return}abre()};
+function abre(){msg('');$('czQ').hidden=true;$('czQ').style.display='';$('czA').hidden=false;$('czGen').disabled=false;$('czGen').textContent='Pagar com Pix';if(!uid())msg('Entre na sua conta primeiro (login do jogo) pra liberar.');M.hidden=false}
+$('czX').onclick=function(){stop();M.hidden=true};
+$('czGen').onclick=function(){var b=this;if(FN.indexOf('http')){msg('Pagamento automático chegando em breve. Se você tem um código, use abaixo.');return}
+ if(!uid()){msg('Entre na sua conta primeiro.');return}b.disabled=true;b.textContent='Gerando Pix…';msg('');
+ api('criar').then(function(j){var u=uid();if(j.pago){lss('cz-pago-'+u,'1');entra();return}
+  $('czKey').textContent=j.qr;$('czImg').style.display=j.qrImg?'block':'none';if(j.qrImg)$('czImg').src='data:image/png;base64,'+j.qrImg;$('czA').hidden=true;$('czQ').hidden=false;$('czQ').style.display='flex';$('czWt').hidden=false;
+  stop();var n=0;poll=setInterval(function(){if(M.hidden){stop();return}if(++n>225){stop();$('czWt').textContent='Esse Pix expirou. Toque em Voltar e gere outro.';return}
+   api('status').then(function(s){if(s.pago){lss('cz-pago-'+u,'1');entra()}}).catch(function(){})},4000)})
+ .catch(function(e){b.disabled=false;b.textContent='Pagar com Pix';msg(e&&e.login||e&&e.erro==='login'?'Entre na sua conta de novo e tente outra vez.':'Não deu pra gerar o Pix agora. Tente de novo.')})};
+$('czCopy').onclick=function(){var b=this,t=$('czKey').textContent;try{navigator.clipboard.writeText(t).then(function(){b.textContent='Copiado ✔ — cole no app do banco'},sel)}catch(e){sel()}};
+function sel(){var r=document.createRange();r.selectNodeContents($('czKey'));var s=getSelection();s.removeAllRanges();s.addRange(r)}
+$('czGo').onclick=function(){var u=uid(),c=$('czIn').value.toUpperCase().replace(/[^A-Z0-9]/g,'');if(!u){msg('Entre na sua conta primeiro.');return}
+ if(!czOk(u,c)){msg('Código inválido.');return}lss('cz-lib-'+u,c);try{if(CONTA.salvarCz)CONTA.salvarCz(c)}catch(e){}stop();msg('Liberado! Bora lutar…',1);setTimeout(function(){location.href='luta/?ed=caze'},700)};
+marca();var hook=function(){CONTA.onPerfil(function(){marca();confere()})};if(window.CONTA)hook();else{var t=setInterval(function(){if(window.CONTA){clearInterval(t);hook()}},500)}
+if(/[?&]cz=1/.test(location.search))setTimeout(abre,300);
+})();</script></div>
 <button id="hHome" title="Menu inicial">🏠</button><div id="menu"><div class="tt"><img data-logo id="mlogo" alt="Rua Ubaldina — Patraca Games"></div>
 <div id="mm"><div id="mmain" style="display:flex;flex-direction:column;gap:12px"><button id="bIni">Iniciar</button><button id="bDif" class="alt" style="display:none">Dificuldade: Médio</button><button id="bLuta">Luta</button><button id="bKart">Kart</button><button id="bHide">Esconde-esconde</button><button id="bFlav">Corre, o Flávio fugiu!</button><button id="bGuerra">Guerra na Ubaldina</button></div>
 <div id="msub" style="flex-direction:column;gap:12px"><button id="de">Molezinha</button><button id="dm" class="alt">Médio</button><button id="dh">Difícil pra caralho</button></div></div>
@@ -1465,4 +1514,4 @@ ubHud({mode:()=>st===1?'dash':st===5?'kart':st===6?'beat':st===7?'hide':null,sho
  pause:on=>{window.__hp=on&&(st===1||st===6)?1:0},
  css:'body.hedit #joy,body.hedit #btns{display:block!important}body.hedit #bJ,body.hedit #bP,body.hedit #bR{display:block!important}body.hedit.k #bRe{display:block!important}'});
 loop(last);
-</script><script>/* modo CORRE, O FLÁVIO FUGIU! */(function(){var b=document.getElementById('bFlav');if(!b)return;b.onclick=function(){var go=function(){location.href='flavio.html'};try{if(typeof fade==='function'){fade(go);return}}catch(e){}go()}})();</script><script>/* modo GUERRA NA UBALDINA */(function(){var b=document.getElementById('bGuerra');if(!b)return;b.onclick=function(){var go=function(){location.href='guerra.html'};try{if(typeof fade==='function'){fade(go);return}}catch(e){}go()}})();</script><script>/* iPhone: reajusta a tela quando a barra do Safari aparece/some ou o celular gira */(function(){var f=function(){try{window.scrollTo(0,0)}catch(e){}window.dispatchEvent(new Event('resize'))};var t;if(window.visualViewport)visualViewport.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(f,120)});addEventListener('orientationchange',function(){setTimeout(f,350)})})();</script><script src="conta.js?v=1"></script></body></html>
+</script><script>/* modo CORRE, O FLÁVIO FUGIU! */(function(){var b=document.getElementById('bFlav');if(!b)return;b.onclick=function(){var go=function(){location.href='flavio.html'};try{if(typeof fade==='function'){fade(go);return}}catch(e){}go()}})();</script><script>/* modo GUERRA NA UBALDINA */(function(){var b=document.getElementById('bGuerra');if(!b)return;b.onclick=function(){var go=function(){location.href='guerra.html'};try{if(typeof fade==='function'){fade(go);return}}catch(e){}go()}})();</script><script>/* iPhone: reajusta a tela quando a barra do Safari aparece/some ou o celular gira */(function(){var f=function(){try{window.scrollTo(0,0)}catch(e){}window.dispatchEvent(new Event('resize'))};var t;if(window.visualViewport)visualViewport.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(f,120)});addEventListener('orientationchange',function(){setTimeout(f,350)})})();</script><script src="conta.js?v=3"></script></body></html>

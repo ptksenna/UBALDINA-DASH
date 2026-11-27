@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="pt-BR">
-<head>
+<head><script>/* cadeado CAZÉ FIGHTER */(function(){if(!/[?&]ed=caze/.test(location.search))return;var CZS='da3a9df2b7b68fb6';function czH(s){var h=2166136261>>>0,g=5381;for(var i=0;i<s.length;i++){var c=s.charCodeAt(i);h=Math.imul(h^c,16777619)>>>0;g=(Math.imul(g,33)+c)>>>0}var A='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',o='',x=h,y=g;for(var j=0;j<6;j++){var v=(j<3?x:y)%32;o+=A[v];if(j<3)x=Math.floor(x/32);else y=Math.floor(y/32)}return o};function czId(u){return czH('ID|'+u)}function czOk(u,c){if(!u||!c)return false;var k=String(c).toUpperCase().replace(/[^A-Z0-9]/g,'');return k==='PATRACA5'||k===czH('CZF|'+czId(u)+'|'+CZS)}
+try{var c=JSON.parse(localStorage.getItem('ub-conta')||'null'),u=c&&c.uid,k=u&&(localStorage.getItem('cz-lib-'+u)||c.czcode);if(czOk(u,k)||(u&&localStorage.getItem('cz-pago-'+u)==='1'))return}catch(e){}
+location.replace('../?cz=1')})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Ubaldina Fighter</title>
